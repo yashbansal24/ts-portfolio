@@ -3,14 +3,44 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { NextUIProvider } from '@nextui-org/react';
+import GitHubCalendar from 'react-github-calendar';
+import Stomata from './components/Stomata';
+import { createTheme } from "@nextui-org/react"
+import { ThemeProvider as NextThemesProvider } from 'next-themes';
+
+const lightTheme = createTheme({
+  type: 'light',
+  theme: {
+  }
+})
+
+const darkTheme = createTheme({
+  type: 'dark',
+  theme: {
+  }
+})
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <div>
+    <NextThemesProvider
+      defaultTheme="dark"
+      attribute="class"
+      value={{
+        light: lightTheme.className,
+        dark: darkTheme.className
+      }}
+    >
+    <NextUIProvider>
+      <App />
+    </NextUIProvider>
+  </NextThemesProvider>
+    <div style={{'margin': '0 auto'}}><Stomata width={window.outerWidth.toString()} height={'350'} animate/></div>
+    <GitHubCalendar username="yashbansal24" color="red" style={{'margin': '0 auto'}}/>
+  </div>
 );
 
 // If you want to start measuring performance in your app, pass a function
