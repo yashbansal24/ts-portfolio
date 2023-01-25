@@ -1,15 +1,19 @@
 import { Container, Grid, Navbar, Dropdown, Text, Button, Link,Image } from "@nextui-org/react";
+import { Modal, useModal} from "@nextui-org/react";
+
 import React from "react";
 import { Card1 } from './components/Card1';
 import { Card2 } from './components/Card2';
 import { Card3 } from './components/Card3';
 import { Card4 } from './components/Card4';
 import { Card5 } from './components/Card5';
+import Experience from './Experience';
 import { icons } from "./icons";
 import { AcmeLogo } from "./Acme";
 import Marquee from "react-fast-marquee";
 
 export default function App() {
+  const { setVisible, bindings } = useModal();
   const collapseItems = [
     "Profile",
     "Dashboard",
@@ -24,6 +28,7 @@ export default function App() {
   ];
   return (
     <React.Fragment>
+    <Experience bindings={bindings}></Experience>
     <Navbar isBordered variant="sticky">
         <Navbar.Brand>
         <AcmeLogo />
@@ -50,7 +55,7 @@ export default function App() {
                 iconRight={icons.chevron}
                 ripple={false}
               >
-                Features
+                Skillset
               </Dropdown.Button>
             </Navbar.Item>
             <Dropdown.Menu
@@ -74,59 +79,59 @@ export default function App() {
               }}
             >
               <Dropdown.Item
-                key="autoscaling"
+                key="Languages & Technologies"
                 showFullDescription
-                description="ACME scales apps to meet user demand, automagically, based on load."
+                description="Javascript, Typescript, Python, Java, C++, C"
                 icon={icons.scale}
               >
-                Autoscaling
+                Languages
               </Dropdown.Item>
               <Dropdown.Item
-                key="usage_metrics"
+                key="Frameworks"
                 showFullDescription
-                description="Real-time metrics to debug issues. Slow query added? We’ll show you exactly where."
+                description="Express, NestJS, NextJS, ReactJS, Cypress, Webpack, Flask, Django, Spring"
                 icon={icons.activity}
               >
-                Usage Metrics
+                Frameworks & Libraries
               </Dropdown.Item>
               <Dropdown.Item
-                key="production_ready"
+                key="Trends"
                 showFullDescription
-                description="ACME runs on ACME, join us and others serving requests at web scale."
+                description="Avid user of new technologies in market. Experience with Blockchain and web3."
                 icon={icons.flash}
               >
-                Production Ready
+                Latest Trends in market
               </Dropdown.Item>
               <Dropdown.Item
-                key="99_uptime"
+                key="Microservices"
                 showFullDescription
-                description="Applications stay on the grid with high availability and high uptime guarantees."
+                description="Experience with Advanced System Design Skill. Worked with SQL and NoSQL databases at scale."
                 icon={icons.server}
               >
-                +99% Uptime
+                Advanced Backend Design
               </Dropdown.Item>
               <Dropdown.Item
-                key="supreme_support"
+                key="Scale"
                 showFullDescription
-                description="Overcome any challenge with a supporting team ready to respond."
+                description="Experience with container technologies (Docker and Kubernetes) to build applications at scale."
                 icon={icons.user}
               >
-                +Supreme Support
+                Scaled 50 million MAU
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
           <Navbar.Link isActive href="#">
-            Customers
+            Portfolio
           </Navbar.Link>
-          <Navbar.Link href="#">Pricing</Navbar.Link>
-          <Navbar.Link href="#">Company</Navbar.Link>
+          <Navbar.Link href="#">Quotation</Navbar.Link>
+          <Navbar.Link href="#">Testimonials</Navbar.Link>
         </Navbar.Content>
       </Navbar>
       
     <Container style={{'maxWidth': '1080px', 'margin': '0 auto'}}>
       <Grid.Container gap={2} justify="center" style={{'maxWidth': '1080px'}}>
         <Grid xs={12} sm={4}>
-          <Card1 />
+          <Card1 pressMethod={() => setVisible(true)} />
         </Grid>
         <Grid xs={12} sm={4}>
           <Card2 />
@@ -154,6 +159,11 @@ export default function App() {
             width={100}
             style={{'background': 'white'}}
             src="ekster.png"
+            alt="Ekster logo"
+          />
+          <Image
+            width={100}
+            src="petasense.png"
             alt="Ekster logo"
           />
         </Marquee>
