@@ -1,18 +1,26 @@
 import { Card, Col, Row, Button, Text, Link, Spacer} from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
-
+import ls from 'localstorage-slim';
 
 export const Card5 = () => {
   const [news, setNews] = useState([]);
 
   const fetchData = () => {
-    return fetch("https://newsapi.org/v2/top-headlines?country=in&category=technology&apiKey=ada9606193fd4dac98d32fd87b47b5d2")
+    return fetch('https://gnews.io/api/v4/search?q=Technology&token=' + "31eefdec89c064e680f8c3418c4387fe" + '&lang=en&country=us&max=10')
           .then((response) => response.json())
-          .then((data) => setNews(data.articles.slice(0,2)));
+          .then((data) => {
+            setNews(data.articles.slice(0,2));
+            ls.set('news_data', data.articles.slice(0,2), { ttl: 18000 });
+      });
   }
 
-  useEffect(() => {
-    fetchData();
+  useEffect(() => {    
+    if (ls.get('news_data')) {
+      setNews(ls.get('news_data'))
+    }
+    else {
+      fetchData();
+    }
   },[])
   console.log(news)
   return (
@@ -71,10 +79,10 @@ export const Card5 = () => {
             </Col>
             <Col>
               <Text color="#d1d1d1" size={12}>
-                Breathing App
+                Learn New Tech
               </Text>
               <Text color="#d1d1d1" size={12}>
-                Get a good night's sleep.
+                and the Latest News & Trends.
               </Text>
             </Col>
           </Row>
@@ -93,7 +101,7 @@ export const Card5 = () => {
                 weight="bold"
                 transform="uppercase"
               >
-                Get App
+                Stay Updated
               </Text>
             </Button>
           </Row>
