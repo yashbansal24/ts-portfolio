@@ -11,6 +11,7 @@ import Experience from './Experience';
 import { icons } from "./icons";
 import { AcmeLogo } from "./Acme";
 import Marquee from "react-fast-marquee";
+import Projects from "./projects";
 
 export default function App() {
   const { setVisible, bindings } = useModal();
@@ -29,6 +30,7 @@ export default function App() {
   return (
     <React.Fragment>
     <Experience bindings={bindings}></Experience>
+    <Projects bindings={bindings}></Projects>
     <Navbar isBordered variant="sticky">
         <Navbar.Brand>
         <AcmeLogo />
@@ -137,7 +139,7 @@ export default function App() {
           <Card2 />
         </Grid>
         <Grid xs={12} sm={4}>
-          <Card3 />
+          <Card3 pressMethod={() => setVisible(true)} />
         </Grid>
         <Marquee gradient={false} gradientWidth={'100%'} gradientColor={[221,187,255]}>
           <Image
@@ -165,6 +167,11 @@ export default function App() {
             width={100}
             src="petasense.png"
             alt="Ekster logo"
+          />
+          <Image
+            width={100}
+            src="trading_economics.png"
+            alt="Trading Economics"
           />
         </Marquee>
         <Grid xs={12} sm={5}>

@@ -5,7 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { NextUIProvider } from '@nextui-org/react';
 import GitHubCalendar from 'react-github-calendar';
-import Stomata from './components/Stomata';
+import Streamgraph from './components/Streamgraph';
 import { createTheme } from "@nextui-org/react"
 import { ThemeProvider as NextThemesProvider } from 'next-themes';
 
@@ -38,7 +38,7 @@ root.render(
       <App />
     </NextUIProvider>
   </NextThemesProvider>
-    <div style={{'margin': '0 auto'}}><Stomata width={window.outerWidth.toString()} height={'350'} animate/></div>
+    <div style={{'margin': '0 auto'}}><Streamgraph width={window.outerWidth.toString()} height={'350'} animate/></div>
     <GitHubCalendar username="yashbansal24" color="red" style={{'margin': '0 auto'}}/>
   </div>
 );
