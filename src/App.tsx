@@ -123,11 +123,11 @@ export default function App() {
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
-          <Navbar.Link isActive href="#">
+          <Navbar.Link isActive href="/">
             Portfolio
           </Navbar.Link>
-          <Navbar.Link href="#">Quotation</Navbar.Link>
-          <Navbar.Link href="#">Testimonials</Navbar.Link>
+          <Navbar.Link href="/about">Quotation</Navbar.Link>
+          <Navbar.Link href="/clients">Testimonials</Navbar.Link>
         </Navbar.Content>
       </Navbar>
     
