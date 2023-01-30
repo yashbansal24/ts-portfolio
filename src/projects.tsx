@@ -8,7 +8,7 @@ export default function Projects(props) {
         width="600px"
         aria-labelledby="modal-title"
         aria-describedby="modal-description"
-        {...props.bindings}
+        {...props.bindings2}
       >
         <Modal.Header>
           <Text id="modal-title" size={18}>

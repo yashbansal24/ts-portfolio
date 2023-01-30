@@ -37,10 +37,9 @@ root.render(
     >
     <NextUIProvider>
     <BrowserRouter>
-      <App />
       <Routes>
         <Route path="/" element={<App />}>
-          <Route index element={<App />} />
+          <Route index element={<App />} /> */
           <Route path="about" element={<App />} />
           <Route path="dashboard" element={<App />} />
 

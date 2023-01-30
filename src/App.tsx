@@ -31,7 +31,7 @@ export default function App() {
   return (
     <React.Fragment>
     <Experience bindings={bindings}></Experience>
-    <Projects bindings={bindings}></Projects>
+    {/* <Projects bindings2={bindings2}></Projects> */}
     <Navbar isBordered variant="sticky">
         <Navbar.Brand>
         <AcmeLogo />
@@ -140,7 +140,7 @@ export default function App() {
             <Card2 />
           </Grid>
           <Grid xs={12} sm={4}>
-            <Card3 pressMethod={() => setVisible(true)} />
+            <Card3/>
           </Grid>
           <Marquee gradient={false} gradientWidth={'100%'} gradientColor={[221,187,255]}>
             <Image
