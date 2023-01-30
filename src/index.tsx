@@ -10,6 +10,10 @@ import { createTheme } from "@nextui-org/react"
 import { ThemeProvider as NextThemesProvider } from 'next-themes';
 import { Routes, Route, Outlet, Link } from "react-router-dom";
 import { BrowserRouter } from "react-router-dom";
+import Default404 from './404'
+import Backend from './backend'
+import Diary from './diary'
+
 const lightTheme = createTheme({
   type: 'light',
   theme: {
@@ -38,16 +42,14 @@ root.render(
     <NextUIProvider>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<App />}>
-          <Route index element={<App />} /> */
-          <Route path="about" element={<App />} />
-          <Route path="dashboard" element={<App />} />
+        <Route path="/" element={<App />}></Route>
+          <Route path="diary" element={<Diary />} ></Route>
+          <Route path="systemdesign" element={<Backend />} ></Route>
 
           {/* Using path="*"" means "match anything", so this route
                 acts like a catch-all for URLs that we don't have explicit
                 routes for. */}
-          <Route path="*" element={<App />} />
-        </Route>
+          <Route path="*" element={<Default404 />}></Route>
       </Routes>
     </BrowserRouter>
       
