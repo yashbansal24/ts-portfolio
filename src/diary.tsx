@@ -1,4 +1,4 @@
-import { Container, Grid, Navbar, Dropdown, Text, Button, Link,Image } from "@nextui-org/react";
+import { Container, Grid, Navbar, Dropdown, Text, Button, Link,Image, Spacer } from "@nextui-org/react";
 import { Modal, useModal} from "@nextui-org/react";
 
 import React from "react";
@@ -19,9 +19,12 @@ export default function Backend() {
   return (
     <React.Fragment>
     <Navigation />
-      <div style={{'margin': '0 auto', 'width': '800px', 'height': '600px'}}>
-        <iframe  src="https://excalidraw.com/" width={800} height={600}></iframe>
-      </div>
+      <Text h4 css={{'textAlign': 'center', 'margin': '20px 0'}}> Multiplayer Game Sync </Text>
+      <Image 
+      src="simple_state_sync.png"
+      height={400}
+      width={800} />
+      <Spacer />
     </React.Fragment>
   );
 }
