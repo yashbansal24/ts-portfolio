@@ -101,6 +101,7 @@ export default function(props) {
           </Navbar.Link>
           <Navbar.Link href="/diary">Diary</Navbar.Link>
           <Navbar.Link href="/systemdesign">System Design</Navbar.Link>
+          <Navbar.Link href="/contact-us">Pricing</Navbar.Link>
         </Navbar.Content>
       </Navbar>
     );

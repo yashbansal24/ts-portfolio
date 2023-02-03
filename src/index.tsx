@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { NextUIProvider } from '@nextui-org/react';
+import { NextUIProvider, Spacer } from '@nextui-org/react';
 import GitHubCalendar from 'react-github-calendar';
 import Streamgraph from './components/Streamgraph';
 import { createTheme } from "@nextui-org/react"
@@ -13,6 +13,7 @@ import { BrowserRouter } from "react-router-dom";
 import Default404 from './404'
 import Backend from './backend'
 import Diary from './diary'
+import Contact from './components/stripe-pricing-table'
 
 const lightTheme = createTheme({
   type: 'light',
@@ -49,6 +50,7 @@ root.render(
           {/* Using path="*"" means "match anything", so this route
                 acts like a catch-all for URLs that we don't have explicit
                 routes for. */}
+          <Route path="contact-us" element={<Contact />}></Route>
           <Route path="*" element={<Default404 />}></Route>
       </Routes>
     </BrowserRouter>
@@ -56,7 +58,8 @@ root.render(
       
     </NextUIProvider>
   </NextThemesProvider>
-    <div style={{'margin': '0 auto'}}><Streamgraph width={window.outerWidth.toString()} height={'350'} animate/></div>
+  <Spacer />
+    {/* <div style={{'margin': '0 auto'}}><Streamgraph width={window.outerWidth.toString()} height={'350'} animate/></div> */}
     <GitHubCalendar username="yashbansal24" color="red" style={{'margin': '0 auto'}}/>
   </div>
 );
