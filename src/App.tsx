@@ -41,7 +41,7 @@ export default function App() {
           <Grid xs={12} sm={4}>
             <Card3/>
           </Grid>
-          <Marquee gradient={false} gradientWidth={'100%'} gradientColor={[221,187,255]}>
+          <Marquee style={{'background': 'orange', 'borderRadius': '15px'}} gradient={false} gradientWidth={'100%'} gradientColor={[221,187,255]}>
             <Image
               width={50}
               src="h1_logo.png"

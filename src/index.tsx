@@ -33,7 +33,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <div>
     <NextThemesProvider
-      defaultTheme="dark"
+      forcedTheme="light"
       attribute="class"
       value={{
         light: lightTheme.className,
@@ -60,7 +60,7 @@ root.render(
   </NextThemesProvider>
   <Spacer />
     {/* <div style={{'margin': '0 auto'}}><Streamgraph width={window.outerWidth.toString()} height={'350'} animate/></div> */}
-    <GitHubCalendar username="yashbansal24" color="red" style={{'margin': '0 auto'}}/>
+    <GitHubCalendar username="yashbansal24" color="orange" style={{'margin': '0 auto', 'width': "500px"}}/>
   </div>
 );
 
