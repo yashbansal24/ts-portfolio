@@ -1,6 +1,14 @@
 import * as React from 'react';
 import Navigation from './navigation'
 
+declare global {
+  namespace JSX {
+      interface IntrinsicElements {
+          "stripe-pricing-table": React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
+      }
+  }
+}
+
 function PricingPage() {
   // Paste the stripe-pricing-table snippet in your React component
   return (
