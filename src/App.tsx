@@ -10,7 +10,6 @@ import { Card5 } from './components/Card5';
 import Experience from './Experience';
 import Navigation from './components/navigation'
 import Marquee from "react-fast-marquee";
-import Projects from "./projects";
 
 export default function App() {
   const { setVisible, bindings } = useModal();

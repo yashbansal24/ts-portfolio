@@ -1,4 +1,4 @@
-import { Container, Grid, Navbar, Dropdown, Text, Button, Link,Image } from "@nextui-org/react";
+import { Navbar, Dropdown, Text } from "@nextui-org/react";
 import { AcmeLogo } from "../Acme";
 import { icons } from "../icons";
 
