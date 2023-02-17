@@ -8,6 +8,7 @@ import { Card3 } from './components/Card3';
 import { Card4 } from './components/Card4';
 import { Card5 } from './components/Card5';
 import Experience from './Experience';
+import Window from './components/window';
 import Navigation from './components/navigation'
 import Marquee from "react-fast-marquee";
 
@@ -81,6 +82,7 @@ export default function App() {
           </Grid>
         </Grid.Container>
       </Container>
+      <Window></Window>
     </React.Fragment>
   );
 }

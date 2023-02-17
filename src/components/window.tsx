@@ -13,6 +13,7 @@ export default function Window (props) {
             </div>
         </div>
         <div className="card__content">
+            VS CODE snippet here
         </div>
         </div>);
 }
