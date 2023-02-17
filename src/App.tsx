@@ -82,7 +82,7 @@ export default function App() {
           </Grid>
         </Grid.Container>
       </Container>
-      <Window></Window>
+      {/* <Window></Window> */}
     </React.Fragment>
   );
 }
