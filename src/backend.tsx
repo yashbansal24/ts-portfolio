@@ -7,7 +7,6 @@ import { data } from "./system_design"
 
 
 export default function Backend() {
-  const { setVisible, bindings } = useModal();
   const { exercises, practice } = data;
   return (
     <React.Fragment>
