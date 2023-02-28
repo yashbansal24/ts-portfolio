@@ -45,7 +45,7 @@ export default function Backend() {
               <Text b>{item.problem}</Text>
             </Card.Header>
             <Card.Divider />
-            <Card.Body css={{ py: "$10" }}>
+              <Card.Body css={{ py: "$10" }}>
             <Text h6>
               {item.description}
             </Text>
