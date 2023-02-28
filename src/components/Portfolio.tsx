@@ -33,11 +33,8 @@ export default function Portfolio(props) {
         </Text>
         </Modal.Body>
         <Modal.Footer>
-          <Button auto flat color="error" onPress={() => props.setVisible(false)}>
-            Close
-          </Button>
           <Button auto onPress={() => props.setVisible(false)}>
-            Agree
+            Close
           </Button>
         </Modal.Footer>
       </Modal>
