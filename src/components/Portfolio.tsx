@@ -1,4 +1,4 @@
-import { Modal, useModal, Button, Text, Spacer } from "@nextui-org/react";
+import { Modal, useModal, Button, Text, Spacer, Link } from "@nextui-org/react";
 import { FaNewspaper } from 'react-icons/fa';
 import { SiStorybook } from 'react-icons/si';
 
@@ -42,6 +42,7 @@ export default function Portfolio(props) {
             - Built various features for the webapp. Full details in the Introduction.
             <Spacer/>
             - Built invoice generator page for SEO.
+            <Link href="https://www.paypal.com/us/invoice/invoice-template-generator">Template generator</Link>
           </Text>
           <Text h4 id="modal-description">
             H1DN Schema Transformer
