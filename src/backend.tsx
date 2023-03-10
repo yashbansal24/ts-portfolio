@@ -49,6 +49,7 @@ export default function Backend() {
             <Text h6>
               {item.description}
             </Text>
+            {item.images.map((photoLink ,idx) => <Image src={photoLink}/>)}
             <Text h6>
               {item.requirements.map((req,ix) => <Text h6>{req}</Text>)}
             </Text>
