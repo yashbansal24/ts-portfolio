@@ -30,6 +30,14 @@ const exercises = [
         "requirements": ["the throughput of the cache should be optimal", "the cache should be lock-free", "every component should be fault tolerant"],
         "solution": ["implementing in-memory cache,", "lock-free implementations,", "consistent hashing"],
         "detailed_links": ["https://github.com/yashbansal24/system-design-questions/blob/master/distributed-cache.md"]
+    },
+    {
+        "problem": "Design a Superfast KV Store",
+        "images": [],
+        "description": "Design a single-node persistent KV Store that supports GET, PUT and DEL operations and it utilizes hardware (disk, RAM) optimally. The response time for all the 3 operations should be as low as possible and complexity of operations should be O(1). It is okay for this KV store to not support infinite number of keys given it is bound to a single node.",
+        "requirements": ["this KV store is not distributed and will run on just a single node"],
+        "solution": ["designing storage engine,", "utilizing every ounce of your hardware"],
+        "detailed_links": ["https://github.com/yashbansal24/system-design-questions/blob/master/superfast-kv.md"]
     }
 ]
 
