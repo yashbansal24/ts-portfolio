@@ -25,7 +25,7 @@ const exercises = [
     },
     {
         "problem": "Design a Distributed Cache",
-        "images": ["cache_example.png"],
+        "images": ["cache_example.png", "consistent_hashing.png"],
         "description": "cache should support GET, PUT, DEL, and TTL. While designing the cache it is very important to note that the cache should be highly available and scalable. Given that cache is a high throughput and highly concurrent system, scaling up and down the cache should not have a major impact on the data or the performance.",
         "requirements": ["the throughput of the cache should be optimal", "the cache should be lock-free", "every component should be fault tolerant"],
         "solution": ["implementing in-memory cache,", "lock-free implementations,", "consistent hashing"],
