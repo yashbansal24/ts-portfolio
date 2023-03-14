@@ -12,7 +12,7 @@ const exercises = [
         "images": [],
         "description": "Design a scalable blob storage like Amazon's S3. S3 is a distributed file storage facilitating storage of blob data. In simpler terms, it could be described as the folder on the cloud. The various functions to think about while designing something as robust as S3 are: scaling API requests, scaling storage, durability, handling hot storage nodes, cost efficiency, disk utilization, data redundancy, data corruption, and permission management.",
         "requirements": [],
-        "solution": ["how raw files are served over HTTP", "Designing complex systems"],
+        "solution": ["how raw files are served over HTTP, ", "Designing complex systems"],
         "detailed_links": ["https://github.com/yashbansal24/system-design-questions/blob/master/s3.md"]
     },
     {
@@ -27,7 +27,7 @@ const exercises = [
         "problem": "Design a Distributed Cache",
         "images": ["cache_example.png", "consistent_hashing.png"],
         "description": "cache should support GET, PUT, DEL, and TTL. While designing the cache it is very important to note that the cache should be highly available and scalable. Given that cache is a high throughput and highly concurrent system, scaling up and down the cache should not have a major impact on the data or the performance.",
-        "requirements": ["the throughput of the cache should be optimal", "the cache should be lock-free", "every component should be fault tolerant"],
+        "requirements": ["the throughput of the cache should be optimal, ", "the cache should be lock-free, ", "every component should be fault tolerant"],
         "solution": ["implementing in-memory cache,", "lock-free implementations,", "consistent hashing"],
         "detailed_links": ["https://github.com/yashbansal24/system-design-questions/blob/master/distributed-cache.md"]
     },
