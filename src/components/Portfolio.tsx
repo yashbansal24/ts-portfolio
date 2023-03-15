@@ -45,7 +45,7 @@ export default function Portfolio(props) {
             <Link href="https://www.paypal.com/us/invoice/invoice-template-generator">Template generator</Link>
           </Text>
           <Text h4 id="modal-description">
-            H1DN Schema Transformer
+            H1DN Schema Transformer using Pyspark
         </Text>
         <Text h6 id="modal-description">
             - An open source attempt to transform any data to any other format.
