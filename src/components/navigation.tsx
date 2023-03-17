@@ -99,7 +99,7 @@ export default function(props) {
           <Navbar.Link isActive href="/">
             Portfolio
           </Navbar.Link>
-          <Navbar.Link href="/diary">Diary</Navbar.Link>
+          <Navbar.Link href="/firewatch">Firewatch</Navbar.Link>
           <Navbar.Link href="/systemdesign">System Design</Navbar.Link>
           <Navbar.Link href="/contact-us">Pricing</Navbar.Link>
         </Navbar.Content>

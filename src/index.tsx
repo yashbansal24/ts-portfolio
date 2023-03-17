@@ -12,6 +12,7 @@ import Default404 from './404'
 import Backend from './backend'
 import Diary from './diary'
 import Contact from './components/stripe-pricing-table'
+import ParallaxDemo from './components/Parallax'
 
 const lightTheme = createTheme({
   type: 'light',
@@ -42,7 +43,7 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />}></Route>
-          <Route path="diary" element={<Diary />} ></Route>
+          <Route path="firewatch" element={<ParallaxDemo />} ></Route>
           <Route path="systemdesign" element={<Backend />} ></Route>
 
           {/* Using path="*"" means "match anything", so this route
