@@ -54,7 +54,7 @@
     display: block;
     position: relative !important;
     overflow:hidden scroll !important;
-    width: calc(100% + 35px) !important;
+    width: calc(100% + 30px) !important;
     z-index: 10;
   }
   
