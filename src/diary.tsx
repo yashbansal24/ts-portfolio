@@ -16,6 +16,7 @@ export default function Backend() {
       width={800} />
       <Spacer />
       <Text h4 css={{'textAlign': 'center', 'margin': '20px 0'}}> Multiplayer Game Sync with Notifications</Text>
+      <Text h4 css={{'textAlign': 'center', 'margin': '20px 0'}}> Multiplayer Game Sync with Notifications</Text>
       <Image 
       src="simple_state_sync.png"
       height={400}
