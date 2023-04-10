@@ -43,8 +43,8 @@ const exercises = [
         "problem": "Design a Remote File Sync Service",
         "images": [],
         "description": "Designing a file sync service in which a user can upload a file to the cloud and it gets sync across all of his/her devices.",
-        "requirements": ["Sync all the files across all the devices of the user,", "A file could be at max 4GB big,", "The upload and downloads should be efficient and resumable,", "User's bandwidth is critical, so be efficient."],
-        "solution": ["designing resumable uploads and downloads,", "efficiently communicate changes and updates across clients"],
+        "requirements": ["Sync all the files across all the devices of the user, ", "A file could be at max 4GB big, ", "The upload and downloads should be efficient and resumable, ", "User's bandwidth is critical, so be efficient."],
+        "solution": ["designing resumable uploads and downloads, ", "efficiently communicate changes and updates across clients"],
         "detailed_links": ["https://github.com/yashbansal24/system-design-questions/blob/master/file-sync.md"]
     }
 ]
