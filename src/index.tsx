@@ -10,6 +10,7 @@ import { Routes, Route } from "react-router-dom";
 import { BrowserRouter } from "react-router-dom";
 import Default404 from './404'
 import Backend from './backend'
+import ChatGPT from './chatgpt'
 import Diary from './diary'
 import Contact from './components/stripe-pricing-table'
 import ParallaxDemo from './components/Parallax'
@@ -44,6 +45,7 @@ root.render(
       <Routes>
         <Route path="/" element={<App />}></Route>
           <Route path="firewatch" element={<ParallaxDemo />} ></Route>
+          <Route path="chatgpt" element={<ChatGPT />} ></Route>
           <Route path="systemdesign" element={<Backend />} ></Route>
 
           {/* Using path="*"" means "match anything", so this route
