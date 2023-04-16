@@ -1,4 +1,4 @@
-import { Container, Grid, Navbar, Dropdown, Text, Button, Link,Image } from "@nextui-org/react";
+import { Container, Grid,Image } from "@nextui-org/react";
 import { Modal, useModal} from "@nextui-org/react";
 
 import React from "react";
@@ -9,7 +9,6 @@ import { Card4 } from './components/Card4';
 import { Card5 } from './components/Card5';
 import Experience from './Experience';
 import Portfolio from './components/Portfolio';
-import Window from './components/window';
 import Navigation from './components/navigation'
 import Marquee from "react-fast-marquee";
 
