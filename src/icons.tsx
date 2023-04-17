@@ -1,5 +1,3 @@
-import React from "react";
-
 const ChevronDownIcon = ({fill, size, width = 24, height = 24, ...props}) => {
   return (
     <svg
