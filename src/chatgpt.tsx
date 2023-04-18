@@ -10,16 +10,8 @@ export default function Backend() {
     <React.Fragment>
     <Navigation />
       <Text h4 css={{'textAlign': 'center', 'margin': '20px 0'}}> Chat GPT Prompt 1 </Text>
-      <Image 
-      src="simple_state_sync.png"
-      height={400}
-      width={800} />
       <Spacer />
       <Text h4 css={{'textAlign': 'center', 'margin': '20px 0'}}> Chat GPT Prompt 2</Text>
-      <Image 
-      src="simple_state_sync.png"
-      height={400}
-      width={800} />
       <Spacer />
     </React.Fragment>
   );
