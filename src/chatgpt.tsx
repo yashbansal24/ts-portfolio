@@ -12,6 +12,8 @@ export default function Backend() {
       <Spacer />
       <Text h4 css={{'textAlign': 'center', 'margin': '20px 0'}}> Chat GPT Prompt 2</Text>
       <Spacer />
+      <Text h4 css={{'textAlign': 'center', 'margin': '20px 0'}}> Node JS Prompt engineer</Text>
+      <Spacer />
     </React.Fragment>
   );
 }
