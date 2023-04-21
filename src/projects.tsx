@@ -55,9 +55,6 @@ export default function Projects(props) {
           <Button auto flat color="error" onPress={() => props.setVisible(false)}>
             Close
           </Button>
-          <Button auto onPress={() => props.setVisible(false)}>
-            Agree
-          </Button>
         </Modal.Footer>
       </Modal>
     </div>
