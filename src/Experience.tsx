@@ -22,7 +22,7 @@ export default function Experience(props) {
           <Text h6 id="modal-description">
             - Curated the internal architecture of H1DN short for H1 data network and designed all the workflows. This enables any firm to run and match the data with H1's internal database in near real time using batch and streaming jobs.
             <Spacer/>
-            - Leading a technical team of 4 engineers and building a platform for all teams inside H1 to use H1DN as a go to ingestion service for the data. Direct reporting to the CDO and SVP of the company with a size of 800.
+            - Leading a team of 4 engineers and building a platform for all teams inside H1 to use H1DN as a go to ingestion service for the data. Direct reporting to the CDO and SVP of the company with a size of 800.
             <Spacer/>
             - Building a replication strategy for geographically distributed data. This ensures that data is available at the required time at different places. Handles north of 45 TBs of data for now. Led the development of a distributed database system, improving data reliability and scalability.
             <Spacer/>
