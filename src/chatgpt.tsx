@@ -1,4 +1,4 @@
-import { Text,Image, Spacer } from "@nextui-org/react";
+import { Text,Image, Spacer, Link } from "@nextui-org/react";
 import { useModal} from "@nextui-org/react";
 
 import React from "react";
@@ -16,6 +16,7 @@ export default function Backend() {
     <Text h4 css={{'textAlign': 'center', 'margin': '20px 0'}}> Careers in AI </Text>
     <Spacer />
     <Text h4 css={{'textAlign': 'center', 'margin': '20px 0'}}> Node JS Prompt engineer</Text>
+    <Link href="https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers/"> New Prompt Engineering course </Link>
     <Spacer />
   </React.Fragment>
   );
