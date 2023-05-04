@@ -16,6 +16,11 @@ export default function Backend() {
     <Text h3 css={{'textAlign': 'center', 'margin': '20px 0'}}> Careers in AI </Text>
     <Spacer />
     <Text h3 css={{'textAlign': 'center', 'margin': '20px 0'}}> Node JS Prompt engineer</Text>
+    <Text css={{'textAlign': 'center', 'margin': '20px 0'}}>
+    A prompt engineer, in the context of natural language processing (NLP) and machine learning, is someone who designs and creates prompts that are used to train AI language models like myself. These prompts can take various forms, such as questions, statements, or incomplete phrases, and are used to guide the language model in generating relevant and coherent responses.
+    The job of a prompt engineer involves designing prompts that are diverse, relevant, and representative of the language and concepts the model is meant to learn. They may also need to fine-tune and adjust the prompts based on the performance of the model during training and testing.
+    In short, a prompt engineer is responsible for designing the inputs that enable AI language models like me to generate natural language responses to a wide range of queries and prompts.
+    </Text>
     <Link href="https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers/"> New Prompt Engineering course </Link>
     <Spacer />
   </React.Fragment>
