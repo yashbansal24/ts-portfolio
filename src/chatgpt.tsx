@@ -1,4 +1,4 @@
-import { Text,Image, Spacer, Link } from "@nextui-org/react";
+import { Text,Image, Spacer, Link, Container } from "@nextui-org/react";
 import { useModal} from "@nextui-org/react";
 
 import React from "react";
@@ -8,6 +8,7 @@ export default function Backend() {
   return (
     <React.Fragment>
     <Navigation />
+    <Container style={{'maxWidth': '1080px', 'margin': '0 auto'}}>
     <Text css={{'textAlign': 'center', 'margin': '20px 0'}}>
         First invented by Github Copilot, prompt engineering is the process of using tools like chatGPT or Copilot to generate code snippets based on a given prompt.
         It allows us to quickly prototype and iterate on different ideas, saving us time and effort in the development process.
@@ -23,6 +24,7 @@ export default function Backend() {
     </Text>
     <Link href="https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers/"> New Prompt Engineering course </Link>
     <Spacer />
+    </Container>
   </React.Fragment>
   );
 }
