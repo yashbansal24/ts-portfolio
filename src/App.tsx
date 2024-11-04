@@ -29,7 +29,7 @@ export default function App() {
   ];
   return (
     <React.Fragment>
-    <Experience bindings={bindings}></Experience>
+    <Experience setVisible={setVisible} bindings={bindings}></Experience>
     <Portfolio isOpen={portfolioVisible} setVisible={setPortolioVisible}></Portfolio>
     <Navigation />
       <Container style={{'maxWidth': '1080px', 'margin': '0 auto'}}>
@@ -47,6 +47,16 @@ export default function App() {
             <Image
               width={50}
               src="h1_logo.png"
+              alt="H1 logo"
+            />
+            <Image
+              width={100}
+              src="dataloop.png"
+              alt="H1 logo"
+            />
+            <Image
+              width={80}
+              src="envirospark-logo-site.webp"
               alt="H1 logo"
             />
             <Image

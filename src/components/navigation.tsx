@@ -96,7 +96,7 @@ export default function(props) {
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
-          <Navbar.Link isActive href="/">
+          <Navbar.Link href="/">
             Portfolio
           </Navbar.Link>
           <Navbar.Link href="/firewatch">Firewatch</Navbar.Link>

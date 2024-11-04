@@ -8,7 +8,7 @@ export const Card1 = (props) => (
           About Me
         </Text>
         <Text h4 color="white">
-          Lead Software Developer | Technical Lead
+          Staff Software Engineer | Technical Lead
         </Text>
 
         <Text h5 color="white">
