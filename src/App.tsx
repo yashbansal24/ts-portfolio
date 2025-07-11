@@ -51,6 +51,11 @@ export default function App() {
             />
             <Image
               width={100}
+              src="deel_logo.png"
+              alt="Deel"
+            />
+            <Image
+              width={100}
               src="dataloop.png"
               alt="H1 logo"
             />

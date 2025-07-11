@@ -8,9 +8,8 @@ export const Card1 = (props) => (
           About Me
         </Text>
         <Text h4 color="white">
-          Staff Software Engineer | Technical Lead
+          Engineering Manager | Backend Engineer
         </Text>
-
         <Text h5 color="white">
           Click to know more
         </Text>

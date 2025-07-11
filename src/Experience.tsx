@@ -17,16 +17,19 @@ export default function Experience(props) {
         </Modal.Header>
         <Modal.Body>
         <Collapse.Group>
-          <Collapse title="Envirospark Energy Solutions - Staff Software Engineer" expanded>
+          <Collapse title="Deel - Engineering Manager/Backend Engineer (UAE) (JUN 2024 - Present)" expanded>
             <Text h6 id="modal-description">
-              - Handling a team of 5 engineers remotely for a B2B product building an operations first software.
+              - Led and initially managed a team of 4 engineers to develop time sheet ingestion integrations. Created dashboards and prepared data for RAG based search to handle customer centric queries.
               <Spacer/>
-              - I built an IoT-based real-time monitoring system that tracked charger performance, including voltage, current, and usage patterns. The system was designed to flag issues early, allowing us to perform proactive maintenance. As a result, I was able to reduce downtime from 10% to 2% and cut emergency repair costs by 25%.
+              - Working for the Notifications team responsible for all communications which happen through Deel. Handling a scale of 20 million plus notification events across email, in-app and push notifications.
               <Spacer/>
-              - Setup pipelines to ingest, clean and normalize data which is then put into the respective tables.
+              - Built a live react-email based code editor with preview. Took measures to prevent RCE, XSS, Injection and other types of attacks.
               <Spacer/>
-              - Building the Envirospark official charging app and web application.
+              - Moved email integrations to a Kafka based messaging queue service. Added validation schemas and internal SDK. Cut the development and delivery time of creating/updating notifications by 50%.
               <Spacer/>
+              - Created Looker dashboards for managing and viewing different notification performances and streamlined analytics for Product and design teams.
+              <Spacer/>
+              - <b>Skills:</b> NodeJs, React, Python, AWS, Postgresql, Redis, REST, Pipelines, Datadog, Microservices, Monolithic Architecture, SQS, Message Queues, AWS Bedrock, Kafka, Docker, Kubernetes, S3.
             </Text>
           </Collapse>
           <Collapse title="Dataloop - Senior Software Engineer">
