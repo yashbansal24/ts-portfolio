@@ -56,18 +56,18 @@ function ActionLines() {
   );
 }
 
-/** Decorative horizontal speed lines (the "less SDLC time" panel). */
-function SpeedLines() {
-  const lines = [
-    [10, 150, 300, 5], [24, 96, 300, 9], [40, 190, 300, 4], [54, 120, 300, 11],
-    [70, 170, 300, 5], [84, 104, 300, 8], [98, 210, 300, 4],
-  ];
+/** Decorative speed lines trailing a "WHOOSH!" (the "less SDLC time" panel). */
+function Whoosh() {
+  const lines = [[6, 70, 2], [14, 10, 3], [22, 92, 2], [30, 34, 4], [38, 118, 2], [44, 60, 2]];
   return (
-    <svg className="about__speed" viewBox="0 0 300 108" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-      {lines.map(([y, x1, x2, w]) => (
-        <line key={y} x1={x1} x2={x2} y1={y} y2={y} strokeWidth={w} />
-      ))}
-    </svg>
+    <span className="about__sfx about__zoom" aria-hidden="true">
+      <svg className="about__speed" viewBox="0 0 200 48" preserveAspectRatio="none" focusable="false">
+        {lines.map(([y, x1, w]) => (
+          <line key={y} x1={x1} x2={196} y1={y} y2={y} strokeWidth={w} />
+        ))}
+      </svg>
+      <span className="about__sfx-word">WHOOSH!</span>
+    </span>
   );
 }
 
@@ -131,7 +131,7 @@ function StatPanel({ s, i }: { s: Stat; i: number }) {
       );
       break;
     case 'speed':
-      body = <><SpeedLines />{fact}{context}</>;
+      body = <>{fact}<Whoosh />{context}</>;
       break;
     default:
       body = <>{fact}{context}</>;
@@ -155,7 +155,7 @@ function StatPanel({ s, i }: { s: Stat; i: number }) {
 export function About() {
   const ref = useRef<HTMLElement>(null);
 
-  // Bursts "pop" in once when they scroll into view (skipped entirely under reduced motion / no IO).
+  // Bursts "pop" (and the WHOOSH! zooms) in once when they scroll into view (skipped entirely under reduced motion / no IO).
   useEffect(() => {
     const el = ref.current;
     if (!el || prefersReducedMotion() || typeof IntersectionObserver === 'undefined') return;
@@ -170,7 +170,7 @@ export function About() {
       },
       { rootMargin: '0px 0px -10% 0px' },
     );
-    el.querySelectorAll('.about__pop').forEach((n) => io.observe(n));
+    el.querySelectorAll('.about__pop, .about__zoom').forEach((n) => io.observe(n));
     return () => {
       io.disconnect();
       delete el.dataset.pop;

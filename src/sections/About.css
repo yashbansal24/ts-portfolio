@@ -115,8 +115,8 @@
 .about__impact-copy { container-type: inline-size; display: flex; flex-direction: column; gap: 12px; }
 .about__impact-copy .about__num { font-size: clamp(58px, 40cqi, 112px); }
 .about__impact-art { position: relative; display: grid; place-items: center; min-height: 200px; }
-.about__impact .burst { --burst-size: clamp(170px, 16vw, 228px) !important; }
-.about__impact-art--sm .burst { --burst-size: clamp(150px, 14vw, 200px) !important; }
+.about__impact .burst { --burst-size: clamp(170px, 16vw, 228px) !important; --burst-fit: .25 !important; }
+.about__impact-art--sm .burst { --burst-size: clamp(150px, 14vw, 200px) !important; --burst-fit: .15 !important; }
 .about__panel.panel--periwinkle .about__rays { opacity: .5; }
 
 /* paper "focus lines" radiating from the burst (lighten coral → ink text only gains contrast) */
@@ -128,12 +128,17 @@
   pointer-events: none;
 }
 
-/* speed lines streaming off the number ("less time") */
-.about__speed {
-  position: absolute; left: 0; right: 0; top: clamp(14px, 1.6vw, 22px); z-index: -1;
-  width: 100%; height: clamp(84px, 8vw, 112px);
-  stroke: var(--periwinkle); stroke-linecap: round;
-  pointer-events: none;
+/* "WHOOSH!" + speed lines in the "less time" panel (decorative) */
+.about__sfx { display: flex; align-items: center; gap: 4px; margin-block: auto; padding-block: 14px; }
+.about__panel--speed .about__context { margin-top: 0; }
+.about__speed { flex: 1; min-width: 0; height: 40px; stroke: var(--ink); stroke-linecap: round; opacity: .8; }
+.about__speed line { vector-effect: non-scaling-stroke; }
+.about__sfx-word {
+  flex: none;
+  font: 400 clamp(34px, 3.2vw, 44px)/1 var(--font-comic); letter-spacing: .04em;
+  color: var(--coral); -webkit-text-stroke: 1.5px var(--ink);
+  text-shadow: 3px 3px 0 var(--ink);
+  transform: skew(-10deg) rotate(-5deg);
 }
 
 /* speech bubble: the number "says" its context */
@@ -162,6 +167,12 @@
 .about__pop { display: inline-grid; }
 .about[data-pop='ready'] .about__pop { opacity: 0; transform: scale(.35) rotate(-24deg); }
 .about[data-pop='ready'] .about__pop.is-popped { animation: about-pop 560ms var(--ease-snap) both; }
+.about[data-pop='ready'] .about__zoom { opacity: 0; transform: translateX(-48px); }
+.about[data-pop='ready'] .about__zoom.is-popped { animation: about-zoom 480ms var(--ease-out) 120ms both; }
+@keyframes about-zoom {
+  0% { opacity: 0; transform: translateX(-48px); }
+  100% { opacity: 1; transform: none; }
+}
 @keyframes about-pop {
   0% { opacity: 0; transform: scale(.35) rotate(-24deg); }
   55% { opacity: 1; }
@@ -171,8 +182,10 @@
 /* ---- responsive ---- */
 @media (max-width: 1080px) {
   .about__top { grid-template-columns: minmax(0, 1fr); }
-  .about__manifesto { max-width: 640px; }
+  .about__manifesto { max-width: 680px; margin-left: auto; }
   .about__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .about__impact .burst { --burst-size: 210px !important; }
+  .about__impact-art--sm .burst { --burst-size: 190px !important; }
 }
 @media (max-width: 640px) {
   .about__grid { grid-template-columns: minmax(0, 1fr); gap: 26px; }
@@ -189,5 +202,5 @@
   .about__bar-meta { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .about__pop { animation: none !important; opacity: 1 !important; transform: none !important; }
+  .about__pop, .about__zoom { animation: none !important; opacity: 1 !important; transform: none !important; }
 }
