@@ -150,11 +150,6 @@
 .contact__top:hover { background: var(--paper); color: var(--ink); border-color: var(--ink); }
 
 /* ---- responsive ---- */
-/* below ~1250px the four-item colophon wraps (a stray "/" leads line 2, or "Back to top"
-   drops alone); drop the type credit so it stays one clean row down to the 720px stack */
-@media (max-width: 1260px) {
-  .contact__colophon-type { display: none; }
-}
 @media (max-width: 1080px) {
   .contact__grid { grid-template-columns: minmax(0, 1fr); }
   .contact__main { margin-right: 12px; }
@@ -174,7 +169,6 @@
   .contact__hint { flex-basis: 100%; text-align: center; }
   .contact__colophon { flex-direction: column; align-items: flex-start; gap: 6px; }
   .contact__colophon > span + span::before { content: none; }
-  .contact__colophon-type { display: none; }
   .contact__top { margin: 14px 0 0; }
 }
 

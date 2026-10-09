@@ -101,7 +101,7 @@ export function Projects() {
         <SectionHeader
           id="projects-title"
           eyebrow="Open source"
-          title={<>Side quests, <em>&amp; the source to prove it.</em></>}
+          title={<>Projects <em>on GitHub.</em></>}
           dek="Selected public repositories, newest first. Every card opens its repo."
         />
 
