@@ -29,8 +29,8 @@ const LOOKS: Record<string, Look> = {
   'less SDLC time': { device: 'speed', tone: 'paper', caption: 'peach', tilt: 0 },
   'daily active users': { device: 'plain', tone: 'blue', caption: 'coral', tilt: 1.2, halftone: 'periwinkle' },
   'notification events': { device: 'bubble', tone: 'peach', caption: 'paper', tilt: 0.8 },
-  'US patents': { device: 'thought', tone: 'paper', caption: 'peach', tilt: 0, halftone: 'blue', wide: true },
-  'saved per year': { device: 'kaching', tone: 'periwinkle', caption: 'paper', tilt: -1 },
+  'US patents': { device: 'thought', tone: 'paper', caption: 'peach', tilt: 0, halftone: 'blue' },
+  'saved per year': { device: 'kaching', tone: 'periwinkle', caption: 'paper', tilt: -0.8, wide: true },
 };
 const FALLBACK: Look = { device: 'plain', tone: 'paper', caption: 'peach', tilt: 0 };
 
@@ -59,11 +59,11 @@ function ActionLines() {
 /** Decorative horizontal speed lines (the "less SDLC time" panel). */
 function SpeedLines() {
   const lines = [
-    [18, 40, 300, 9], [44, 120, 300, 5], [66, 70, 300, 12], [92, 160, 300, 4],
-    [114, 96, 300, 8], [140, 30, 300, 6], [162, 140, 300, 10], [188, 84, 300, 4],
+    [10, 150, 300, 5], [24, 96, 300, 9], [40, 190, 300, 4], [54, 120, 300, 11],
+    [70, 170, 300, 5], [84, 104, 300, 8], [98, 210, 300, 4],
   ];
   return (
-    <svg className="about__speed" viewBox="0 0 300 200" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+    <svg className="about__speed" viewBox="0 0 300 108" preserveAspectRatio="none" aria-hidden="true" focusable="false">
       {lines.map(([y, x1, x2, w]) => (
         <line key={y} x1={x1} x2={x2} y1={y} y2={y} strokeWidth={w} />
       ))}
@@ -90,7 +90,7 @@ function StatPanel({ s, i }: { s: Stat; i: number }) {
           <div className="about__impact-art">
             <ActionLines />
             <span className="about__pop">
-              <Burst text={`${s.value.replace(/\+$/, '')}!`} sub={s.label} tone="paper" size={210} rotate={-10} spikes={14} />
+              <Burst text={`${s.value.replace(/\+$/, '')}!`} tone="paper" size={210} rotate={-10} spikes={14} />
             </span>
           </div>
           <div className="about__impact-copy">{fact}{context}</div>
@@ -101,7 +101,7 @@ function StatPanel({ s, i }: { s: Stat; i: number }) {
       body = (
         <>
           {fact}
-          <SpeechBubble side="bottom-left" tone="paper" as="p" className="about__say">{s.context}</SpeechBubble>
+          <SpeechBubble side="top-left" tone="paper" as="p" className="about__say">{s.context}</SpeechBubble>
         </>
       );
       break;
@@ -119,12 +119,15 @@ function StatPanel({ s, i }: { s: Stat; i: number }) {
       break;
     case 'kaching':
       body = (
-        <>
-          <span className="about__pop about__pop--corner">
-            <Burst text="KA-CHING!" tone="coral" size={128} rotate={10} spikes={11} />
-          </span>
-          {fact}{context}
-        </>
+        <div className="about__impact about__impact--flip">
+          <div className="about__impact-copy">{fact}{context}</div>
+          <div className="about__impact-art about__impact-art--sm">
+            <ActionLines />
+            <span className="about__pop">
+              <Burst text="KA-CHING!" tone="coral" size={170} rotate={9} spikes={11} />
+            </span>
+          </div>
+        </div>
       );
       break;
     case 'speed':

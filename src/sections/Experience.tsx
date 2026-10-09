@@ -23,6 +23,9 @@ function monthIndex(s: string): number {
 }
 const yearOf = (s: string) => (isPresent(s) ? today.getFullYear() : Number(s.split(' ')[1]));
 const pad = (n: number) => String(n).padStart(2, '0');
+/** Instrument Serif's "1" reads as "l" ("H1" → "Hl"), so digit runs in names are set in the sans. */
+const nameNodes = (name: string) =>
+  name.split(/(\d+)/).map((part, i) => (i % 2 ? <span key={i} className="experience__digits">{part}</span> : part));
 
 const WORDS = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve'];
 const word = (n: number) => WORDS[n] ?? String(n);
@@ -60,11 +63,11 @@ function Rail() {
               <b className="experience__seg-no">{pad(i + 1)}</b>
               <span className="experience__seg-name">{r.company}</span>
               <span className="experience__tick">{yearOf(r.start)}</span>
+              {i === 0 && <span className="experience__tick experience__tick--now">Now</span>}
             </span>
           );
         })}
       </div>
-      <span className="experience__tick experience__tick--now">Now</span>
     </div>
   );
 }
@@ -92,13 +95,12 @@ function RolePanel({ role, index, total }: { role: Role; index: number; total: n
           </span>
         }
         footer={current ? <span aria-hidden="true">To be continued…</span> : undefined}
-        halftone={current ? 'coral' : false}
-        halftoneFade="right"
       >
+        {current && <Halftone tone="coral" density="medium" fade="radial" opacity={0.6} className="experience__splash-dots" />}
         <div className="experience__lead">
           <p className="experience__beat" aria-hidden="true">{beatOf(index, total)}</p>
           <h3 className="experience__company">
-            {role.company}
+            {nameNodes(role.company)}
             {role.companyNote && (
               <>
                 <span className="sr-only">, </span>
