@@ -33,8 +33,6 @@
   mask-image: linear-gradient(to bottom, transparent 0, #000 7%, #000 88%, transparent 100%), linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
   mask-composite: intersect;
 }
-.slayb__figtag { position: absolute; top: 6px; left: 0; z-index: var(--z-overlay); transform: rotate(-1.5deg); pointer-events: none; }
-.slayb__figtag .figcap__label { white-space: nowrap; }
 
 /* ---- step captions: light up in sync with the scene ---- */
 .slayb__cap { position: relative; z-index: var(--z-raised); }
@@ -49,15 +47,13 @@
   transition: transform var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out), background-color var(--dur-slow) ease;
 }
 .slayb__step:not(:last-child)::after {
-  content: ""; position: absolute; top: 22px; right: -17px; width: 14px; height: 3px;
+  content: ""; position: absolute; top: 17px; right: -17px; width: 14px; height: 3px;
   background: var(--ink);
 }
-.slayb__step-n { font: 500 11px/1 var(--font-mono); letter-spacing: var(--tracking-mono); color: var(--blue-2); }
 .slayb__step-label { font: 800 15px/1.15 var(--font-sans); letter-spacing: -.005em; color: var(--ink); }
 .slayb__step-note { font: 400 13px/1.35 var(--font-sans); color: var(--blue-2); }
 .slayb__step.is-done { background: var(--peach); }
 .slayb__step.is-active { background: var(--coral); transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--ink); }
-.slayb__step.is-active .slayb__step-n,
 .slayb__step.is-active .slayb__step-note { color: var(--ink); }
 .slayb__step-bar {
   position: absolute; left: 0; right: 0; bottom: 0; height: 4px;
@@ -80,9 +76,6 @@
   .slayb__copy { margin-top: clamp(40px, 7vw, 56px); }
 }
 @media (max-width: 720px) {
-  /* tag sits above the stage (in flow) so the goal star never slides under it */
-  .slayb__fig { display: flex; flex-direction: column; }
-  .slayb__figtag { order: -1; position: relative; top: 0; align-self: flex-start; margin-bottom: 4px; }
   .slayb__steps { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
   .slayb__step:nth-child(2)::after { display: none; }
 }
@@ -92,7 +85,6 @@
   .slayb__step { padding: 9px 10px 12px; }
   .slayb__step-label { font-size: 14px; }
   .slayb__step-note { font-size: 12.5px; }
-  .slayb__figtag .figcap__label { white-space: normal; }
   .slayb__cta .btn { flex: 1 1 auto; }
   .slayb__sticker { right: -4px; }
 }

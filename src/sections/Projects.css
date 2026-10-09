@@ -11,7 +11,6 @@
   transform: rotate(-1.5deg);
 }
 .projects__bar-rule { flex: 1; height: 3px; background: var(--ink); }
-.projects__bar-meta { flex: none; color: var(--ink); }
 
 /* ---- halftone hard-shadow: a dot field offset under each card (kit Halftone, repositioned) ---- */
 .projects__item, .projects__lead-wrap { position: relative; isolation: isolate; }
@@ -221,7 +220,6 @@
   .projects .projects__ht { inset: 9px -9px -9px 9px; }
   .projects .projects__ht--lead { inset: 11px -11px -11px 11px; }
   .projects__burst { --burst-size: 92px; top: -40px; right: -6px; }
-  .projects__bar-meta { display: none; }
   .projects__archive { margin-inline: calc(-1 * var(--gutter) + 6px); }
   .projects__more-btn { width: 100%; }
 }

@@ -17,8 +17,6 @@ const ARCHIVE_YEAR = Math.min(...repos.map(yearOf));
 const archive = repos.filter((p) => yearOf(p) === ARCHIVE_YEAR);
 const [lead, ...recent] = repos.filter((p) => yearOf(p) !== ARCHIVE_YEAR);
 
-const WORDS = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve'];
-const word = (n: number) => WORDS[n] ?? String(n);
 const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 const githubHost = profile.links.github.replace(/^https?:\/\//, '');
 
@@ -102,17 +100,15 @@ export function Projects() {
       <div className="wrap">
         <SectionHeader
           id="projects-title"
-          num="05"
-          eyebrow="Projects · On GitHub"
+          eyebrow="Open source"
           title={<>Side quests, <em>&amp; the source to prove it.</em></>}
-          dek={<>{word(repos.length)} public repositories from {ARCHIVE_YEAR} to {lead.year}, newest first. Every card opens its repo.</>}
+          dek="Selected public repositories, newest first. Every card opens its repo."
         />
 
         {/* ---- latest builds ---- */}
         <div className="projects__bar">
           <p className="projects__bar-title" id="projects-latest">Latest builds</p>
           <span className="projects__bar-rule" aria-hidden="true" />
-          <span className="projects__bar-meta eyebrow" aria-hidden="true">{1 + recent.length} repos</span>
         </div>
 
         <div className="projects__latest" role="group" aria-labelledby="projects-latest">
@@ -127,7 +123,7 @@ export function Projects() {
                 <p className="projects__desc projects__desc--lead">{lead.description}</p>
               </div>
               <div className="projects__lead-side">
-                <p className="projects__side-label eyebrow">Stack · {lead.tech.length}</p>
+                <p className="projects__side-label eyebrow">Stack</p>
                 <ChipList items={lead.tech} label={`${lead.name} tech`} tone="paper" className="projects__chips" />
                 <RepoLink p={lead} variant="lead" />
               </div>
@@ -146,7 +142,7 @@ export function Projects() {
             From the archive <span className="projects__tab-year">· {ARCHIVE_YEAR}</span>
           </p>
           <p className="projects__archive-dek">
-            {word(archive.length)} {ARCHIVE_YEAR} repos: retrieval, ranking, recommendation and fuzzy logic.
+            Information retrieval, ranking, recommendation and fuzzy logic.
           </p>
           <ul className="projects__grid projects__grid--archive" role="list" onFocus={revealFocusedCard}>
             {archive.map((p) => <ProjectCard key={p.name} p={p} skin={{ halftone: 'blue', bubble: 'periwinkle' }} />)}
