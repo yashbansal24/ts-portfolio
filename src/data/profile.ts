@@ -62,7 +62,8 @@ export const experience: Role[] = [
       'Led architecture for secure B2B AI platforms — sandboxed and air-gapped deployments, RBAC, guardrails, auditability, blast-radius isolation, SOC 2, GDPR and data residency.',
       'Designed serving for self-hosted open-weight models alongside hosted APIs; evaluated LoRA adapters and distillation against prompting and RAG.',
     ],
-    stack: ['Multi-agent orchestration', 'MCP', 'LLM evals', 'Kubernetes', 'Air-gapped', 'LoRA'],
+    // Chips trace to the Presight bullets: Kubernetes is only in the résumé's general skills list, and LoRA was evaluated, not shipped.
+    stack: ['Multi-agent orchestration', 'MCP', 'LLM evals', 'RBAC', 'Air-gapped', 'Open-weight serving'],
   },
   {
     company: 'Deel',
@@ -118,13 +119,14 @@ export const experience: Role[] = [
     end: 'Feb 2022',
     headline: 'Invoicing and payouts for 25M+ daily users at sub-200 ms.',
     highlights: [
-      'Architecture for invoicing and payout systems serving 25M+ DAU with sub-200 ms latency; APIs at 10k+ QPS.',
+      'Architecture docs (component diagrams, data flows, API specs) for invoicing and payout systems serving 25M+ DAU at sub-200 ms; backend APIs at 10k+ QPS.',
       'Launched 5 high-impact A/B payment experiments serving 5M+ daily checkouts.',
       'Built the new Invoicing mobile and desktop experience from scratch in React.',
       'Invented and patented a neural-network-based algorithm saving $1M+ a year; applied CQRS, Saga, Outbox and distributed locking.',
       'Improved wildcard search response time over a billion records by 25%.',
     ],
-    stack: ['Node.js', 'React', 'Java', 'Redis', 'Distributed systems'],
+    // Java removed: no source puts it at PayPal (legacy site: "Application server is based on NodeJS").
+    stack: ['Node.js', 'React', 'REST APIs', 'Redis', 'Distributed systems'],
   },
 ];
 
