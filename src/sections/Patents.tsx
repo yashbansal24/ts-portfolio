@@ -120,8 +120,8 @@ function Certificate({ p, i }: { p: Patent; i: number }) {
 /** PATENTS — comic "origin story" page: a coral splash panel (lightbulb + speed lines) and two certificate panels. */
 export function Patents() {
   return (
-    <section className="patents section tone-ivory-2 rule-top" id="patents" aria-labelledby="patents-title">
-      <Halftone tone="periwinkle" density="coarse" fade="left" className="patents__dots" />
+    <section className="patents section tone-blue rule-top" id="patents" aria-labelledby="patents-title">
+      <Halftone tone="periwinkle" density="coarse" fade="left" opacity={0.25} className="patents__dots" />
       <div className="wrap">
         <SectionHeader
           id="patents-title"

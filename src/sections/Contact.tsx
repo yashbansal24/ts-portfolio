@@ -153,7 +153,7 @@ export function Contact() {
         <p className="contact__colophon">
           <span>© {year} {profile.name}</span>
           <span>Built with React &amp; three.js</span>
-          <span className="contact__colophon-type">Set in Instrument Serif, Inter Tight &amp; JetBrains Mono</span>
+          <span className="contact__colophon-type">Set in Instrument Serif, Inter Tight, JetBrains Mono &amp; Bangers</span>
           <a className="contact__top" href="#main">Back to top <span aria-hidden="true">↑</span></a>
         </p>
       </div>

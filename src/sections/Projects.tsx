@@ -1,3 +1,4 @@
+import type { FocusEvent } from 'react';
 import { profile, projects, type Project } from '../data/profile';
 import { SectionHeader } from '../components/SectionHeader';
 import { SpeechBubble, type BubbleTone } from '../components/SpeechBubble';
@@ -59,6 +60,20 @@ function Stars({ n }: { n: number }) {
 }
 
 type CardSkin = { halftone: HalftoneTone; bubble: BubbleTone };
+
+/**
+ * On phones the archive is a horizontal swipe row (Projects.css). The browser leaves a partly visible
+ * card where it is when its link takes keyboard focus, so snap the focused card fully into the row.
+ */
+function revealFocusedCard(e: FocusEvent<HTMLUListElement>) {
+  const row = e.currentTarget;
+  const cs = getComputedStyle(row);
+  if (cs.overflowX === 'visible') return;   // wide screens: a plain grid, nothing to scroll
+  const item = (e.target as HTMLElement).closest<HTMLElement>('.projects__item');
+  if (!item) return;
+  const start = row.getBoundingClientRect().left + (parseFloat(cs.scrollPaddingInlineStart) || 0);
+  row.scrollBy({ left: item.getBoundingClientRect().left - start });
+}
 
 /** One repo card. Rows (cap / name / bubble / desc / chips / link) sit on a shared subgrid so neighbours align. */
 function ProjectCard({ p, skin }: { p: Project; skin: CardSkin }) {
@@ -133,7 +148,7 @@ export function Projects() {
           <p className="projects__archive-dek">
             {word(archive.length)} {ARCHIVE_YEAR} repos: retrieval, ranking, recommendation and fuzzy logic.
           </p>
-          <ul className="projects__grid projects__grid--archive" role="list">
+          <ul className="projects__grid projects__grid--archive" role="list" onFocus={revealFocusedCard}>
             {archive.map((p) => <ProjectCard key={p.name} p={p} skin={{ halftone: 'blue', bubble: 'periwinkle' }} />)}
           </ul>
         </div>
