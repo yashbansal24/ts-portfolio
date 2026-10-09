@@ -40,7 +40,7 @@
 .patents__bulb-tip { fill: var(--ink); }
 
 .patents .patents__burst {
-  --burst-size: clamp(150px, 13vw, 190px) !important; --burst-fit: .14 !important;
+  --burst-size: clamp(150px, 13vw, 190px); --burst-fit: .14;
   position: absolute; right: -4%; bottom: -2%; z-index: var(--z-raised);
 }
 
@@ -124,7 +124,7 @@
 @media (max-width: 560px) {
   .patents__art { min-height: 250px; }
   .patents__bulb { width: min(58%, 190px); }
-  .patents .patents__burst { --burst-size: 124px !important; right: -6%; bottom: -4%; }
+  .patents .patents__burst { --burst-size: 124px; right: -6%; bottom: -4%; }
   /* seal floats top-right; kicker + title wrap around it */
   .patents__head { display: block; }
   .patents__head::after { content: ""; display: table; clear: both; }

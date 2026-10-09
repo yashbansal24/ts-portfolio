@@ -40,6 +40,8 @@ p { text-wrap: pretty; }
   outline-offset: 3px;
 }
 .tone-blue, .tone-ink { --focus: var(--coral); }
+/* light cards/panels/bubbles inside a dark tone switch focus back to ink (coral is too faint on paper/peach) */
+.card:not(.card--blue), .panel:not(.panel--blue), .bubble:not(.bubble--blue) { --focus: var(--ink); }
 
 /* ---- hard-shadow colour follows the surface: ink on light, coral on deep blue ----
    Components draw shadows with var(--shadow-c, var(--ink)). Light containers reset it for their children. */

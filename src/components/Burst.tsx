@@ -20,7 +20,7 @@ function burstPath(spikes: number, seed: number) {
   return `M${pts.join('L')}Z`;
 }
 
-/** SVG starburst with Bangers onomatopoeia ("SHIPPED!", "98%!"). Decorative unless `label` is given (then role="img"). Size in px (override with --burst-size in CSS). */
+/** SVG starburst with Bangers onomatopoeia ("SHIPPED!", "98%!"). Decorative unless `label` is given (then role="img"). Size in px; props are defaults — override from section CSS with --burst-size / --burst-fit / --burst-rot (no !important needed). */
 export function Burst({ text, sub, tone = 'coral', size = 160, rotate = -8, spikes = 12, label, className, style }: BurstProps) {
   const d = burstPath(spikes, text.length);
   const fit = text.length <= 4 ? 0.3 : text.length <= 7 ? 0.22 : text.length <= 10 ? 0.17 : 0.14;
@@ -28,7 +28,7 @@ export function Burst({ text, sub, tone = 'coral', size = 160, rotate = -8, spik
   return (
     <div
       className={['burst', `burst--${tone}`, className].filter(Boolean).join(' ')}
-      style={{ '--burst-size': `${size}px`, '--burst-fit': fit, '--burst-rot': `${rotate}deg`, ...style } as CSSProperties}
+      style={{ '--burst-size-p': `${size}px`, '--burst-fit-p': fit, '--burst-rot-p': `${rotate}deg`, ...style } as CSSProperties}
       {...a11y}
     >
       <svg className="burst__svg" viewBox="-6 -6 218 218" aria-hidden="true" focusable="false">

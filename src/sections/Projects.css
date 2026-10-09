@@ -43,6 +43,13 @@
 .projects__cap--coral { background: var(--coral); }
 
 .projects__stars { position: absolute; top: -15px; right: 16px; font-size: 13px; }
+.projects__stars--flat {
+  top: 0; right: 0; margin: 0; padding: 7px 12px;
+  background: var(--ivory-2); color: var(--ink);
+  border-left: var(--border); border-bottom: var(--border);
+  border-top-right-radius: calc(var(--r) - var(--bw));
+  font: 500 12px/1.3 var(--font-mono); letter-spacing: .1em;
+}
 
 .projects__name { margin-top: 18px; font: 400 clamp(28px, 2.5vw, 38px)/1 var(--font-serif); letter-spacing: -.015em; color: var(--blue); }
 
@@ -200,7 +207,7 @@
   .projects__grid, .projects__grid--archive { grid-template-columns: minmax(0, 1fr); }
   .projects .projects__ht { inset: 9px -9px -9px 9px; }
   .projects .projects__ht--lead { inset: 11px -11px -11px 11px; }
-  .projects__burst { --burst-size: 92px !important; top: -40px; right: -6px; }
+  .projects__burst { --burst-size: 92px; top: -40px; right: -6px; }
   .projects__bar-meta { display: none; }
   .projects__archive { margin-inline: calc(-1 * var(--gutter) + 6px); }
   .projects__more-btn { width: 100%; }

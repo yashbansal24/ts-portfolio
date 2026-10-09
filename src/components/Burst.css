@@ -1,8 +1,11 @@
 .burst {
+  /* CSS overrides (--burst-size/-fit/-rot) win over the inline prop defaults (--burst-*-p). */
+  --_bs: var(--burst-size, var(--burst-size-p, 160px));
+  --_bf: var(--burst-fit, var(--burst-fit-p, .22));
   position: relative; flex: none;
-  width: var(--burst-size, 160px); aspect-ratio: 1;
+  width: var(--_bs); aspect-ratio: 1;
   display: grid; place-items: center;
-  transform: rotate(var(--burst-rot, -8deg));
+  transform: rotate(var(--burst-rot, var(--burst-rot-p, -8deg)));
 }
 .burst__svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
 .burst__shadow { fill: var(--ink); }
@@ -14,7 +17,7 @@
 .burst--blue { --burst-fill: var(--blue-2); --burst-ink: var(--paper); }
 .burst__text {
   position: relative; display: grid; justify-items: center; max-width: 72%;
-  font: 400 calc(var(--burst-size, 160px) * var(--burst-fit, .22)) / .9 var(--font-comic);
+  font: 400 calc(var(--_bs) * var(--_bf)) / .9 var(--font-comic);
   letter-spacing: .03em; text-align: center; color: var(--burst-ink);
   transform: skew(-6deg) rotate(-2deg);
   text-shadow: 2px 2px 0 var(--burst-shadow-text, transparent);
@@ -22,6 +25,6 @@
 .burst--coral .burst__text { --burst-shadow-text: var(--paper); }
 .burst__sub {
   margin-top: .3em;
-  font: 800 calc(var(--burst-size, 160px) * .065) / 1.1 var(--font-sans); letter-spacing: .04em; text-transform: uppercase;
+  font: 800 calc(var(--_bs) * .065) / 1.1 var(--font-sans); letter-spacing: .04em; text-transform: uppercase;
   text-shadow: none;
 }

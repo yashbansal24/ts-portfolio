@@ -38,7 +38,18 @@ function RepoLink({ p, variant }: { p: Project; variant?: 'lead' }) {
   );
 }
 
+/** Only the most-starred repo gets a rotated Sticker (kit: ≤ 1–2 stickers per section); the rest get a flat tab. */
+const TOP_STARS = Math.max(0, ...projects.map((p) => p.stars ?? 0));
+
 function Stars({ n }: { n: number }) {
+  if (n < TOP_STARS) {
+    return (
+      <p className="projects__stars projects__stars--flat">
+        <span aria-hidden="true">★ {n}</span>
+        <span className="sr-only">{n} GitHub stars</span>
+      </p>
+    );
+  }
   return (
     <Sticker tone="coral" rotate={4} className="projects__stars">
       <span aria-hidden="true">★ {n}</span>

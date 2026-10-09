@@ -115,8 +115,8 @@
 .about__impact-copy { container-type: inline-size; display: flex; flex-direction: column; gap: 12px; }
 .about__impact-copy .about__num { font-size: clamp(58px, 40cqi, 112px); }
 .about__impact-art { position: relative; display: grid; place-items: center; min-height: 200px; }
-.about__impact .burst { --burst-size: clamp(170px, 16vw, 228px) !important; --burst-fit: .25 !important; }
-.about__impact-art--sm .burst { --burst-size: clamp(150px, 14vw, 200px) !important; --burst-fit: .15 !important; }
+.about__impact .burst { --burst-size: clamp(170px, 16vw, 228px); --burst-fit: .25; }
+.about__impact-art--sm .burst { --burst-size: clamp(150px, 14vw, 200px); --burst-fit: .15; }
 .about__panel.panel--periwinkle .about__rays { opacity: .5; }
 
 /* paper "focus lines" radiating from the burst (lighten coral → ink text only gains contrast) */
@@ -184,8 +184,8 @@
   .about__top { grid-template-columns: minmax(0, 1fr); }
   .about__manifesto { max-width: 680px; margin-left: auto; }
   .about__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .about__impact .burst { --burst-size: 210px !important; }
-  .about__impact-art--sm .burst { --burst-size: 190px !important; }
+  .about__impact .burst { --burst-size: 210px; }
+  .about__impact-art--sm .burst { --burst-size: 190px; }
 }
 @media (max-width: 640px) {
   .about__grid { grid-template-columns: minmax(0, 1fr); gap: 26px; }
@@ -196,7 +196,7 @@
   .about__impact { grid-template-columns: minmax(0, 1fr); gap: 0; }
   /* burst jumps into the top-right corner, beside the caption box */
   .about__impact-art { order: -1; min-height: 0; justify-self: end; margin: -58px -12px -30px 0; }
-  .about__impact .burst, .about__impact-art--sm .burst { --burst-size: 124px !important; }
+  .about__impact .burst, .about__impact-art--sm .burst { --burst-size: 124px; }
   .about__think .about__fact { margin-bottom: 50px; }
   .about__context { max-width: none; }
   .about__bar-meta { display: none; }
