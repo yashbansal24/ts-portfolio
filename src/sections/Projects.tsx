@@ -115,7 +115,7 @@ export function Projects() {
 
         {/* ---- the archive drawer ---- */}
         <div className="projects__archive" role="group" aria-labelledby="projects-archive">
-          <Halftone tone="blue" density="coarse" fade="up" opacity={0.14} />
+          <Halftone tone="periwinkle" density="coarse" fade="up" opacity={0.75} />
           <p className="projects__tab" id="projects-archive">
             From the archive <span className="projects__tab-year">· {ARCHIVE_YEAR}</span>
           </p>

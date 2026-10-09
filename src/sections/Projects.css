@@ -66,7 +66,7 @@
   text-decoration: none;
 }
 .projects__link::after { content: ""; position: absolute; inset: calc(-1 * var(--bw)); z-index: 1; border-radius: var(--r); }
-.projects__link-text { flex: 1; min-width: 0; display: grid; gap: 3px; padding: 12px var(--pad); }
+.projects__link-text { flex: 1; min-width: 0; display: grid; align-content: start; gap: 3px; padding: 12px var(--pad); }
 .projects__link-k { font: 800 12px/1.2 var(--font-sans); letter-spacing: .08em; text-transform: uppercase; }
 .projects__link-v { font: 500 13px/1.35 var(--font-mono); color: var(--blue-2); overflow-wrap: anywhere; }
 .projects__link-go {
