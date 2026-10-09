@@ -9,8 +9,17 @@ import './Contact.css';
 
 type CopyState = 'idle' | 'copied' | 'manual';
 
-/** "https://www.linkedin.com/in/x/" → "linkedin.com/in/x" */
-const handle = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
+/** "https://www.linkedin.com/in/x/" → "linkedin.com/in/x", with line-break hints after each "/". */
+function Handle({ url }: { url: string }) {
+  const parts = url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '').split('/');
+  return (
+    <span className="contact__link-handle">
+      {parts.map((part, i) => (
+        <span key={i}>{i > 0 && <>/<wbr /></>}{part}</span>
+      ))}
+    </span>
+  );
+}
 
 const LINKS = [
   { name: 'LinkedIn', href: profile.links.linkedin, tone: 'paper' },
@@ -88,9 +97,9 @@ export function Contact() {
             />
 
             <div className="contact__email">
-              <p className="contact__email-label eyebrow" id="contact-email-label">Email</p>
-              <p className="contact__email-value" aria-labelledby="contact-email-label contact-email-text">
-                <span ref={emailRef} id="contact-email-text" className="contact__email-text">{profile.email}</span>
+              <p className="contact__email-label eyebrow">Email</p>
+              <p className="contact__email-value">
+                <span ref={emailRef} className="contact__email-text">{profile.email}</span>
               </p>
               <div className="contact__email-actions">
                 <Button href={`mailto:${profile.email}`} variant="primary" size="lg">
@@ -123,7 +132,7 @@ export function Contact() {
                 <Button href={l.href} variant="secondary" className={`contact__link contact__link--${l.tone}`}>
                   <span className="contact__link-text">
                     <span className="contact__link-name">{l.name}</span>
-                    <span className="contact__link-handle">{handle(l.href)}</span>
+                    <Handle url={l.href} />
                   </span>
                   <span className="contact__link-arrow" aria-hidden="true">↗</span>
                   <span className="sr-only"> (opens in a new tab)</span>

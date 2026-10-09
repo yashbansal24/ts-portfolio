@@ -1,1 +1,175 @@
-/* Contact footer styles — BEM-ish: .contact__x */
+/* ---------- CONTACT footer: bold coral → blue mesh + paper CTA card + comic burst ---------- */
+.contact {
+  overflow: hidden;
+  padding-block: clamp(84px, 9vw, 132px) 0;
+}
+
+.contact__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+  column-gap: clamp(40px, 5vw, 88px);
+  row-gap: 48px;
+  align-items: start;
+}
+
+/* ---- the CTA card (all body text lives on paper → ≥ 4.5:1 anywhere on the mesh) ---- */
+.contact__main { position: relative; }
+.contact__card {
+  position: relative;
+  padding: clamp(22px, 3.6vw, 52px);
+  background: var(--paper); color: var(--blue);
+  border: var(--border); border-radius: var(--r-lg);
+  /* coral slab with its own ink outline: reads on the coral and the blue parts of the mesh */
+  box-shadow: 12px 12px 0 0 var(--coral), 12px 12px 0 var(--bw) var(--ink);
+  /* children are on paper: ink shadows + ink focus ring */
+  --shadow-c: var(--ink);
+  --focus: var(--ink);
+}
+
+.contact .contact__card .sh { max-width: none; margin-bottom: clamp(28px, 3.4vw, 44px); }
+.contact .contact__card .sh__title { font-size: clamp(46px, 6.6vw, 108px); line-height: .9; color: var(--blue); }
+.contact .contact__card .sh__title em { display: block; color: var(--blue-2); }
+.contact .contact__card .sh__dek { max-width: 46ch; color: var(--blue-2); }
+
+/* email: big selectable serif line + actions */
+.contact__email {
+  display: grid; gap: 12px;
+  padding-top: clamp(20px, 2.4vw, 28px);
+  border-top: var(--border);
+}
+.contact__email-label { color: var(--ink); }
+.contact__email-value {
+  font: italic 400 clamp(30px, 4.3vw, 64px)/1.08 var(--font-serif);
+  letter-spacing: -.01em;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+.contact__email-text {
+  -webkit-user-select: all; user-select: all;
+  cursor: text;
+  box-shadow: inset 0 -.26em 0 var(--peach);
+  -webkit-box-decoration-break: clone; box-decoration-break: clone;
+}
+.contact__email-text::selection { background: var(--coral); color: var(--ink); }
+.contact__email-actions {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 14px 16px;
+  margin-top: 10px;
+}
+.contact .contact__copy { min-width: 11.5ch; }
+.contact .contact__copy.is-copied { background: var(--periwinkle); }
+.contact__status {
+  padding: 6px 10px;
+  background: var(--peach); color: var(--ink);
+  border: var(--border-sm); border-radius: var(--r-sm);
+  font: 800 13px/1.2 var(--font-sans); letter-spacing: .05em; text-transform: uppercase;
+  transform: rotate(-2deg);
+  animation: contact-pop var(--dur-slow) var(--ease-snap);
+}
+/* stays in the a11y tree (live region) but takes no room when empty */
+.contact__status:empty { position: absolute; padding: 0; border: 0; animation: none; }
+@keyframes contact-pop { from { transform: rotate(-2deg) scale(.6); opacity: 0; } }
+
+/* comic burst stamped on the card's corner */
+.contact__burst {
+  position: absolute; z-index: var(--z-raised);
+  top: -78px; right: -64px;
+  --burst-size: 196px;
+  pointer-events: none;
+}
+.contact__burst .burst__text { font-size: calc(var(--burst-size) * .19); }
+
+/* ---- elsewhere: chunky link tiles on the blue part of the mesh ---- */
+.contact__side {
+  display: grid; gap: 18px; align-content: start;
+  /* line the "Elsewhere" box up with the card's eyebrow box: border + card padding + numeral + gap */
+  padding-top: calc(var(--bw) + clamp(22px, 3.6vw, 52px) + clamp(52px, 6.5vw, 92px) * .8 + 12px);
+}
+/* same boxed mono eyebrow as SectionHeader's, so the two columns read as one spread */
+.contact__side-label {
+  justify-self: start;
+  padding: 5px 9px;
+  background: var(--paper); color: var(--ink);
+  border: var(--border-sm); box-shadow: 3px 3px 0 var(--shadow-c, var(--ink));
+}
+.contact__links { display: grid; gap: 20px; }
+.contact .contact__link {
+  width: 100%; min-height: 92px;
+  justify-content: space-between; gap: 16px;
+  padding: 14px 14px 14px 22px;
+  text-align: left; text-transform: none; white-space: normal;
+  border-radius: var(--r);
+}
+.contact .contact__link--periwinkle { background: var(--periwinkle); }
+.contact .contact__link--coral { background: var(--coral); }
+.contact__link-text { display: grid; gap: 6px; min-width: 0; }
+.contact__link-name {
+  font: 800 clamp(22px, 2.1vw, 30px)/1 var(--font-sans);
+  letter-spacing: .01em; text-transform: uppercase; color: var(--ink);
+}
+.contact__link-handle {
+  font: 500 12px/1.3 var(--font-mono); letter-spacing: .04em;
+  color: var(--ink);
+}
+.contact__link-arrow {
+  flex: none; display: grid; place-items: center;
+  width: 46px; height: 46px;
+  background: var(--paper); color: var(--ink);
+  border: var(--border-sm); border-radius: var(--r-sm);
+  font: 800 22px/1 var(--font-sans);
+  transition: transform var(--dur) var(--ease-snap);
+}
+.contact .contact__link--paper .contact__link-arrow { background: var(--coral); }
+.contact__link:hover .contact__link-arrow,
+.contact__link:focus-visible .contact__link-arrow { transform: rotate(45deg); }
+
+.contact__where { justify-self: start; margin-top: 10px; }
+.contact__pin { flex: none; width: 13px; height: 17px; fill: var(--coral); stroke: var(--ink); stroke-width: 2; }
+.contact__pin circle { fill: var(--paper); stroke-width: 1.6; }
+
+/* ---- colophon ---- */
+.contact__colophon {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px;
+  margin-top: clamp(64px, 8vw, 112px);
+  padding-block: 22px 30px;
+  border-top: var(--bw-sm) solid var(--on-dark-2);
+  font: 500 var(--fs-xs)/1.5 var(--font-mono);
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--on-dark-2);
+}
+.contact__colophon > span + span::before { content: "/"; margin-right: 18px; color: var(--coral); font-weight: 700; }
+.contact__top {
+  margin-left: auto;
+  padding: 7px 11px;
+  color: var(--on-dark); text-decoration: none;
+  border: var(--bw-sm) solid currentColor; border-radius: var(--r-sm);
+  transition: background-color var(--dur) ease, color var(--dur) ease;
+}
+.contact__top:hover { background: var(--paper); color: var(--ink); border-color: var(--ink); }
+
+/* ---- responsive ---- */
+@media (max-width: 1080px) {
+  .contact__grid { grid-template-columns: minmax(0, 1fr); }
+  .contact__main { margin-right: 12px; }
+  .contact__burst { right: -14px; }
+  .contact__side { padding-top: 16px; }
+  .contact__links { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+  .contact .contact__link { min-height: 96px; padding-left: 16px; gap: 10px; }
+  .contact__link-arrow { width: 38px; height: 38px; font-size: 19px; }
+}
+@media (max-width: 720px) {
+  .contact { padding-top: 96px; }
+  .contact__links { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .contact__burst { --burst-size: 112px; top: -84px; right: -12px; }
+  .contact .contact__link { min-height: 80px; padding-left: 20px; }
+  .contact__link-arrow { width: 44px; height: 44px; }
+  .contact__email-actions .btn { flex: 1 1 auto; }
+  .contact__status { flex-basis: 100%; text-align: center; }
+  .contact__colophon { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .contact__colophon > span + span::before { content: none; }
+  .contact__colophon-type { display: none; }
+  .contact__top { margin: 14px 0 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact__status, .contact__link-arrow { animation: none; transition: none; }
+}
