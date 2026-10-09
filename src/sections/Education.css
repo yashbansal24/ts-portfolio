@@ -1,1 +1,68 @@
-/* Education section styles — BEM-ish: .education__x */
+/* ---------- EDUCATION: compact ivory-2 zone — each degree is a neo-brutal admit ticket ---------- */
+.education { overflow: hidden; }
+.education__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+  gap: clamp(28px, 4vw, 64px);
+  align-items: center;
+}
+.education .education__header { margin-bottom: 0; }
+
+.education__list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(22px, 2.4vw, 32px);
+  list-style: none; margin: 0; padding: 0;
+}
+
+/* ticket = coloured stub | dashed perforation | details */
+.education__ticket {
+  --stub: 104px;
+  position: relative;
+  display: grid; grid-template-columns: var(--stub) minmax(0, 1fr);
+  background: var(--paper); color: var(--blue);
+  border: var(--border); border-radius: var(--r);
+  box-shadow: 6px 6px 0 var(--ink);
+  transform: rotate(-.6deg);
+}
+.education__ticket:nth-child(even) { transform: rotate(.6deg); }
+/* half-moon bites where the perforation meets the top and bottom edges */
+.education__ticket::before, .education__ticket::after {
+  content: ""; position: absolute; left: calc(var(--stub) - 11.5px);
+  width: 20px; height: 20px; border-radius: var(--r-pill);
+  background: var(--ivory-2); border: var(--border);
+}
+.education__ticket::before { top: -13px; clip-path: inset(10px 0 0 0); }
+.education__ticket::after { bottom: -13px; clip-path: inset(0 0 10px 0); }
+
+.education__stub {
+  display: grid; align-content: space-between; gap: 18px;
+  padding: 14px 12px 16px;
+  border-right: 3px dashed var(--ink);
+  border-radius: calc(var(--r) - var(--bw)) 0 0 calc(var(--r) - var(--bw));
+  color: var(--ink);
+}
+.education__ticket--coral .education__stub { background: var(--coral); }
+.education__ticket--periwinkle .education__stub { background: var(--periwinkle); }
+.education__stub-no { font: 500 11px/1.2 var(--font-mono); letter-spacing: .12em; text-transform: uppercase; }
+.education__abbr { font: 400 clamp(34px, 3vw, 44px)/.9 var(--font-serif); letter-spacing: -.02em; overflow-wrap: anywhere; }
+
+.education__body { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; padding: 18px 20px 20px; }
+.education__school { font: 400 clamp(27px, 2.3vw, 34px)/1.02 var(--font-serif); letter-spacing: -.012em; color: var(--blue); }
+.education__degree { font: 700 16px/1.35 var(--font-sans); color: var(--ink); }
+.education__place {
+  margin-top: auto; padding: 4px 8px 3px;
+  background: var(--ivory-2); color: var(--ink);
+  border: var(--border-sm); border-radius: var(--r-sm);
+  font: 500 11px/1.3 var(--font-mono); letter-spacing: .12em; text-transform: uppercase;
+}
+.education__school + .education__degree { margin-bottom: 6px; }
+
+@media (max-width: 1080px) {
+  .education__grid { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 640px) {
+  .education__list { grid-template-columns: minmax(0, 1fr); }
+  .education__ticket { --stub: 88px; }
+  .education__body { padding: 16px 16px 18px; }
+}

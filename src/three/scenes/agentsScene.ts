@@ -240,7 +240,7 @@ const create: SceneFactory<AgentsProps> = (canvas, { container: el, dpr, reduced
   ([[0.27, 0.1, 0.4, softM], [0.22, 0.0, 0.3, softM], [0, -0.22, 0.92, periM]] as Array<[number, number, number, THREE.Material]>).forEach(([x, y, w, m]) => {
     const l = mesh(unit, m, flat); l.scale.set(w, 0.055, 0.02); l.position.set(x, y, 0.042); page.add(l);
   });
-  const PAGE0 = new THREE.Vector3(), PAGE1 = new THREE.Vector3();
+  const PAGE0 = new THREE.Vector3(), PAGE1 = new THREE.Vector3(), PAGE_S = 1.3;
 
   /* ---------------- packets, trails, guide dots, the goal ---------------- */
   const packetG = track(new THREE.SphereGeometry(0.125, 22, 14));
@@ -349,7 +349,7 @@ const create: SceneFactory<AgentsProps> = (canvas, { container: el, dpr, reduced
     // the page ships: drops from the cloud into the middle of the ring
     const ps = composed ? 1 : backOut(clamp01((ct - SHIP_AT) / 0.55)) * (1 - smooth(CYCLE - 0.8, CYCLE - 0.2, ct)) * (ct >= SHIP_AT ? 1 : 0);
     page.visible = ps > 0.01;
-    page.scale.setScalar(Math.max(1e-4, ps));
+    page.scale.setScalar(Math.max(1e-4, ps * PAGE_S));
     page.position.lerpVectors(PAGE0, PAGE1, composed ? 1 : ease(clamp01((ct - SHIP_AT) / 1.1)));
     page.position.y += composed ? 0 : Math.sin(t * 1.2) * 0.04;
     page.rotation.set(-0.1, YAW + (composed ? 0.16 : Math.sin(t * 0.8) * 0.22), 0, 'YXZ');
@@ -426,7 +426,7 @@ const create: SceneFactory<AgentsProps> = (canvas, { container: el, dpr, reduced
     world.rotation.y = 0;
     agents.forEach((a) => { a.g.position.copy(a.pos); a.g.rotation.copy(a.rot); a.g.scale.setScalar(a.scale); });
     hub.position.copy(HUB); hub.scale.setScalar(1);
-    page.position.copy(PAGE1); page.rotation.set(-0.1, YAW, 0, 'YXZ'); page.scale.setScalar(1); page.visible = true;
+    page.position.copy(PAGE1); page.rotation.set(-0.1, YAW, 0, 'YXZ'); page.scale.setScalar(PAGE_S); page.visible = true;
     extras.forEach(({ c, base }) => c.position.copy(base));
     world.updateMatrixWorld(true);
     const box = new THREE.Box3(), pts: THREE.Vector3[] = [];

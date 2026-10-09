@@ -85,10 +85,14 @@
   .slayb__copy { margin-top: clamp(40px, 7vw, 56px); }
 }
 @media (max-width: 720px) {
+  /* tag sits above the stage (in flow) so the goal star never slides under it */
+  .slayb__fig { display: flex; flex-direction: column; }
+  .slayb__figtag { order: -1; position: relative; top: 0; align-self: flex-start; margin-bottom: 4px; }
   .slayb__steps { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
   .slayb__step:nth-child(2)::after { display: none; }
 }
 @media (max-width: 520px) {
+  .slayb__head .sh__title { font-size: clamp(76px, 25vw, 108px); }
   .slayb__stage { height: 380px; }
   .slayb__step { padding: 9px 10px 12px; }
   .slayb__step-label { font-size: 14px; }

@@ -91,9 +91,9 @@ function Certificate({ p, i }: { p: Patent; i: number }) {
     >
       <article className="patents__cert" aria-labelledby={id}>
         <div className="patents__head">
+          <Seal n={i + 1} />
           <p className="patents__kicker eyebrow">United States Patent</p>
           <h3 id={id} className="patents__title">{p.title}</h3>
-          <Seal n={i + 1} />
         </div>
         <dl className="patents__fields">
           <div className="patents__field patents__field--no">
