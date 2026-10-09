@@ -52,7 +52,7 @@
   .hero__body { padding-top: 4px; }
 }
 @media (max-width: 520px) {
-  .hero__canvas { height: 380px; }
+  .hero__canvas { height: 340px; }
   .hero__name { font-size: clamp(64px, 21vw, 96px); }
   .hero__ctas .btn { flex: 1 1 auto; }
   .hero__ctas { gap: 12px; }

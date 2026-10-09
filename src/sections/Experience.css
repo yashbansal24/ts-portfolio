@@ -6,7 +6,7 @@
 
 .experience__sh { margin-bottom: clamp(28px, 3.6vw, 44px); }
 
-/* ---------- tenure rail (decorative twin of the panel dates) ---------- */
+/* ---------- tenure rail (decorative twin of the panel dates; segments carry company names) ---------- */
 .experience__rail { position: relative; padding-bottom: 30px; margin-bottom: clamp(48px, 6vw, 76px); }
 .experience__rail-bar {
   display: flex; min-height: 40px;
@@ -120,8 +120,9 @@
 .experience__now { position: absolute; top: -66px; right: -24px; z-index: var(--z-raised); pointer-events: none; }
 
 /* ---------- responsive ---------- */
-@media (max-width: 1080px) {
-  .experience__seg-name { display: none; }
+@media (max-width: 880px) {
+  /* tighter labels so the shortest tenures still fit their company name */
+  .experience__seg { padding: 0 6px; font-size: 10px; letter-spacing: .04em; }
 }
 @media (max-width: 860px) {
   .experience__item--splash .experience__panel .panel__body { display: flex; }
@@ -132,9 +133,9 @@
 }
 @media (max-width: 720px) {
   .experience__strip { grid-template-columns: minmax(0, 1fr); }
-  .experience__tick:not(.experience__tick--now) { display: none; }
-  .experience__seg:last-child .experience__tick { display: block; }
-  .experience__seg { justify-content: center; padding: 0 4px; }
+  /* too narrow to name every tenure: the dek already lists the path and each panel carries its dates */
+  .experience__rail { display: none; }
+  .experience__sh { margin-bottom: 64px; }
   .experience .experience__panel { transform: rotate(calc(var(--panel-tilt, 0deg) * .6)); }
   .experience__now { top: -44px; right: -6px; }
   .experience__now .burst { --burst-size: 96px; }

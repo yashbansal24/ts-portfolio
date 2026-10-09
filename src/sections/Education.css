@@ -36,7 +36,7 @@
 .education__ticket::after { bottom: -13px; clip-path: inset(0 0 10px 0); }
 
 .education__stub {
-  display: grid; align-content: space-between; gap: 18px;
+  display: grid; align-content: end;
   padding: 14px 12px 16px;
   border-right: 3px dashed var(--ink);
   border-radius: calc(var(--r) - var(--bw)) 0 0 calc(var(--r) - var(--bw));
@@ -44,7 +44,6 @@
 }
 .education__ticket--coral .education__stub { background: var(--coral); }
 .education__ticket--periwinkle .education__stub { background: var(--periwinkle); }
-.education__stub-no { font: 500 11px/1.2 var(--font-mono); letter-spacing: .12em; text-transform: uppercase; }
 .education__abbr { font: 400 clamp(34px, 3vw, 44px)/.9 var(--font-serif); letter-spacing: -.02em; overflow-wrap: anywhere; }
 
 .education__body { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; padding: 18px 20px 20px; }

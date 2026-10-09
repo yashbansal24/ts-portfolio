@@ -1,7 +1,7 @@
 // SCENE 1 — THE IMPOSSIBLE DESK (hero).
 // One of each object: monitor (with keycap staircase into a coral sun behind the glass), keyboard
 // whose keys fly off and dock into ONE server rack, mug under a rain cloud, coral cable knot.
-// Only clouds repeat. Drag / hover turns the desk.
+// Only clouds repeat. The desk sways and floats on its own; drag / hover add a turn on top.
 import * as THREE from 'three';
 import type { SceneFactory } from '../types';
 import { C, addLights, clamp01, createKit, createRenderer, ease, fitCamera, lerp, qbez, rrect, smooth } from '../kit';
@@ -224,6 +224,14 @@ const create: SceneFactory = (canvas, { container: el, dpr, reducedMotion: REDUC
     return { b, x: -0.9 + i * 0.8, z: 0.4 + (i % 2) * 0.5, o: i / 4 };
   });
 
+  /* motion: slow turntable sway + float on their own clocks, so they can ease out while the user drags
+     and pick up again where they left off (no jump). Hover tilt + drag add on top. */
+  const SWAY = 0.55, SWAY_W = (Math.PI * 2) / 18; // ±0.55 rad (≈ ±32°), 18 s period
+  const BOB = 0.07, BOB_W = (Math.PI * 2) / 6.5; //   ±0.07 units, 6.5 s period
+  const HOVER = 0.2; // ± half of this at the canvas edges
+  const AUTO_OUT = 0.35, AUTO_IN = 1.5; // seconds to ease auto-motion out on grab / back in after release
+  let auto = 1, swayT = 0, bobT = 0;
+
   /* interaction: hover tilt + drag turntable */
   let hoverX = 0, drag = 0, dragging = false, lastX = 0, rotY = 0;
   const onMove = (e: PointerEvent) => {
@@ -240,29 +248,48 @@ const create: SceneFactory = (canvas, { container: el, dpr, reducedMotion: REDUC
   el.addEventListener('pointercancel', onEnd);
   el.addEventListener('pointerleave', onLeave);
 
+  // The room behind the glass is laid out along the camera's rays for a desk turned by most of its current angle,
+  // so the coral sun and stairs stay framed in the screen while the desk sways; the remainder still reads as parallax.
+  const up = new THREE.Vector3(0, 1, 0);
+  const portalInv = new THREE.Matrix4();
+  const PORTAL_FOLLOW = 0.85;
+  const followPortal = () => {
+    const a = Math.atan2(Math.sin(rotY), Math.cos(rotY)); // drag can wind past a full turn
+    camL.copy(camera.position).applyAxisAngle(up, -THREE.MathUtils.clamp(a, -0.8, 0.8) * PORTAL_FOLLOW).applyMatrix4(portalInv);
+    layoutPortal();
+  };
+
   const fit = () => {
     const ps: THREE.Vector3[] = [];
     for (const sx of [-1, 1]) for (const sz of [-1, 1]) for (const y of [0, -0.47]) ps.push(new THREE.Vector3(sx * DW / 2, y, sz * DD / 2));
     for (const sx of [-1, 1]) ps.push(new THREE.Vector3(sx * MW / 2, MY + MH / 2 + 0.05, 0.1).applyMatrix4(monitor.matrix));
     ps.push(new THREE.Vector3(3.6, 2.6, -1.7), new THREE.Vector3(2.95, 2.2, 1.3), new THREE.Vector3(-2.85, 2.3, 0.75), new THREE.Vector3(0, -1.2, 2.2), new THREE.Vector3(0.6, 3.2, -0.2));
     const all: THREE.Vector3[] = [];
-    const up = new THREE.Vector3(0, 1, 0);
-    for (const a of [-0.16, 0, 0.16]) for (const p of ps) all.push(p.clone().applyAxisAngle(up, a));
+    // fit the whole sway range (+ hover) and the float, so the moving desk never leaves the canvas
+    const reach = SWAY + HOVER / 2;
+    for (let i = -4; i <= 4; i++) for (const p of ps) for (const dy of [-BOB, BOB]) all.push(p.clone().applyAxisAngle(up, (reach * i) / 4).setY(p.y + dy));
     fitCamera(camera, all, CAM_DIR, new THREE.Vector3(0, 0.8, 0), camera.aspect < 0.9 ? 1.0 : 0.97);
     const ry = world.rotation.y, py = world.position.y;
     world.rotation.y = 0; world.position.y = 0; world.updateMatrixWorld(true);
-    camL.copy(portal.worldToLocal(camera.position.clone()));
+    portalInv.copy(portal.matrixWorld).invert(); // portal frame relative to the (unturned) desk
     world.rotation.y = ry; world.position.y = py; world.updateMatrixWorld(true);
-    layoutPortal();
+    followPortal();
   };
 
   const CYCLE = 18;
   const tmp = new THREE.Vector3();
-  const update = (t: number) => {
-    const target = (REDUCED ? 0 : Math.sin(t * 0.17) * 0.1) + hoverX * 0.35 + drag;
-    rotY += (target - rotY) * (REDUCED ? 1 : 0.06);
+  const update = (t: number, dt: number) => {
+    if (!REDUCED && dt > 0) {
+      auto = dragging ? Math.max(0, auto - dt / AUTO_OUT) : Math.min(1, auto + dt / AUTO_IN);
+      const w = auto * auto * (3 - 2 * auto); // smoothstep: motion slows to a halt / speeds back up
+      swayT += dt * w; bobT += dt * w;
+    }
+    const target = (REDUCED ? 0 : Math.sin(swayT * SWAY_W) * SWAY) + hoverX * HOVER + drag;
+    // frame-rate independent follow (≈ 0.06 per frame at 60 fps); a fixed step when redrawn while paused (dt = 0)
+    rotY += (target - rotY) * (REDUCED ? 1 : dt > 0 ? 1 - Math.exp(-dt * 3.6) : 0.06);
     world.rotation.y = rotY;
-    world.position.y = Math.sin(t * 0.7) * 0.06;
+    world.position.y = REDUCED ? 0 : Math.sin(bobT * BOB_W) * BOB;
+    followPortal();
 
     const ct = t % CYCLE;
     for (const f of flyers) {
@@ -305,8 +332,8 @@ const create: SceneFactory = (canvas, { container: el, dpr, reducedMotion: REDUC
         ? renderer.compileAsync(scene, camera)
         : Promise.resolve(renderer.compile(scene, camera)),
     staticTime: 6.4,
-    render(t) {
-      update(t);
+    render(t, dt) {
+      update(t, dt);
       renderer.render(scene, camera);
     },
     resize(w, h) {
