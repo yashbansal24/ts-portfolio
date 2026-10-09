@@ -38,7 +38,6 @@ export function Skills() {
                 </li>
               );
             })}
-            <li className="skills__space" aria-hidden="true" />
           </ul>
         </div>
       </div>

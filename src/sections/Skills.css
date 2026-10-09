@@ -44,16 +44,7 @@
 .skills__name { font: 800 15px/1.2 var(--font-sans); letter-spacing: .06em; text-transform: uppercase; color: var(--ink); }
 .skills .skills__chips { gap: 9px 7px; }
 
-/* decorative (blank) spacebar */
-.skills__space {
-  grid-column: 3 / span 8;
-  min-height: 46px;
-  background: var(--paper);
-  border: var(--border); border-radius: var(--r);
-  box-shadow: inset 0 -8px 0 rgba(14, 27, 77, .13), 0 5px 0 var(--ink);
-}
-
-/* key widths: a staggered 12-column board (3 rows + spacebar) */
+/* key widths: a staggered 12-column board (3 rows) */
 .skills__key--1 { grid-column: span 8; }
 .skills__key--2 { grid-column: span 4; }
 .skills__key--3 { grid-column: span 4; }
@@ -65,7 +56,7 @@
 /* tablet: a 6-column board so short keys pair with short keys (no dead keycap space) */
 @media (max-width: 1080px) {
   .skills__keys { grid-template-columns: repeat(6, minmax(0, 1fr)); }
-  .skills__keys > .skills__key--1, .skills__space { grid-column: 1 / -1; }
+  .skills__keys > .skills__key--1 { grid-column: 1 / -1; }
   .skills__keys > .skills__key--2, .skills__keys > .skills__key--3 { grid-column: span 3; }
   .skills__keys > .skills__key--4, .skills__keys > .skills__key--7 { grid-column: span 2; }
   .skills__keys > .skills__key--5, .skills__keys > .skills__key--6 { grid-column: span 4; }
@@ -75,5 +66,4 @@
   .skills__keys > .skills__key { grid-column: 1 / -1; }
   .skills__board { box-shadow: 6px 6px 0 var(--ink); }
   .skills__key { gap: 12px; padding: 13px 14px 20px; }
-  .skills__space { min-height: 28px; }  /* reads as a slim spacebar, not an empty card */
 }
