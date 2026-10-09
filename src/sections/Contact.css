@@ -3,6 +3,8 @@
   overflow: hidden;
   padding-block: clamp(84px, 9vw, 132px) 0;
 }
+/* deep-blue under the mesh: if the drifting field ever leaves a sliver uncovered it reads as blue, not page cream */
+.contact.tone-mesh { background-color: var(--blue); }
 
 .contact__grid {
   display: grid;

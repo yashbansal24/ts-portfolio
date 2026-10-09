@@ -10,8 +10,8 @@ export const profile = {
   focus: ['Applied AI & Agentic Systems', 'Distributed Systems', 'AI Platform Engineering'],
   location: 'United Arab Emirates',
   summary:
-    'I build multi-agent systems that run for hours without falling over — and the distributed platforms underneath them. ' +
-    'Eight years across PayPal, H1, Dataloop, Deel and Presight (G42): payments at 25M+ daily users, ' +
+    'I build long-running multi-agent systems that don\'t fall over — and the distributed platforms underneath them. ' +
+    'Since 2018 across PayPal, H1, Dataloop, Deel and Presight (G42): payments at 25M+ daily users, ' +
     'data platforms at terabyte scale, and today, agent harnesses that automate the whole software lifecycle.',
   email: 'yashbansal97@gmail.com',
   links: {
@@ -135,17 +135,17 @@ export type Patent = { number: string; title: string; issued: string; employer: 
 export const patents: Patent[] = [
   {
     number: 'US 10,956,698',
-    title: 'Systems and methods for using machine learning to determine an origin of code',
+    title: 'Systems and methods for using machine learning to determine an origin of a code',
     issued: 'Mar 2021',
     employer: 'PayPal',
-    note: 'Machine learning that traces where a piece of code came from.',
+    note: 'Turns a tracking code into an image a model can read, to tell which carrier issued it.',
   },
   {
-    number: 'US 17393941',
+    number: 'US 11,593,449',
     title: 'Reducing computing calls for webpage load times and resources',
     issued: 'Feb 2023',
     employer: 'PayPal',
-    note: 'Fewer calls, faster pages, lighter infrastructure.',
+    note: 'Maps how people move between pages, finds wasteful repeat data loads and merges them, cutting power use.',
   },
 ];
 
