@@ -1,6 +1,7 @@
 import { useState, type CSSProperties } from 'react';
 import { experience } from '../data/profile';
 import { SectionHeader } from '../components/SectionHeader';
+import { setMotionPaused, useMotionPaused } from '../hooks/useMotionPaused';
 import './Logos.css';
 
 type Org = {
@@ -54,12 +55,21 @@ function Tile({ org, i }: { org: Org; i: number }) {
 
 /** "Organizations I've worked with" — neo-brutal logo tiles in a marquee (pausable; static grid under reduced motion). */
 export function Logos() {
-  const [paused, setPaused] = useState(false);
+  const [localPaused, setPaused] = useState(false);
+  // the site-wide motion switch (Nav) also freezes the track via global.css; keep the label in sync with it
+  const motionPaused = useMotionPaused();
+  const paused = localPaused || motionPaused;
+  const toggle = () => {
+    if (motionPaused) {
+      setMotionPaused(false); // the track cannot play while motion is paused site-wide
+      setPaused(false);
+    } else setPaused((p) => !p);
+  };
   return (
     <section className="logos section tone-paper rule-bottom" id="organizations" aria-labelledby="orgs-title">
       <div className="wrap logos__head">
         <SectionHeader id="orgs-title" num="01" eyebrow={`Logos · ${ORGS.length} organizations`} title={<>Organizations <em>I've worked with</em></>} />
-        <button type="button" className="logos__toggle" onClick={() => setPaused((p) => !p)}>
+        <button type="button" className="logos__toggle" onClick={toggle}>
           <span aria-hidden="true">{paused ? '▶' : '❚❚'}</span> {paused ? 'Play' : 'Pause'} logos
         </button>
       </div>

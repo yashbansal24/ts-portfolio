@@ -5,6 +5,7 @@ import { Button } from '../components/Button';
 import { MeshGradient } from '../components/MeshGradient';
 import { SectionHeader } from '../components/SectionHeader';
 import { Sticker } from '../components/Sticker';
+import { useMonthIndex } from '../hooks/useMonthIndex';
 import './Contact.css';
 
 type CopyState = 'idle' | 'copied' | 'manual';
@@ -70,7 +71,7 @@ export function Contact() {
   const [copy, setCopy] = useState<CopyState>('idle');
   const emailRef = useRef<HTMLSpanElement>(null);
   const timer = useRef<number | undefined>(undefined);
-  const year = new Date().getFullYear();
+  const year = Math.floor(useMonthIndex() / 12);
 
   useEffect(() => () => window.clearTimeout(timer.current), []);
 
@@ -93,7 +94,7 @@ export function Contact() {
               num="09"
               eyebrow="Contact · Back page"
               title={<>Pull up a chair <em>at the desk.</em></>}
-              dek="Agents that run for hours, platforms that hold them up, or a product that needs both: tell me what you are building."
+              dek="Multi-agent systems, the platforms under them, or a product that needs both: tell me what you are building."
             />
 
             <div className="contact__email">
@@ -137,7 +138,6 @@ export function Contact() {
                     <Handle url={l.href} />
                   </span>
                   <span className="contact__link-arrow" aria-hidden="true">↗</span>
-                  <span className="sr-only"> (opens in a new tab)</span>
                 </Button>
               </li>
             ))}

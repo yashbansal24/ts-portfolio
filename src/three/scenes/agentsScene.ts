@@ -450,6 +450,12 @@ const create: SceneFactory<AgentsProps> = (canvas, { container: el, dpr, reduced
 
   return {
     startTime: 0,
+    // link shader programs before the first frame: off the main thread where KHR_parallel_shader_compile exists
+    // (checked with has() — get() logs a warning when it is missing), otherwise one synchronous compile
+    prepare: () =>
+      renderer.extensions.has('KHR_parallel_shader_compile')
+        ? renderer.compileAsync(scene, camera)
+        : Promise.resolve(renderer.compile(scene, camera)),
     staticTime: 8.4,
     render(t) {
       update(t);

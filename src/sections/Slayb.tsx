@@ -128,7 +128,7 @@ export function Slayb() {
             <ChipList items={slayb.tech} label={`${slayb.name} focus`} size="sm" tone="periwinkle" className="slayb__chips" />
             <div className="slayb__cta">
               <Button href={slayb.url} variant="dark" size="lg">
-                Visit {slayb.urlLabel}<span aria-hidden="true"> ↗</span><span className="sr-only"> (opens in a new tab)</span>
+                Visit {slayb.urlLabel}<span aria-hidden="true"> ↗</span>
               </Button>
             </div>
           </Card>

@@ -191,7 +191,7 @@ Kit exports: `C` (palette ints), `clamp01 smooth ease lerp qbez`, `createRendere
 | 4 | experience | **solid deep blue** (`tone-blue`), roles as a strip of `ComicPanel`s (paper/peach panels, caption boxes for dates/company), periwinkle/coral halftone backdrop | comic |
 | 5 | slayb | **rich gradient mesh** `preset="slayb"` + 3D agents scene (lazy), copy on a paper card | mesh + 3D |
 | 6 | projects | **ivory**, cards with halftone hard-shadows, taglines in `SpeechBubble`s | comic-lite |
-| 7 | patents | **comic origin-story panel(s)** (ComicPanel multi-panel grid) + "PATENTED!" `Burst`, on paper or ivory-2 | comic |
+| 7 | patents | **comic origin-story panel(s)** (ComicPanel multi-panel grid) + "PATENTED!" `Burst`, on `tone-blue` with periwinkle Halftone at 0.25 (breaks the paper run between Projects and Skills) | comic |
 | 8 | skills | **paper**, chips grouped in Cards | neo-brutal |
 | 9 | education | **paper/ivory-2** (alternate with skills; separate with `rule-top`) | neo-brutal |
 | 10 | contact (footer) | **bold gradient mesh** `preset="contact"` (coral → blue), ivory text, paper/coral buttons | mesh |

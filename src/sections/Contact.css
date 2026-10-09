@@ -138,8 +138,9 @@
 }
 .contact__colophon > span + span::before { content: "/"; margin-right: 18px; color: var(--coral); font-weight: 700; }
 .contact__top {
+  display: inline-flex; align-items: center; min-height: 44px;
   margin-left: auto;
-  padding: 7px 11px;
+  padding: 0 14px;
   color: var(--on-dark); text-decoration: none;
   border: var(--bw-sm) solid currentColor; border-radius: var(--r-sm);
   transition: background-color var(--dur) ease, color var(--dur) ease;

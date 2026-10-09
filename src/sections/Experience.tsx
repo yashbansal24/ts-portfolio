@@ -7,6 +7,7 @@ import { Burst } from '../components/Burst';
 import { SpeechBubble, type BubbleTone } from '../components/SpeechBubble';
 import { ChipList, type ChipTone } from '../components/Chip';
 import { Button } from '../components/Button';
+import { useMonthIndex } from '../hooks/useMonthIndex';
 import './Experience.css';
 
 /** Highlights shown before "Show all". */
@@ -14,14 +15,14 @@ const TOP = 3;
 
 /* ---------- dates: "Nov 2025" / "Present" → month index (derived from profile.ts only) ---------- */
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-const today = new Date();
 const isPresent = (s: string) => /present/i.test(s);
-function monthIndex(s: string): number {
-  if (isPresent(s)) return today.getFullYear() * 12 + today.getMonth();
+/** `now` = current month index (useMonthIndex), so prerender and hydration agree. */
+function monthIndex(s: string, now: number): number {
+  if (isPresent(s)) return now;
   const [m, y] = s.split(' ');
   return Number(y) * 12 + Math.max(0, MONTHS.indexOf(m.slice(0, 3)));
 }
-const yearOf = (s: string) => (isPresent(s) ? today.getFullYear() : Number(s.split(' ')[1]));
+const yearOf = (s: string, now: number) => (isPresent(s) ? Math.floor(now / 12) : Number(s.split(' ')[1]));
 const pad = (n: number) => String(n).padStart(2, '0');
 /** Instrument Serif's "1" reads as "l" ("H1" → "Hl"), so digit runs in names are set in the sans. */
 const nameNodes = (name: string) =>
@@ -35,7 +36,6 @@ const word = (n: number) => WORDS[n] ?? String(n);
 
 const latest = experience[0];
 const origin = experience[experience.length - 1];
-const years = Math.floor((monthIndex('Present') - monthIndex(origin.start)) / 12);
 
 /* ---------- look per panel (position in the strip, not tied to a company) ---------- */
 type Look = { tone: ComicPanelTone; cap: 'paper' | 'peach' | 'coral'; bubble: BubbleTone; chip: ChipTone; tilt: number };
@@ -54,18 +54,18 @@ function beatOf(i: number, n: number) {
 }
 
 /** Proportional tenure rail (newest on the left, like the strip). Decorative: every date is also in the panels. */
-function Rail() {
+function Rail({ now }: { now: number }) {
   return (
     <div className="experience__rail" aria-hidden="true">
       <div className="experience__rail-bar">
         {experience.map((r, i) => {
-          const months = Math.max(1, monthIndex(r.end) - monthIndex(r.start));
+          const months = Math.max(1, monthIndex(r.end, now) - monthIndex(r.start, now));
           const tone = i === 0 && isPresent(r.end) ? 'coral' : LOOKS[i % LOOKS.length].tone;
           return (
             <span key={r.company} className={`experience__seg experience__seg--${tone}`} style={{ flexGrow: months } as CSSProperties}>
               <b className="experience__seg-no">{pad(i + 1)}</b>
               <span className="experience__seg-name">{r.company}</span>
-              <span className="experience__tick">{yearOf(r.start)}</span>
+              <span className="experience__tick">{yearOf(r.start, now)}</span>
               {i === 0 && <span className="experience__tick experience__tick--now">Now</span>}
             </span>
           );
@@ -152,6 +152,8 @@ function RolePanel({ role, index, total }: { role: Role; index: number; total: n
 
 /** Experience — deep-blue comic zone: one ComicPanel per role in a flashback strip (newest first), numbered and railed. */
 export function Experience() {
+  const now = useMonthIndex();
+  const years = Math.floor((now - monthIndex(origin.start, now)) / 12);
   return (
     <section className="experience section tone-blue" id="experience" aria-labelledby="experience-title">
       <Halftone tone="periwinkle" density="coarse" fade="up" opacity={0.2} />
@@ -162,10 +164,10 @@ export function Experience() {
           num="03"
           eyebrow={`Experience · since ${origin.start.split(' ')[1]}`}
           title={<>{word(experience.length)} desks, <em>{word(years).toLowerCase()} years.</em></>}
-          dek={<>From {origin.company} in {yearOf(origin.start)} to {latest.company}{latest.companyNote ? ` (${latest.companyNote})` : ''} today. Read the strip newest panel first.</>}
+          dek={<>From {origin.company} in {yearOf(origin.start, now)} to {latest.company}{latest.companyNote ? ` (${latest.companyNote})` : ''} today. Read the strip newest panel first.</>}
           className="experience__sh"
         />
-        <Rail />
+        <Rail now={now} />
         <ol className="experience__strip" role="list">
           {experience.map((r, i) => (
             <RolePanel key={r.company} role={r} index={i} total={experience.length} />

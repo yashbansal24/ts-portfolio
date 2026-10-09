@@ -5,7 +5,7 @@
 .logos__head .sh__title { font-size: clamp(38px, 5vw, 72px); }
 .logos__toggle {
   display: inline-flex; align-items: center; gap: 8px; margin-bottom: clamp(24px, 3vw, 36px);
-  min-height: 40px; padding: 0 12px;
+  min-height: 44px; padding: 0 12px;
   background: var(--paper); color: var(--ink);
   border: var(--border-sm); border-radius: var(--r-sm); box-shadow: var(--shadow-sm);
   font: 500 12px/1 var(--font-mono); letter-spacing: .1em; text-transform: uppercase; cursor: pointer;
