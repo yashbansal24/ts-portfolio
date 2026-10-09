@@ -76,3 +76,8 @@
   .logos__head .sh { margin-bottom: 12px; }
   .logos__toggle { margin-bottom: 18px; }
 }
+/* reduced motion on 360–400px phones: shrink tiles so the wrapped list fits two per row */
+@media (prefers-reduced-motion: reduce) and (max-width: 400px) {
+  .logos__list { column-gap: 12px; }
+  .logos__tile { width: 150px; height: 84px; }
+}

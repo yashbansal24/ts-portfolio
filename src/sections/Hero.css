@@ -1,5 +1,5 @@
 /* ---------- HERO: light mesh backdrop + 3D desk + neo-brutal UI ---------- */
-.hero { padding-block: clamp(28px, 4vw, 52px) clamp(56px, 7vw, 96px); overflow: hidden; border-bottom: 0; }
+.hero { padding-block: clamp(20px, 1.7vw, 24px) clamp(56px, 7vw, 96px); overflow: hidden; border-bottom: 0; }
 .hero__grid {
   display: grid;
   grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
@@ -7,14 +7,14 @@
   grid-template-rows: auto 1fr;
   column-gap: clamp(24px, 3vw, 48px);
 }
-.hero__head { grid-area: head; padding-top: clamp(12px, 3vw, 36px); }
-.hero__body { grid-area: body; align-self: start; padding-top: 26px; }
+.hero__head { grid-area: head; padding-top: clamp(4px, .6vw, 8px); }
+.hero__body { grid-area: body; align-self: start; padding-top: 14px; }
 .hero__stage { grid-area: stage; position: relative; margin: 0; }
 
 /* issue line */
 .hero__issue {
   display: flex; flex-wrap: wrap; gap: 6px 16px;
-  padding-bottom: 14px; margin-bottom: 18px;
+  padding-bottom: 14px; margin-bottom: 14px;
   border-bottom: var(--border);
   color: var(--ink);
 }
@@ -31,14 +31,18 @@
 .hero__title { margin-top: 22px; font: 800 clamp(19px, 1.9vw, 25px)/1.2 var(--font-sans); letter-spacing: -.005em; color: var(--ink); }
 .hero__focus { margin-top: 8px; font: 500 15px/1.5 var(--font-sans); color: var(--blue-2); }
 
-.hero__pitch { margin-top: 24px; max-width: 30ch; font: 400 clamp(23px, 2.1vw, 30px)/1.25 var(--font-serif); color: var(--blue); }
-.hero__ctas { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+.hero__pitch { margin-top: 20px; max-width: 30ch; font: 400 clamp(23px, 2.1vw, 30px)/1.25 var(--font-serif); color: var(--blue); }
+.hero__ctas { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 22px; }
 
 /* stage */
-.hero__canvas { height: 660px; cursor: grab; }
+.hero__canvas { height: 660px; }
 /* soften where the floating desk's ground shadow meets the canvas edge */
 .hero__canvas .three-stage__canvas { -webkit-mask-image: linear-gradient(to bottom, #000 86%, transparent 100%); mask-image: linear-gradient(to bottom, #000 86%, transparent 100%); }
-.hero__canvas:active { cursor: grabbing; }
+/* grab cursor + drag hint only once the scene is live; the static SVG fallback is not interactive */
+.hero__canvas.three-stage--ready { cursor: grab; }
+.hero__canvas.three-stage--ready:active { cursor: grabbing; }
+.hero__canvas.three-stage--fallback,
+.hero__canvas.three-stage--fallback:active { cursor: default; }
 .hero__fig { position: absolute; z-index: var(--z-overlay); pointer-events: none; }
 .hero__fig--tag { top: 14px; left: 0; max-width: none; transform: rotate(-1.5deg); }
 .hero__fig--tag .figcap__label { white-space: nowrap; }
@@ -48,11 +52,19 @@
   position: absolute; right: 0; bottom: 8px; z-index: var(--z-overlay);
   padding: 4px 8px; background: var(--paper); color: var(--ink);
   border: var(--border-sm); pointer-events: none;
+  opacity: 0; transition: opacity var(--dur-slow) var(--ease-out);
 }
+.hero__canvas.three-stage--ready ~ .hero__hint { opacity: 1; }
+.hero__canvas.three-stage--fallback ~ .hero__hint { display: none; }
 
 
 @media (max-width: 1100px) {
   .hero__canvas { height: 560px; }
+}
+/* 2-column hero with a narrow left column: keep the three CTAs on one row */
+@media (min-width: 901px) and (max-width: 1240px) {
+  .hero__ctas { gap: 10px; }
+  .hero__ctas .btn--lg { flex: 1 1 auto; min-height: 52px; padding-inline: 16px; font-size: 16px; }
 }
 @media (max-width: 900px) {
   .hero__grid { grid-template-columns: minmax(0, 1fr); grid-template-areas: "head" "stage" "body"; grid-template-rows: auto; }

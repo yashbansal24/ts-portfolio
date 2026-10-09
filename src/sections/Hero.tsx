@@ -7,7 +7,11 @@ import { Tape } from '../components/Tape';
 import { ThreeCanvas } from '../three/ThreeCanvas';
 import './Hero.css';
 
-const loadDesk = () => import('../three/scenes/deskScene');
+// Start fetching three.js + the desk scene as soon as this module runs, in parallel with first paint,
+// instead of waiting for ThreeCanvas's IntersectionObserver. Mounting is still gated by the observer.
+const deskModule = typeof window !== 'undefined' ? import('../three/scenes/deskScene') : null;
+deskModule?.catch(() => {}); // the loader may never be called (no WebGL); don't surface an unhandled rejection
+const loadDesk = () => deskModule ?? import('../three/scenes/deskScene');
 
 // First sentence of the summary is the pitch.
 const now = experience[0];
