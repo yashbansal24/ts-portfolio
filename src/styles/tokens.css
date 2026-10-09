@@ -1,5 +1,63 @@
 /* Design tokens — "The Impossible Desk", neo-brutalist edition.
    Every colour, border, shadow, size and timing the site uses lives here. */
+
+/* ---- self-hosted fonts (public/fonts, latin subset, OFL — see public/fonts/OFL.txt) ----
+   Same origin, preloaded in index.html (Inter Tight + both Instrument Serif styles), so no render-blocking
+   third-party CSS. Paths are stable: if a file changes, rename it (Vercel caches /fonts for 30 days). */
+@font-face {
+  font-family: 'Instrument Serif'; font-style: normal; font-weight: 400; font-display: swap;
+  src: url('/fonts/instrument-serif-latin-400.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Instrument Serif'; font-style: italic; font-weight: 400; font-display: swap;
+  src: url('/fonts/instrument-serif-latin-400-italic.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Inter Tight'; font-style: normal; font-weight: 100 900; font-display: swap;
+  src: url('/fonts/inter-tight-latin-wght.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* mono: 500 for eyebrows/captions + a real 700 (600/700 used to be faux-bolded from 500) */
+@font-face {
+  font-family: 'JetBrains Mono'; font-style: normal; font-weight: 500; font-display: swap;
+  src: url('/fonts/jetbrains-mono-latin-500.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'JetBrains Mono'; font-style: normal; font-weight: 700; font-display: swap;
+  src: url('/fonts/jetbrains-mono-latin-700.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Bangers'; font-style: normal; font-weight: 400; font-display: swap;
+  src: url('/fonts/bangers-latin-400.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Metric-matched fallbacks (capsize xWidthAvg + vertical metrics): until the webfonts swap in, Arial / Times
+   (or their metric clones Liberation / Arimo / Tinos) take the same space, so the swap does not reflow the page. */
+@font-face {
+  font-family: 'Inter Tight Fallback'; font-weight: 100 599;
+  src: local('Arial'), local('ArialMT'), local('Liberation Sans'), local('LiberationSans'), local('Arimo');
+  size-adjust: 96.39%; ascent-override: 100.51%; descent-override: 25.03%; line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Inter Tight Fallback'; font-weight: 600 900;
+  src: local('Arial Bold'), local('Arial-BoldMT'), local('Liberation Sans Bold'), local('LiberationSans-Bold'), local('Arimo Bold');
+  size-adjust: 98.17%; ascent-override: 98.68%; descent-override: 24.57%; line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Instrument Serif Fallback'; font-style: normal;
+  src: local('Times New Roman'), local('TimesNewRomanPSMT'), local('Liberation Serif'), local('LiberationSerif'), local('Tinos');
+  size-adjust: 83.94%; ascent-override: 117.94%; descent-override: 36.93%; line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Instrument Serif Fallback'; font-style: italic;
+  src: local('Times New Roman Italic'), local('TimesNewRomanPS-ItalicMT'), local('Liberation Serif Italic'), local('LiberationSerif-Italic'), local('Tinos Italic');
+  size-adjust: 87.95%; ascent-override: 112.57%; descent-override: 35.25%; line-gap-override: 0%;
+}
 :root {
   /* ---- palette ---- */
   --ivory: #F7F1E5;        /* page background */
@@ -17,8 +75,8 @@
   --on-dark-2: #C9D2F0;    /* muted text on --blue (9.0:1) */
 
   /* ---- type ---- */
-  --font-serif: 'Instrument Serif', 'Times New Roman', Georgia, serif;
-  --font-sans: 'Inter Tight', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-serif: 'Instrument Serif', 'Instrument Serif Fallback', 'Times New Roman', Georgia, serif;
+  --font-sans: 'Inter Tight', 'Inter Tight Fallback', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
   --font-comic: 'Bangers', 'Impact', 'Arial Black', sans-serif; /* bursts / onomatopoeia ONLY */
 

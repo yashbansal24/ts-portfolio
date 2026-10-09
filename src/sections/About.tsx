@@ -9,10 +9,11 @@ import type { HalftoneTone } from '../components/Halftone';
 import { prefersReducedMotion } from '../hooks/useReducedMotion';
 import './About.css';
 
-/* ---------- manifesto: profile.summary split into its pitch + its record ---------- */
+/* ---------- manifesto: profile.summary minus its first sentence (the hero already shows that pitch) ---------- */
 const cut = profile.summary.indexOf('. ') + 1;
-const pitch = profile.summary.slice(0, cut);
 const record = profile.summary.slice(cut).trim();
+/** The record is set in Instrument Serif, whose "1" reads as "l" ("H1" → "Hl"), so digit runs are set in the sans. */
+const recordNodes = record.split(/(\d+)/).map((part, i) => (i % 2 ? <span key={i} className="about__digits">{part}</span> : part));
 const initials = `${profile.firstName[0]}${profile.lastName[0]}`;
 
 /* ---------- stats → comic panels ----------
@@ -92,7 +93,7 @@ function StatPanel({ s, i }: { s: Stat; i: number }) {
           <div className="about__impact-art">
             <ActionLines />
             <span className="about__pop">
-              <Burst text={`${s.value.replace(/\+$/, '')}!`} tone="paper" size={210} rotate={-10} spikes={14} />
+              <Burst text="SHIPPED!" tone="paper" size={210} rotate={-10} spikes={14} />
             </span>
           </div>
           <div className="about__impact-copy">{fact}{context}</div>
@@ -189,7 +190,7 @@ export function About() {
               id="about-title"
               num="02"
               eyebrow="About · Manifesto"
-              title={<>Agents that run for hours. <em>Platforms that hold them up.</em></>}
+              title={<>Long-running agents. <em>Platforms that hold them up.</em></>}
             />
             <div className="about__focus">
               <p className="about__focus-label eyebrow">Focus</p>
@@ -202,8 +203,7 @@ export function About() {
           <figure className="about__manifesto">
             <p className="about__narration">Meanwhile, in the {profile.location}…</p>
             <SpeechBubble as="blockquote" side="bottom-left" tone="paper" className="about__bubble">
-              <p className="about__pitch">{pitch}</p>
-              <p className="about__record">{record}</p>
+              <p className="about__record">{recordNodes}</p>
             </SpeechBubble>
             <figcaption className="about__speaker">
               <span className="about__avatar" aria-hidden="true">{initials}</span>

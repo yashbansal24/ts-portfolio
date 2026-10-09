@@ -4,24 +4,35 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Yash Bansal — Staff Software Engineer</title>
-    <meta name="description" content="Yash Bansal, Staff Software Engineer in the UAE. I build multi-agent systems that run for hours without falling over — and the distributed platforms underneath them. Eight years across PayPal, H1, Dataloop, Deel and Presight (G42)." />
+    <meta name="description" content="Yash Bansal, Staff Software Engineer (UAE): multi-agent systems that run for hours, and the platforms underneath. PayPal, H1, Dataloop, Deel, Presight (G42)." />
     <meta name="author" content="Yash Bansal" />
     <meta name="theme-color" content="#F7F1E5" />
     <link rel="canonical" href="https://www.theyashbansal.com/" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Yash Bansal" />
     <meta property="og:title" content="Yash Bansal — Staff Software Engineer" />
     <meta property="og:description" content="Applied AI & agentic systems, distributed systems. Multi-agent systems that run for hours — and the platforms underneath them." />
     <meta property="og:url" content="https://www.theyashbansal.com/" />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content="https://www.theyashbansal.com/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Yash Bansal, Staff Software Engineer: a clay 3D desk scene beside the headline on an ivory page." />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Yash Bansal — Staff Software Engineer" />
     <meta name="twitter:description" content="Applied AI & agentic systems, distributed systems. Multi-agent systems that run for hours — and the platforms underneath them." />
+    <meta name="twitter:image" content="https://www.theyashbansal.com/og.png" />
+    <meta name="twitter:image:alt" content="Yash Bansal, Staff Software Engineer: a clay 3D desk scene beside the headline on an ivory page." />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bangers&family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+    <!-- self-hosted fonts (@font-face in src/styles/tokens.css): preload the faces above the fold -->
+    <link rel="preload" href="/fonts/inter-tight-latin-wght.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/instrument-serif-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/instrument-serif-latin-400-italic.woff2" as="font" type="font/woff2" crossorigin />
+
+    <!-- restore the visitor's "Pause motion" choice before first paint (see src/hooks/useMotionPaused.ts) -->
+    <script>try{if(localStorage.getItem('motion')==='paused')document.documentElement.dataset.motion='paused'}catch(e){}</script>
   </head>
   <body>
     <div id="root"></div>

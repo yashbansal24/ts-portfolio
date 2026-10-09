@@ -79,17 +79,16 @@
 }
 .experience__digits { font-family: var(--font-sans); font-weight: 500; font-size: .86em; letter-spacing: -.03em; }
 .experience__note {
-  display: inline-block; vertical-align: .55em;
-  margin-left: 12px; padding: 4px 7px 3px;
+  display: inline-block; vertical-align: .9em;
+  margin-left: 12px; padding: 5px 9px 4px;
   border: var(--border-sm); border-radius: var(--r-sm);
-  background: var(--paper); color: var(--ink);
+  background: var(--peach); color: var(--ink);
   box-shadow: 2px 2px 0 var(--ink);
-  font: 500 11px/1.1 var(--font-mono); letter-spacing: .1em; text-transform: uppercase;
+  font: 500 13px/1.1 var(--font-mono); letter-spacing: .1em; text-transform: uppercase;
   white-space: nowrap;
   transform: rotate(-3deg);
 }
 .panel--paper .experience__digits { font-family: var(--font-sans); font-weight: 500; font-size: .86em; letter-spacing: -.03em; }
-.experience__note { background: var(--peach); }
 .experience__title {
   margin-top: 10px;
   font: 800 15px/1.3 var(--font-sans); letter-spacing: .005em;
@@ -131,23 +130,24 @@
 .experience__item--splash .experience__detail { margin-top: 6px; height: 100%; }
 .experience__item--splash .experience__hl { font-size: 16px; }
 .experience__item--splash .experience__digits { font-family: var(--font-sans); font-weight: 500; font-size: .86em; letter-spacing: -.03em; }
-.experience__note { font-size: 13px; padding: 5px 9px 4px; vertical-align: .9em; }
 /* Ben-Day dots fill the splash's left column (behind the name + bubble), never behind the highlights */
 .experience__splash-dots { inset: 0 auto 0 0; width: 46%; }
 
-.experience__now { position: absolute; top: -50px; right: -14px; z-index: var(--z-raised); pointer-events: none; }
+.experience__now { position: absolute; top: -66px; right: -24px; z-index: var(--z-raised); pointer-events: none; }
 
 /* ---------- responsive ---------- */
 @media (max-width: 1080px) {
   .experience__seg-name { display: none; }
 }
 @media (max-width: 860px) {
-  .experience__strip { grid-template-columns: minmax(0, 1fr); }
   .experience__item--splash .experience__panel .panel__body { display: flex; }
   .experience__item--splash .experience__detail { margin-top: 22px; height: auto; }
   .experience__splash-dots { inset: 0 0 auto 25%; width: auto; height: 230px; }
+  /* columns are ~320–360px from here down: a wrapped note would ride up into the name's descenders, so it gets its own line */
+  .experience__note { display: table; margin: 10px 0 0; vertical-align: baseline; }
 }
 @media (max-width: 720px) {
+  .experience__strip { grid-template-columns: minmax(0, 1fr); }
   .experience__tick:not(.experience__tick--now) { display: none; }
   .experience__seg:last-child .experience__tick { display: block; }
   .experience__seg { justify-content: center; padding: 0 4px; }

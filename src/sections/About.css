@@ -44,8 +44,8 @@
   color: var(--blue);
 }
 .about__bubble .bubble__tail { left: 34px; }
-.about__pitch { font: 400 clamp(23px, 1.9vw, 29px)/1.18 var(--font-serif); color: var(--blue); letter-spacing: -.005em; }
-.about__record { margin-top: 14px; font: 500 var(--fs-base)/1.55 var(--font-sans); color: var(--blue-2); }
+.about__record { font: 400 clamp(21px, 1.7vw, 26px)/1.25 var(--font-serif); color: var(--blue); letter-spacing: -.005em; }
+.about__digits { font-family: var(--font-sans); font-weight: 500; font-size: .86em; letter-spacing: -.03em; }
 
 .about__speaker { display: flex; align-items: center; gap: 12px; padding-left: 14px; color: var(--ink); }
 .about__avatar {
@@ -115,7 +115,7 @@
 .about__impact-copy { container-type: inline-size; display: flex; flex-direction: column; gap: 12px; }
 .about__impact-copy .about__num { font-size: clamp(58px, 40cqi, 112px); }
 .about__impact-art { position: relative; display: grid; place-items: center; min-height: 200px; }
-.about__impact .burst { --burst-size: clamp(170px, 16vw, 228px); --burst-fit: .25; }
+.about__impact .burst { --burst-size: clamp(170px, 16vw, 228px); --burst-fit: .17; }
 .about__impact-art--sm .burst { --burst-size: clamp(150px, 14vw, 200px); --burst-fit: .15; }
 .about__panel.panel--periwinkle .about__rays { opacity: .5; }
 
