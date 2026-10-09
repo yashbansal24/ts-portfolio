@@ -6,5 +6,9 @@
   opacity: 0; transition: opacity var(--dur-slow) var(--ease-out);
 }
 .three-stage--ready .three-stage__canvas { opacity: 1; }
-.three-stage__fallback { position: absolute; inset: 0; display: grid; place-items: center; }
+.three-stage__fallback {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  transition: opacity var(--dur-slow) var(--ease-out);
+}
+.three-stage--ready:not(.three-stage--fallback) .three-stage__fallback { opacity: 0; pointer-events: none; }
 .three-stage__fallback > svg { width: 86%; height: auto; }

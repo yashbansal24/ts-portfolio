@@ -165,7 +165,8 @@ export function ThreeCanvas<P = unknown>({ factory, loader, lazyMargin = '600px 
       style={style}
       {...a11y}
     >
-      {failed && <div className="three-stage__fallback">{fallback}</div>}
+      {/* The fallback doubles as the loading placeholder; it fades out once the first frame is ready. */}
+      {fallback && <div className="three-stage__fallback">{fallback}</div>}
       {children}
     </div>
   );
