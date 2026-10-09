@@ -212,5 +212,90 @@ export type Project = {
   featured?: boolean;
 };
 
-// Filled in from the GitHub research pass.
-export const projects: Project[] = [];
+// Slayb is from the résumé; the rest are verified against each repository's code and README.
+export const projects: Project[] = [
+  {
+    name: 'Slayb',
+    tagline: 'A live agentic AI platform with 20+ paying customers.',
+    description:
+      'Describe a goal and a coordinated team of agents carries it out. Slayb builds web apps and websites, and makes designs, data visualizations and slide decks on one platform. Its collaborative execution is inspired by MiroFish: many agents working on shared goals across multi-step workflows.',
+    tech: ['Multi-agent orchestration', 'Generative AI', 'Goal-driven agents', 'Product engineering'],
+    url: 'https://slayb.tech',
+    urlLabel: 'slayb.tech',
+    featured: true,
+  },
+  {
+    name: 'Legal Intel Dashboard',
+    tagline: 'Upload contracts in bulk, then ask them questions in plain English.',
+    description:
+      'A full-stack legal documents app. Bulk PDF/DOCX upload, metadata extraction (agreement type, governing law, geography, industry), natural-language questions translated into database filters, and a charts dashboard. Production touches: rate limiting, request IDs, security headers, health probes and Prometheus metrics.',
+    tech: ['FastAPI', 'SQLModel', 'React', 'TypeScript', 'TanStack Query', 'Prometheus', 'Docker'],
+    url: 'https://github.com/yashbansal24/legal-intel-dashboard',
+    urlLabel: 'legal-intel-dashboard',
+    year: '2025',
+  },
+  {
+    name: 'Vehicle Detection & Counting',
+    tagline: 'Counting traffic with classical computer vision.',
+    description:
+      'Detects moving vehicles in traffic video and overlays a live per-frame count. Uses MOG2 background subtraction, morphological cleanup with shadow removal, and connected-component analysis to box each vehicle.',
+    tech: ['Python', 'OpenCV', 'NumPy'],
+    url: 'https://github.com/yashbansal24/Vehicle_Detection_and_Counting',
+    urlLabel: 'Vehicle_Detection_and_Counting',
+    stars: 8,
+    year: '2018',
+  },
+  {
+    name: 'Kafka Producer–Consumer',
+    tagline: 'An event pipeline from a public API into MongoDB.',
+    description:
+      'A TypeScript publisher pulls city street data from a government open-data API and streams it through Kafka. A consumer persists it to MongoDB via Prisma. The local stack runs in Docker Compose: Redpanda, its console, MongoDB, SingleStore and RabbitMQ.',
+    tech: ['TypeScript', 'Node.js', 'Kafka', 'Prisma', 'MongoDB', 'Docker Compose'],
+    url: 'https://github.com/yashbansal24/producer-consumer-nodejs-ts',
+    urlLabel: 'producer-consumer-nodejs-ts',
+    year: '2023',
+  },
+  {
+    name: 'Fuzzy Dietary Clustering',
+    tagline: 'Fuzzy logic that plans a meal.',
+    description:
+      'Turns nutrients into triangular fuzzy numbers, clusters foods with fuzzy C-means across several cluster counts, then builds a diet plan from the best calorie cluster with a 0/1 knapsack. Ships with a Tkinter GUI.',
+    tech: ['Python', 'scikit-fuzzy', 'NumPy', 'Tkinter'],
+    url: 'https://github.com/yashbansal24/Fuzzy_Based_Dietary_Clustering',
+    urlLabel: 'Fuzzy_Based_Dietary_Clustering',
+    stars: 5,
+    year: '2017',
+  },
+  {
+    name: 'Vector Space Search Engine',
+    tagline: 'Retrieval before RAG: tf-idf, autocorrect and voice.',
+    description:
+      'A team-built ranked-retrieval engine over the Sherlock Holmes stories. It uses an inverted index with tf-idf weighting, heap-based ranking, Levenshtein autocorrect for query terms, and spoken queries via speech-to-text.',
+    tech: ['Python', 'NLTK', 'Information retrieval', 'Speech recognition'],
+    url: 'https://github.com/yashbansal24/Vector_space_model',
+    urlLabel: 'Vector_space_model',
+    stars: 3,
+    year: '2017',
+  },
+  {
+    name: 'PageRank',
+    tagline: "Google's original idea, by power iteration.",
+    description:
+      'PageRank in C++ on a directed graph of 6,301 nodes and 20,777 edges. Teleportation handles dead ends and spider traps, and Python plots show the convergence and the ranked graph.',
+    tech: ['C++', 'Python', 'networkx'],
+    url: 'https://github.com/yashbansal24/PAGERANK_GOOGLE',
+    urlLabel: 'PAGERANK_GOOGLE',
+    stars: 2,
+    year: '2017',
+  },
+  {
+    name: 'SVD & CUR Recommenders',
+    tagline: 'Four ways to guess what you will watch next.',
+    description:
+      'Compares user-user collaborative filtering, a baseline estimator, SVD (full and 90% energy) and CUR decomposition on about 1M movie ratings. Each method is scored on RMSE, Spearman correlation, precision@100 and runtime.',
+    tech: ['C++', 'Python', 'NumPy', 'SciPy'],
+    url: 'https://github.com/yashbansal24/SVD_CUR_COLLABORATIVE',
+    urlLabel: 'SVD_CUR_COLLABORATIVE',
+    year: '2017',
+  },
+];
