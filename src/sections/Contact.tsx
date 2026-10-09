@@ -110,12 +110,14 @@ export function Contact() {
                   size="lg"
                   onClick={onCopy}
                   className={copy === 'copied' ? 'contact__copy is-copied' : 'contact__copy'}
-                  aria-describedby="contact-copy-status"
                 >
                   {copy === 'copied' ? <>Copied <span aria-hidden="true">✓</span></> : 'Copy email'}
                 </Button>
-                <p id="contact-copy-status" className="contact__status" role="status" aria-live="polite">
-                  {copy === 'copied' ? 'Copied' : copy === 'manual' ? 'Selected. Press Ctrl+C (⌘C) to copy.' : ''}
+                {copy === 'manual' && (
+                  <span className="contact__hint" aria-hidden="true">Selected: press Ctrl+C / ⌘C</span>
+                )}
+                <p id="contact-copy-status" className="sr-only" role="status" aria-live="polite">
+                  {copy === 'copied' ? 'Copied' : copy === 'manual' ? 'Email selected. Press Control C or Command C to copy.' : ''}
                 </p>
               </div>
             </div>

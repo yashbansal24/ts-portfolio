@@ -33,6 +33,7 @@
 
 /* email: big selectable serif line + actions */
 .contact__email {
+  container-type: inline-size;   /* email size follows the card width, so it never wraps mid-address */
   display: grid; gap: 12px;
   padding-top: clamp(20px, 2.4vw, 28px);
   border-top: var(--border);
@@ -40,6 +41,7 @@
 .contact__email-label { color: var(--ink); }
 .contact__email-value {
   font: italic 400 clamp(30px, 4.3vw, 64px)/1.08 var(--font-serif);
+  font-size: clamp(20px, 10.4cqi, 64px);
   letter-spacing: -.01em;
   color: var(--ink);
   overflow-wrap: anywhere;
@@ -57,7 +59,7 @@
 }
 .contact .contact__copy { min-width: 11.5ch; }
 .contact .contact__copy.is-copied { background: var(--periwinkle); }
-.contact__status {
+.contact__hint {
   padding: 6px 10px;
   background: var(--peach); color: var(--ink);
   border: var(--border-sm); border-radius: var(--r-sm);
@@ -65,8 +67,6 @@
   transform: rotate(-2deg);
   animation: contact-pop var(--dur-slow) var(--ease-snap);
 }
-/* stays in the a11y tree (live region) but takes no room when empty */
-.contact__status:empty { position: absolute; padding: 0; border: 0; animation: none; }
 @keyframes contact-pop { from { transform: rotate(-2deg) scale(.6); opacity: 0; } }
 
 /* comic burst stamped on the card's corner */
@@ -163,7 +163,7 @@
   .contact .contact__link { min-height: 80px; padding-left: 20px; }
   .contact__link-arrow { width: 44px; height: 44px; }
   .contact__email-actions .btn { flex: 1 1 auto; }
-  .contact__status { flex-basis: 100%; text-align: center; }
+  .contact__hint { flex-basis: 100%; text-align: center; }
   .contact__colophon { flex-direction: column; align-items: flex-start; gap: 6px; }
   .contact__colophon > span + span::before { content: none; }
   .contact__colophon-type { display: none; }
@@ -171,5 +171,5 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .contact__status, .contact__link-arrow { animation: none; transition: none; }
+  .contact__hint, .contact__link-arrow { animation: none; transition: none; }
 }
