@@ -28,7 +28,7 @@
   mask-image: radial-gradient(circle at 50% 50%, transparent 0 15%, #000 38%);
   opacity: .32;
 }
-.patents__bulb { position: relative; width: min(66%, 270px); height: auto; overflow: visible; transform: rotate(-6deg); }
+.patents__bulb { position: relative; width: min(66%, 300px); height: auto; overflow: visible; transform: rotate(-6deg); }
 .patents__bulb-rays { fill: none; stroke: var(--ink); stroke-width: 8; stroke-linecap: round; }
 .patents__bulb-shadow { fill: var(--ink); }
 .patents__bulb-glass { fill: var(--paper); stroke: var(--ink); stroke-width: 6; stroke-linejoin: round; }
@@ -40,7 +40,7 @@
 .patents__bulb-tip { fill: var(--ink); }
 
 .patents .patents__burst {
-  --burst-size: clamp(150px, 13vw, 190px) !important; --burst-fit: .15 !important;
+  --burst-size: clamp(150px, 13vw, 190px) !important; --burst-fit: .14 !important;
   position: absolute; right: -4%; bottom: -2%; z-index: var(--z-raised);
 }
 
