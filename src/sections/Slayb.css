@@ -19,11 +19,6 @@
   max-width: 21ch; padding-top: 6px;
   font: 400 clamp(25px, 2.2vw, 32px)/1.16 var(--font-serif); letter-spacing: -.005em; color: var(--blue);
 }
-.slayb__hl {
-  padding: 0 .14em; margin: 0 -.04em;
-  background: var(--peach); box-shadow: inset 0 -3px 0 var(--coral);
-  -webkit-box-decoration-break: clone; box-decoration-break: clone;
-}
 .slayb__desc { margin-top: 16px; max-width: 54ch; font: 400 var(--fs-base)/1.6 var(--font-sans); color: var(--blue); }
 .slayb__chips { margin-top: 22px; }
 .slayb__cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }

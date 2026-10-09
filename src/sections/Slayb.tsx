@@ -1,4 +1,4 @@
-import { useState, type CSSProperties, type ReactNode } from 'react';
+import { useState, type CSSProperties } from 'react';
 import { projects } from '../data/profile';
 import { SectionHeader } from '../components/SectionHeader';
 import { Card } from '../components/Card';
@@ -18,19 +18,20 @@ const loadAgents = () => import('../three/scenes/agentsScene');
 const slayb = projects.find((p) => p.featured) ?? projects[0];
 /** "20+ paying customers", lifted from the tagline in profile.ts (no hard-coded numbers). */
 const customers = slayb.tagline.match(/\d[\d,.]*\+?\s+paying customers/i)?.[0];
-
-/** Tagline with the customer count set on a peach highlighter. */
-function Tagline(): ReactNode {
-  if (!customers) return slayb.tagline;
-  const [pre, post] = slayb.tagline.split(customers);
-  return <>{pre}<span className="slayb__hl">{customers}</span>{post}</>;
-}
+/**
+ * The count gets ONE emphasis: the coral sticker. When it closes the tagline ("… with 20+ paying
+ * customers."), the sticker carries it and the tagline ends before it ("A live agentic AI platform.").
+ * Any other phrasing keeps the full tagline and drops the sticker, so the fact is never shown twice.
+ */
+const [taglineLead = '', taglineTail = ''] = customers ? slayb.tagline.split(customers) : [];
+const stickerCount = customers && /\s+with\s*$/i.test(taglineLead) && /^\W*$/.test(taglineTail) ? customers : undefined;
+const tagline = stickerCount ? taglineLead.replace(/\s+with\s*$/i, '.') : slayb.tagline;
 
 /** The four beats of the 3D loop; the active one lights up in sync with the scene. */
 const STEPS = [
   { label: 'Goal', note: 'Describe what you want.' },
   { label: 'Plan', note: 'The cloud splits it up.' },
-  { label: 'Agents work in parallel', note: 'Five devices, five agents.' },
+  { label: 'Agents work in parallel', note: 'Each device is a different agent.' },
   { label: 'Ship', note: 'Results merge into one.' },
 ];
 
@@ -81,7 +82,7 @@ export function Slayb() {
             id="slayb-title"
             num="04"
             size="xl"
-            eyebrow="Featured · live product"
+            eyebrow="Featured · product"
             title={<>{slayb.name}<span className="slayb__dot" aria-hidden="true">.</span></>}
           />
         </div>
@@ -116,12 +117,13 @@ export function Slayb() {
 
         <div className="slayb__copy">
           <Card tone="paper" shadow="lg" className="slayb__card">
-            {customers && (
-              <span className="slayb__sticker" aria-hidden="true">
-                <Sticker tone="coral" rotate={4} dot>{customers}</Sticker>
+            {/* not aria-hidden: the sticker is the only place the customer count appears */}
+            {stickerCount && (
+              <span className="slayb__sticker">
+                <Sticker tone="coral" rotate={4} dot>{stickerCount}</Sticker>
               </span>
             )}
-            <p className="slayb__tagline"><Tagline /></p>
+            <p className="slayb__tagline">{tagline}</p>
             <p className="slayb__desc">{slayb.description}</p>
             <ChipList items={slayb.tech} label={`${slayb.name} focus`} size="sm" tone="periwinkle" className="slayb__chips" />
             <div className="slayb__cta">

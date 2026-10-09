@@ -41,6 +41,10 @@ function prerender(): Plugin {
           const mod = (await server.ssrLoadModule('/src/entry-server.tsx')) as { render: () => string };
           const app = mod.render();
           return html.replace(marker, () => `<div id="root">${app}</div>`);
+        } catch (err) {
+          // fail soft: ship the empty #root (main.tsx then client-renders, exactly as before) but say so loudly
+          config.logger.warn(`\n[prerender] skipped, shipping a client-rendered page: ${(err as Error)?.stack ?? err}\n`);
+          return html;
         } finally {
           await server.close();
         }

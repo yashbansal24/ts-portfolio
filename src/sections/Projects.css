@@ -204,7 +204,20 @@
   .projects__link--lead { margin-top: 8px; }
 }
 @media (max-width: 720px) {
-  .projects__grid, .projects__grid--archive { grid-template-columns: minmax(0, 1fr); }
+  .projects__grid { grid-template-columns: minmax(0, 1fr); }
+  /* the 2017 archive becomes a swipe row (secondary content; 4 stacked cards were ~2400px of scroll).
+     Rows stay a 6-track subgrid so cap / name / bubble / desc / chips / link still line up across cards. */
+  .projects__grid--archive {
+    --scroll-pad: clamp(18px, 3vw, 40px);   /* = the drawer's inline padding: bleed to its border, snap in line with the dek */
+    grid-template-columns: none; grid-template-rows: repeat(6, auto);
+    grid-auto-flow: column; grid-auto-columns: min(82%, 320px); column-gap: 22px;
+    overflow-x: auto; overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory; scroll-padding-inline: var(--scroll-pad);
+    margin-inline: calc(-1 * var(--scroll-pad));
+    padding: 10px var(--scroll-pad) 8px;   /* 10px top keeps the hover lift + focus ring (5px offset) unclipped */
+    scrollbar-width: thin; scrollbar-color: var(--blue-2) transparent;
+  }
+  .projects__grid--archive > .projects__item { scroll-snap-align: start; }
   .projects .projects__ht { inset: 9px -9px -9px 9px; }
   .projects .projects__ht--lead { inset: 11px -11px -11px 11px; }
   .projects__burst { --burst-size: 92px; top: -40px; right: -6px; }
