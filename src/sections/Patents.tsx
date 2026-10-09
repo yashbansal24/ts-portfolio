@@ -9,10 +9,10 @@ import './Patents.css';
 /* ---- data-derived copy (no invented facts) ---- */
 const SMALL = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
 const word = (n: number) => SMALL[n] ?? String(n);
+const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 const employers = [...new Set(patents.map((p) => p.employer))];
 const soleEmployer = employers.length === 1 ? employers[0] : undefined;
 const field = stats.find((s) => s.label === 'US patents')?.context; // "Machine learning & web performance"
-const both = patents.length === 2 ? 'Both' : 'All';
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 /** "Mar 2021" → "2021-03" for <time dateTime>. */
@@ -34,8 +34,8 @@ const ROSETTE = (() => {
   return `M${pts.join('L')}Z`;
 })();
 
-/** Decorative certificate seal: coral rosette, ribbon tails, "US PATENT" ring text and the issue number. */
-function Seal({ n }: { n: number }) {
+/** Decorative certificate seal: coral rosette, ribbon tails, "US PATENT" ring text and "US" at the centre. */
+function Seal() {
   const ring = `seal-ring-${useId().replace(/[^a-zA-Z0-9_-]/g, '')}`;
   return (
     <svg className="patents__seal" viewBox="0 0 120 150" aria-hidden="true" focusable="false">
@@ -50,7 +50,7 @@ function Seal({ n }: { n: number }) {
       <text className="patents__seal-ring">
         <textPath href={`#${ring}`} textLength="191" lengthAdjust="spacing">US PATENT ✶ US PATENT ✶ </textPath>
       </text>
-      <text className="patents__seal-no" x="60" y="70" textAnchor="middle">{String(n).padStart(2, '0')}</text>
+      <text className="patents__seal-no" x="60" y="70" textAnchor="middle">US</text>
     </svg>
   );
 }
@@ -85,13 +85,11 @@ function Certificate({ p, i }: { p: Patent; i: number }) {
       as="li"
       tone="paper"
       tilt={i % 2 ? -0.8 : 0.8}
-      caption={`Issue #${i + 1} of ${patents.length}`}
-      captionTone={i % 2 ? 'paper' : 'peach'}
       className={`patents__panel patents__panel--cert patents__panel--${i + 1}`}
     >
       <article className="patents__cert" aria-labelledby={id}>
         <div className="patents__head">
-          <Seal n={i + 1} />
+          <Seal />
           <p className="patents__kicker eyebrow">United States Patent</p>
           <h3 id={id} className="patents__title">{p.title}</h3>
         </div>
@@ -117,7 +115,7 @@ function Certificate({ p, i }: { p: Patent; i: number }) {
   );
 }
 
-/** PATENTS — comic "origin story" page: a coral splash panel (lightbulb + speed lines) and two certificate panels. */
+/** PATENTS — comic page: a coral splash panel (lightbulb + speed lines) and one certificate panel per patent. */
 export function Patents() {
   return (
     <section className="patents section tone-blue rule-top" id="patents" aria-labelledby="patents-title">
@@ -125,14 +123,11 @@ export function Patents() {
       <div className="wrap">
         <SectionHeader
           id="patents-title"
-          num="06"
-          eyebrow="Patents · an origin story"
-          title={<>Every engineer needs <em>an origin story.</em></>}
-          dek={
-            <>
-              Mine comes in {word(patents.length)} US patents.{' '}
-              {soleEmployer && <>{both} invented at {soleEmployer}{field ? ` — ${field.toLowerCase()}` : ''}.</>}
-            </>
+          eyebrow="Patents"
+          title={
+            field
+              ? <>{cap(word(patents.length))} US patents in <em>{field.toLowerCase()}.</em></>
+              : <>{cap(word(patents.length))} <em>US patents.</em></>
           }
         />
 
@@ -141,7 +136,7 @@ export function Patents() {
             as="li"
             tone="coral"
             tilt={-1}
-            caption={soleEmployer ? `Meanwhile, at ${soleEmployer}…` : 'Meanwhile…'}
+            caption={soleEmployer ? `At ${soleEmployer}` : undefined}
             captionTone="paper"
             halftone="peach"
             halftoneFade="radial"
@@ -150,11 +145,8 @@ export function Patents() {
             <div className="patents__art" aria-hidden="true">
               <span className="patents__speed" />
               <Bulb />
-              <Burst text="PATENTED!" sub={patents.length === 2 ? 'Twice' : undefined} tone="paper" size={190} rotate={-10} spikes={14} className="patents__burst" />
+              <Burst text="PATENTED!" tone="paper" size={190} rotate={-10} spikes={14} className="patents__burst" />
             </div>
-            <p className="patents__narration">
-              …{word(patents.length)} ideas switch on, and each one earns a patent number.
-            </p>
           </ComicPanel>
           {patents.map((p, i) => <Certificate key={p.number} p={p} i={i} />)}
         </ol>

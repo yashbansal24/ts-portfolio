@@ -1,4 +1,4 @@
-/* ---------- PATENTS: comic "origin story" page — coral splash panel + two certificate panels ---------- */
+/* ---------- PATENTS: comic page — coral splash panel + one certificate panel per patent ---------- */
 .patents { overflow: hidden; }
 .patents .patents__dots { inset: 0 0 0 30%; }
 
@@ -10,10 +10,10 @@
   list-style: none; margin: 0; padding: 0;
 }
 
-/* ---- splash panel: lightbulb, speed lines, PATENTED! burst, narration ---- */
+/* ---- splash panel: "At PayPal" caption, lightbulb, speed lines, PATENTED! burst ---- */
 .patents__panel--splash { grid-row: span 2; }
 .patents__panel--splash .panel__caption { z-index: 1; font-size: 13px; }
-.patents__panel--splash .panel__body { display: flex; flex-direction: column; gap: 18px; }
+.patents__panel--splash .panel__body { display: flex; flex-direction: column; }
 
 .patents__art {
   position: relative; flex: 1;
@@ -42,15 +42,6 @@
 .patents .patents__burst {
   --burst-size: clamp(150px, 13vw, 190px); --burst-fit: .14;
   position: absolute; right: -4%; bottom: -2%; z-index: var(--z-raised);
-}
-
-/* narration caption box (comic "meanwhile…" box, real text) */
-.patents__narration {
-  position: relative; align-self: flex-start; max-width: 30ch;
-  padding: 10px 14px;
-  background: var(--paper); color: var(--ink);
-  border: var(--border); box-shadow: 4px 4px 0 var(--ink);
-  font: 700 var(--fs-md)/1.3 var(--font-sans);
 }
 
 /* ---- certificate panels ---- */
@@ -132,5 +123,4 @@
   .patents__title { margin-top: 10px; }
   .patents__fields { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
   .patents__field--no { grid-column: 1 / -1; }
-  .patents__narration { font-size: 17px; }
 }

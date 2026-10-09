@@ -6,7 +6,6 @@ export { Chip, ChipList, Tag, type ChipProps, type ChipTone } from './Chip';
 export { SectionHeader, type SectionHeaderProps } from './SectionHeader';
 export { Tape, type TapeProps } from './Tape';
 export { Nav, NAV_LINKS } from './Nav';
-export { FigureCaption, type FigureCaptionProps } from './FigureCaption';
 export { MeshGradient, MESH_PRESETS, type MeshGradientProps, type MeshPoint, type MeshPreset } from './MeshGradient';
 export { Halftone, type HalftoneProps, type HalftoneTone } from './Halftone';
 export { Burst, type BurstProps, type BurstTone } from './Burst';

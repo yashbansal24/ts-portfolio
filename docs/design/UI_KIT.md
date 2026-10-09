@@ -101,12 +101,6 @@ Props: `items: string[]`, `tone?: 'coral'|'blue'|'paper'`, `rotate?=-2`, `speed?
 ### Nav — `Nav.tsx`
 Already in App. `NAV_LINKS` lists every section id; scroll-spy sets `aria-current="location"`. <1080px: Menu button (aria-expanded/controls, focus first link, Tab trap, Esc returns focus, outside click closes). Includes the skip link to `#main`.
 
-### FigureCaption — `FigureCaption.tsx`
-Props: `n` (→ "FIG. 0n"), `title`, `children?` (body; `<b>` inside = serif lead), `tone?: 'ink'|'paper'`, `as?: 'figcaption'|'div'|'span'`. Hero uses Fig. 01–03; continue numbering (Slayb = Fig. 04 …).
-```tsx
-<FigureCaption n={4} title="Agents at work"><b>A goal comes in.</b> Six agents work in parallel.</FigureCaption>
-```
-
 ### MeshGradient — `MeshGradient.tsx`
 Props: `preset?: 'hero'|'slayb'|'contact'`, `points?: {x,y,color,size?,hold?}[]` (custom; %, 6-digit hex), `base?`, `drift?=true` (28s transform drift, off in reduced motion), `grain?=true` (feTurbulence print grain). Absolute, `z-index:-1`, aria-hidden → first child of a `.section.tone-mesh` (needs isolation, which `.section` gives; add `overflow:hidden` on your section).
 Text-safe zones: **hero** — anywhere (deep blue ≥ 9:1). **slayb** — top-left (peach/periwinkle) only for blue text; put body copy on a `Card tone="paper"` or the canvas frame; never body text over the coral/blue-2 corners. **contact** — ivory text in the blue lower/right 2/3 (≥ 7:1); the top-left is coral (ink text there, or keep it empty); put links/buttons on paper or coral fills.

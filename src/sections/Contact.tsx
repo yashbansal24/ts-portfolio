@@ -91,8 +91,7 @@ export function Contact() {
           <div className="contact__card">
             <SectionHeader
               id="contact-title"
-              num="09"
-              eyebrow="Contact · Back page"
+              eyebrow="Contact"
               title={<>Pull up a chair <em>at the desk.</em></>}
               dek="Multi-agent systems, the platforms under them, or a product that needs both: tell me what you are building."
             />
