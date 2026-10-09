@@ -27,6 +27,9 @@ const pad = (n: number) => String(n).padStart(2, '0');
 const nameNodes = (name: string) =>
   name.split(/(\d+)/).map((part, i) => (i % 2 ? <span key={i} className="experience__digits">{part}</span> : part));
 
+/** Keep "sub-200 ms" on one line (non-breaking hyphen + space) — display only, the fact is unchanged. */
+const keep = (s: string) => s.replace(/\bsub-(\d+) ms/g, 'sub\u2011$1\u00a0ms');
+
 const WORDS = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve'];
 const word = (n: number) => WORDS[n] ?? String(n);
 
@@ -111,14 +114,14 @@ function RolePanel({ role, index, total }: { role: Role; index: number; total: n
           <p className="experience__title">{role.title}</p>
           <p className="sr-only">{`${role.start} to ${role.end}, ${role.location}`}</p>
           <SpeechBubble as="p" side="top-left" tone={look.bubble} className="experience__bubble">
-            {role.headline}
+            {keep(role.headline)}
           </SpeechBubble>
         </div>
 
         <div className="experience__detail">
           <ul className="experience__hl" id={listId} role="list" aria-label={`${role.company} highlights`}>
             {role.highlights.map((h, i) => (
-              <li key={h} hidden={!open && i >= TOP}>{h}</li>
+              <li key={h} hidden={!open && i >= TOP}>{keep(h)}</li>
             ))}
           </ul>
           {extra > 0 && (

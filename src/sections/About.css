@@ -45,7 +45,7 @@
 }
 .about__bubble .bubble__tail { left: 34px; }
 .about__record { font: 400 clamp(21px, 1.7vw, 26px)/1.25 var(--font-serif); color: var(--blue); letter-spacing: -.005em; }
-.about__digits { font-family: var(--font-sans); font-weight: 500; font-size: .86em; letter-spacing: -.03em; }
+.about__digits { font-family: var(--font-sans); font-weight: 400; font-size: .8em; letter-spacing: -.02em; }
 
 .about__speaker { display: flex; align-items: center; gap: 12px; padding-left: 14px; color: var(--ink); }
 .about__avatar {

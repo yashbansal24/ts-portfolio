@@ -87,7 +87,7 @@ Props: `tone?: 'paper'|'ivory'|'blue'|'coral'|'peach'`, `shadow?: 'sm'|'md'|'lg'
 ```
 
 ### SectionHeader — `SectionHeader.tsx`
-Props: `id` (goes on the `<h2>`), `eyebrow` (mono box), `title: ReactNode` (wrap emphasis in `<em>` → italic blue-2 / coral on blue), `dek?`, `num?` ("02" italic coral numeral), `align?: 'start'|'center'`, `size?: 'md'|'xl'`.
+Props: `id` (goes on the `<h2>`), `eyebrow` (mono box), `title: ReactNode` (wrap emphasis in `<em>` → italic blue-2 / coral on blue), `dek?`, `num?` ("02" italic serif numeral: ink with a 3px coral offset on light grounds and light cards; coral with a 1px ink outline only on .tone-blue/.tone-ink). Root is a `<div>` (never `<header>`: it sits inside the Contact `<footer>`), `align?: 'start'|'center'`, `size?: 'md'|'xl'`.
 ```tsx
 <section className="about section tone-ivory" id="about" aria-labelledby="about-title">
   <div className="wrap"><SectionHeader id="about-title" num="02" eyebrow="About" title={<>Agents that run for hours. <em>Platforms that hold them up.</em></>} /></div>
