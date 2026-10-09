@@ -80,7 +80,9 @@ function StatPanel({ s, i }: { s: Stat; i: number }) {
       <span className="about__label">{s.label}</span>
     </p>
   );
-  const context = <p className="about__context">{s.context}</p>;
+  // keep "sub-200 ms" on one line: non-breaking hyphen + space (display only; the fact is unchanged)
+  const ctx = s.context.replace(/\bsub-(\d+) ms/g, 'sub\u2011$1\u00a0ms');
+  const context = <p className="about__context">{ctx}</p>;
 
   let body;
   switch (look.device) {
@@ -101,7 +103,7 @@ function StatPanel({ s, i }: { s: Stat; i: number }) {
       body = (
         <>
           {fact}
-          <SpeechBubble side="top-left" tone="paper" as="p" className="about__say">{s.context}</SpeechBubble>
+          <SpeechBubble side="top-left" tone="paper" as="p" className="about__say">{ctx}</SpeechBubble>
         </>
       );
       break;
@@ -110,7 +112,7 @@ function StatPanel({ s, i }: { s: Stat; i: number }) {
         <div className="about__think">
           {fact}
           <div className="about__thought">
-            <p>{s.context}</p>
+            <p>{ctx}</p>
             <span className="about__thought-dot about__thought-dot--1" aria-hidden="true" />
             <span className="about__thought-dot about__thought-dot--2" aria-hidden="true" />
           </div>
