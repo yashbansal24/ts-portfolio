@@ -1,6 +1,9 @@
 .mesh { position: absolute; inset: 0; z-index: var(--z-bg); overflow: hidden; pointer-events: none; }
+/* Overscan in viewport units, not % of the section: a %-inset top moves whenever the section's height changes
+   (font swap, late content), and Chrome then scores the whole viewport-sized layer as a layout shift. */
 .mesh__field {
-  position: absolute; inset: -18%;
+  position: absolute; inset: auto;
+  top: -18vh; left: -18vw; width: 136vw; height: calc(100% + 36vh);
   background: var(--mesh-bg);
   will-change: transform;
 }

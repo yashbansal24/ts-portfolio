@@ -10,6 +10,7 @@
 .btn:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--shadow-c, var(--ink)); }
 .btn:active { transform: translate(4px, 4px); box-shadow: var(--shadow-press); transition-duration: var(--dur-fast); }
 .btn--sm { min-height: 40px; padding: 0 14px; font-size: 13px; }
+@media (pointer: coarse) { .btn--sm { min-height: 44px; } }   /* 44px touch targets on phones / tablets */
 .btn--lg { min-height: 56px; padding: 0 28px; font-size: 17px; }
 
 .btn--primary { background: var(--coral); color: var(--ink); }

@@ -29,9 +29,12 @@ export function qbez(a: THREE.Vector3, c: THREE.Vector3, b: THREE.Vector3, t: nu
 /** WebGL renderer with the house settings (transparent, sRGB, soft shadows, DPR from harness). Throws if no context. */
 export function createRenderer(canvas: HTMLCanvasElement, dpr: number, opts: { stencil?: boolean; shadows?: boolean } = {}) {
   const renderer = new THREE.WebGLRenderer({
-    canvas, antialias: true, alpha: true, stencil: opts.stencil ?? false, powerPreference: 'high-performance',
+    // 'default': two decorative scenes must not keep a dual-GPU laptop's discrete GPU awake for the whole visit
+    canvas, antialias: true, alpha: true, stencil: opts.stencil ?? false, powerPreference: 'default',
   });
   if (!renderer.getContext()) throw new Error('WebGL context unavailable');
+  // shader-error checks cost synchronous GPU round-trips per program; keep them for development only
+  renderer.debug.checkShaderErrors = import.meta.env.DEV;
   renderer.setPixelRatio(dpr);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.NoToneMapping;

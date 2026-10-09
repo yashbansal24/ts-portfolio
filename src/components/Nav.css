@@ -5,7 +5,7 @@
   border-bottom: var(--border);
 }
 .nav__in { height: 100%; display: flex; align-items: center; gap: 16px; }
-.nav__brand { display: inline-flex; align-items: center; gap: 10px; margin-right: auto; text-decoration: none; color: var(--ink); }
+.nav__brand { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; margin-right: auto; text-decoration: none; color: var(--ink); }
 .nav__mark {
   display: grid; place-items: center; width: 38px; height: 38px;
   background: var(--coral); color: var(--ink);
@@ -28,7 +28,7 @@
 
 .nav__toggle {
   display: none; align-items: center; gap: 10px;
-  min-height: 42px; padding: 0 12px;
+  min-height: 44px; padding: 0 12px;
   background: var(--paper); color: var(--ink);
   border: var(--border); border-radius: var(--r-sm); box-shadow: var(--shadow-sm);
   font: 800 13px/1 var(--font-sans); letter-spacing: .05em; text-transform: uppercase; cursor: pointer;
@@ -39,6 +39,32 @@
 .nav--open .nav__burger i:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
 .nav--open .nav__burger i:nth-child(2) { opacity: 0; }
 .nav--open .nav__burger i:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* pause-motion switch: icon button; its label is the accessible name and doubles as a hover/focus tooltip */
+.nav__motion {
+  position: relative; flex: none;
+  display: inline-grid; place-items: center;
+  width: 40px; height: 40px; padding: 0;
+  background: var(--paper); color: var(--ink);
+  border: var(--border); border-radius: var(--r-sm); box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: transform var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out);
+}
+.nav__motion:hover { transform: translate(-2px, -2px); box-shadow: var(--shadow-hover-sm); }
+.nav__motion:active { transform: translate(4px, 4px); box-shadow: none; transition-duration: var(--dur-fast); }
+.nav__motion-icon { width: 14px; height: 14px; fill: currentColor; }
+.nav__motion-label {
+  position: absolute; top: calc(100% + 12px); right: -3px;
+  padding: 7px 9px;
+  background: var(--ink); color: var(--on-dark); border-radius: var(--r-sm);
+  font: 500 11px/1 var(--font-mono); letter-spacing: .1em; text-transform: uppercase; white-space: nowrap;
+  pointer-events: none;
+  clip-path: inset(50%); opacity: 0;   /* visually hidden, still the button's name */
+  transition: opacity var(--dur) ease;
+}
+.nav__motion:focus-visible .nav__motion-label { clip-path: none; opacity: 1; }
+@media (hover: hover) { .nav__motion:hover .nav__motion-label { clip-path: none; opacity: 1; } }
+@media (pointer: coarse) { .nav__motion { width: 44px; height: 44px; } }
 
 .nav__menu {
   position: absolute; left: 0; right: 0; top: 100%; z-index: var(--z-menu);
@@ -59,7 +85,16 @@
   .nav__primary { display: none; }
   .nav__toggle { display: inline-flex; }
 }
+/* phones: Contact stays one tap away; Menu becomes an icon button (its "Menu"/"Close" text stays as the accessible name) */
 @media (max-width: 520px) {
-  .nav__cta { display: none; }
+  .nav__in { gap: 10px; }
+  .nav__cta { min-height: 44px; }
+  .nav__toggle { min-height: 44px; padding: 0 11px; }
+  .nav__toggle > span:last-child { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .nav__motion { width: 44px; height: 44px; }
   .nav__name { font-size: 22px; }
+}
+/* small phones: the YB tile carries the brand (the link keeps its full aria-label) so all four controls fit */
+@media (max-width: 400px) {
+  .nav__name { display: none; }
 }

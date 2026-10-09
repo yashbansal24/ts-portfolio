@@ -4,7 +4,7 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: calc(var(--nav-h) + 12px);
+  scroll-padding-top: var(--nav-h);   /* the only anchor offset: sections land flush under the sticky nav */
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 }
@@ -74,9 +74,7 @@ p { text-wrap: pretty; }
   position: relative;
   isolation: isolate;          /* lets MeshGradient / Halftone sit at z-index -1 */
   padding-block: var(--section-y);
-  scroll-margin-top: calc(var(--nav-h) + 8px);
 }
-section[id], footer[id] { scroll-margin-top: calc(var(--nav-h) + 8px); }
 
 /* ---- section tones ---- */
 .tone-ivory { background-color: var(--ivory); color: var(--blue); }
@@ -125,6 +123,12 @@ section[id], footer[id] { scroll-margin-top: calc(var(--nav-h) + 8px); }
 }
 .nb-lift:hover { transform: translate(-2px, -2px); box-shadow: var(--shadow-hover); }
 .nb-lift:active { transform: translate(4px, 4px); box-shadow: var(--shadow-press); transition-duration: var(--dur-fast); }
+
+/* ---- "Pause motion" (Nav control, html[data-motion='paused']): freeze every looping animation in place ---- */
+[data-motion='paused'] .tape__track,
+[data-motion='paused'] .logos__track,
+[data-motion='paused'] .mesh__field--drift,
+[data-motion='paused'] .sticker__dot { animation-play-state: paused; }
 
 /* ---- reduced motion: kill animation globally ---- */
 @media (prefers-reduced-motion: reduce) {

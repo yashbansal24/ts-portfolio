@@ -31,14 +31,18 @@ export const MESH_PRESETS: Record<MeshPreset, { base: string; points: MeshPoint[
       { x: 42, y: 30, color: '#E3E8FF', size: 35 },
     ],
   },
-  // bold: coral → blue — ivory text in the lower/right blue zone, ink text in the coral top-left; use cards elsewhere
+  // bold: coral → blue — ivory text in the lower/right blue zone, ink text in the coral top-left; use cards elsewhere.
+  // The two light bridges (periwinkle) come last so they paint beneath the coral: coral → rose → periwinkle → blue,
+  // never a muddy brown-plum midpoint where coral fades straight over deep blue.
   contact: {
     base: '#14286E',
     points: [
       { x: 100, y: 20, color: '#2A44A0', size: 60, hold: 10 },
       { x: 20, y: 100, color: '#0E1B4D', size: 50 },
-      { x: 0, y: 0, color: '#FF6B4A', size: 58, hold: 42 },
+      { x: 0, y: 0, color: '#FF6B4A', size: 52, hold: 62 },
       { x: 30, y: 6, color: '#FF8C6E', size: 26, hold: 20 },
+      { x: 42, y: 26, color: '#C9D6FF', size: 34, hold: 10 },
+      { x: 4, y: 50, color: '#9FB2F2', size: 24 },
     ],
   },
 };

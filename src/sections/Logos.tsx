@@ -58,7 +58,7 @@ export function Logos() {
   return (
     <section className="logos section tone-paper rule-bottom" id="organizations" aria-labelledby="orgs-title">
       <div className="wrap logos__head">
-        <SectionHeader id="orgs-title" num="01" eyebrow={`${ORGS.length} organizations`} title={<>Organizations <em>I've worked with</em></>} />
+        <SectionHeader id="orgs-title" num="01" eyebrow={`Logos · ${ORGS.length} organizations`} title={<>Organizations <em>I've worked with</em></>} />
         <button type="button" className="logos__toggle" onClick={() => setPaused((p) => !p)}>
           <span aria-hidden="true">{paused ? '▶' : '❚❚'}</span> {paused ? 'Play' : 'Pause'} logos
         </button>

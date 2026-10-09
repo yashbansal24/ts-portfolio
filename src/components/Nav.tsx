@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { profile } from '../data/profile';
+import { setMotionPaused, useMotionPaused } from '../hooks/useMotionPaused';
 import { Button } from './Button';
 import './Nav.css';
 
@@ -17,9 +18,13 @@ export const NAV_LINKS: NavLink[] = [
   { id: 'education', label: 'Education' },
 ];
 
-/** Sticky neo-brutal top bar: brand tile, section anchors with scroll-spy, Contact CTA, keyboard-accessible mobile menu. */
+/**
+ * Sticky neo-brutal top bar: brand tile, section anchors with scroll-spy, Contact CTA, pause-motion control,
+ * keyboard-accessible mobile menu.
+ */
 export function Nav() {
   const [open, setOpen] = useState(false);
+  const motionPaused = useMotionPaused();
   const [active, setActive] = useState<string>('');
   const btnRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -92,6 +97,15 @@ export function Nav() {
           <ul className="nav__links" role="list">{links()}</ul>
         </nav>
         <Button href="#contact" size="sm" className="nav__cta">Contact</Button>
+        {/* WCAG 2.2.2: one switch pauses every loop (tape, marquee, mesh, stickers, 3D scenes); the label is its name */}
+        <button type="button" className="nav__motion" onClick={() => setMotionPaused(!motionPaused)}>
+          <svg className="nav__motion-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+            {motionPaused
+              ? <path d="M4 2.5v11l9.5-5.5z" />
+              : <><rect x="3" y="2.5" width="3.6" height="11" rx=".6" /><rect x="9.4" y="2.5" width="3.6" height="11" rx=".6" /></>}
+          </svg>
+          <span className="nav__motion-label">{motionPaused ? 'Play motion' : 'Pause motion'}</span>
+        </button>
         <button
           ref={btnRef}
           type="button"

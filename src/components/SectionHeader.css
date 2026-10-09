@@ -1,6 +1,13 @@
 .sh { position: relative; display: grid; gap: 12px; max-width: 980px; margin-bottom: clamp(36px, 5vw, 64px); }
 .sh--center { margin-inline: auto; text-align: center; justify-items: center; }
-.sh__num { font: italic 400 clamp(52px, 6.5vw, 92px)/.8 var(--font-serif); color: var(--coral); -webkit-text-stroke: 1px var(--ink); }
+/* numeral: ink with a coral offset on light grounds (coral text fails contrast on ivory/paper/mesh);
+   coral with an ink outline only on the deep-blue / ink tones */
+.sh__num { font: italic 400 clamp(52px, 6.5vw, 92px)/.8 var(--font-serif); color: var(--ink); text-shadow: 3px 3px 0 var(--coral); }
+.tone-blue .sh__num, .tone-ink .sh__num { color: var(--coral); -webkit-text-stroke: 1px var(--ink); text-shadow: none; }
+/* …but a light card inside a dark tone (Contact's paper card) is a light ground again */
+:is(.tone-blue, .tone-ink) :is(.contact__card, .card:not(.card--blue), .panel:not(.panel--blue)) .sh__num {
+  color: var(--ink); -webkit-text-stroke: 0; text-shadow: 3px 3px 0 var(--coral);
+}
 .sh__eyebrow {
   display: inline-block; justify-self: start; width: max-content; max-width: 100%;
   padding: 5px 9px; background: var(--paper); color: var(--ink);

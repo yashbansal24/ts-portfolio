@@ -20,6 +20,11 @@ export type SceneInstance = {
   resize(w: number, h: number): void;
   /** Free GPU memory, remove listeners, forceContextLoss. */
   dispose(): void;
+  /**
+   * Optional async warm-up the harness awaits before the first frame, e.g. `() => renderer.compileAsync(scene, camera)`,
+   * so shader programs link off the main thread instead of stalling first render. Rejections are ignored.
+   */
+  prepare?(): Promise<unknown>;
   /** Scene time to start the loop at (default 0). */
   startTime?: number;
   /** Scene time rendered when reduced motion is on (default startTime). */
