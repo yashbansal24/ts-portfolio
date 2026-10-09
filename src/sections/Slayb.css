@@ -1,1 +1,102 @@
-/* Slayb section styles — BEM-ish: .slayb__x */
+/* ---------- SLAYB: rich gradient mesh + lazy 3D agents scene + copy on a paper card ---------- */
+.slayb { overflow: hidden; }
+.slayb__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  grid-template-areas: "head fig" "copy fig";
+  grid-template-rows: auto 1fr;
+  column-gap: clamp(28px, 4vw, 64px);
+}
+.slayb__head { grid-area: head; }
+.slayb__head .sh { margin-bottom: clamp(28px, 3.4vw, 44px); }
+.slayb__dot { color: var(--coral); font-style: normal; -webkit-text-stroke: 2px var(--ink); }
+
+/* ---- copy card ---- */
+.slayb__copy { grid-area: copy; align-self: start; padding-right: 10px; }
+.slayb__card { padding: clamp(24px, 2.6vw, 34px); }
+.slayb__sticker { position: absolute; top: -22px; right: -8px; z-index: var(--z-raised); }
+.slayb__tagline {
+  max-width: 21ch; padding-top: 6px;
+  font: 400 clamp(25px, 2.2vw, 32px)/1.16 var(--font-serif); letter-spacing: -.005em; color: var(--blue);
+}
+.slayb__hl {
+  padding: 0 .14em; margin: 0 -.04em;
+  background: var(--peach); box-shadow: inset 0 -3px 0 var(--coral);
+  -webkit-box-decoration-break: clone; box-decoration-break: clone;
+}
+.slayb__desc { margin-top: 16px; max-width: 54ch; font: 400 var(--fs-base)/1.6 var(--font-sans); color: var(--blue); }
+.slayb__chips { margin-top: 22px; }
+.slayb__cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+
+/* ---- 3D figure ---- */
+.slayb__fig { grid-area: fig; position: relative; margin: 0; align-self: center; }
+.slayb__stage { height: 600px; cursor: default; }
+/* fade the canvas into the mesh at every edge so nothing ever reads as clipped */
+.slayb__stage .three-stage__canvas {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 7%, #000 88%, transparent 100%), linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to bottom, transparent 0, #000 7%, #000 88%, transparent 100%), linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
+  mask-composite: intersect;
+}
+.slayb__figtag { position: absolute; top: 6px; left: 0; z-index: var(--z-overlay); transform: rotate(-1.5deg); pointer-events: none; }
+.slayb__figtag .figcap__label { white-space: nowrap; }
+
+/* ---- step captions: light up in sync with the scene ---- */
+.slayb__cap { position: relative; z-index: var(--z-raised); }
+.slayb__steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: 6px; }
+.slayb__step {
+  position: relative;
+  display: grid; align-content: start; gap: 4px;
+  padding: 10px 12px 14px;
+  background: var(--paper); color: var(--ink);
+  border: var(--border); border-radius: var(--r-sm);
+  box-shadow: 4px 4px 0 var(--ink);
+  transition: transform var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out), background-color var(--dur-slow) ease;
+}
+.slayb__step:not(:last-child)::after {
+  content: ""; position: absolute; top: 22px; right: -17px; width: 14px; height: 3px;
+  background: var(--ink);
+}
+.slayb__step-n { font: 500 11px/1 var(--font-mono); letter-spacing: var(--tracking-mono); color: var(--blue-2); }
+.slayb__step-label { font: 800 15px/1.15 var(--font-sans); letter-spacing: -.005em; color: var(--ink); }
+.slayb__step-note { font: 400 13px/1.35 var(--font-sans); color: var(--blue-2); }
+.slayb__step.is-done { background: var(--peach); }
+.slayb__step.is-active { background: var(--coral); transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--ink); }
+.slayb__step.is-active .slayb__step-n,
+.slayb__step.is-active .slayb__step-note { color: var(--ink); }
+.slayb__step-bar {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 4px;
+  background: var(--ink); transform-origin: left center;
+  animation: slayb-beat var(--beat, 4s) linear forwards;
+}
+@keyframes slayb-beat { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+/* ---- responsive ---- */
+@media (max-width: 1100px) {
+  .slayb__stage { height: 520px; }
+  .slayb__steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .slayb__step:nth-child(2)::after { display: none; }
+}
+@media (max-width: 900px) {
+  .slayb__grid { grid-template-columns: minmax(0, 1fr); grid-template-areas: "head" "fig" "copy"; grid-template-rows: auto; }
+  .slayb__stage { height: 480px; }
+  .slayb__steps { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .slayb__step:nth-child(2)::after { display: block; }
+  .slayb__copy { margin-top: clamp(40px, 7vw, 56px); }
+}
+@media (max-width: 720px) {
+  .slayb__steps { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .slayb__step:nth-child(2)::after { display: none; }
+}
+@media (max-width: 520px) {
+  .slayb__stage { height: 380px; }
+  .slayb__step { padding: 9px 10px 12px; }
+  .slayb__step-label { font-size: 14px; }
+  .slayb__step-note { font-size: 12.5px; }
+  .slayb__figtag .figcap__label { white-space: normal; }
+  .slayb__cta .btn { flex: 1 1 auto; }
+  .slayb__sticker { right: -4px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .slayb__step-bar { animation: none; }
+}

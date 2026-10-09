@@ -15,17 +15,20 @@
 
 /* ---- halftone hard-shadow: a dot field offset under each card (kit Halftone, repositioned) ---- */
 .projects__item, .projects__lead-wrap { position: relative; isolation: isolate; }
-.projects .projects__ht { inset: 12px -12px -12px 12px; border-radius: var(--r); }
-.projects .projects__ht--lead { inset: 16px -16px -16px 16px; }
+.projects .projects__ht {
+  --ht-cell: 7px; --ht-dot: 1.9px;   /* dense Ben-Day tone so it reads as a printed shadow */
+  inset: 12px -12px -12px 12px; border-radius: var(--r);
+}
+.projects .projects__ht--lead { --ht-cell: 9px; --ht-dot: 2.5px; inset: 16px -16px -16px 16px; }
 
 /* ---- card shell (shared by grid cards + the lead) ---- */
 .projects .projects__card {
   padding: 0 var(--pad);
+  box-shadow: none;   /* the halftone field underneath is the hard shadow */
   transition: transform var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out);
 }
-.projects .projects__card:hover { transform: translate(-2px, -2px); box-shadow: 7px 7px 0 var(--ink); }
-.projects .projects__card:active { transform: translate(4px, 4px); box-shadow: var(--shadow-press); transition-duration: var(--dur-fast); }
-.projects__lead.projects__card:hover { box-shadow: 9px 9px 0 var(--ink); }
+.projects .projects__card:hover { transform: translate(-3px, -3px); box-shadow: 3px 3px 0 var(--ink); }
+.projects .projects__card:active { transform: translate(6px, 6px); box-shadow: none; transition-duration: var(--dur-fast); }
 
 /* caption box flush in the card's top-left corner (comic panel vocabulary) */
 .projects__cap {
@@ -55,7 +58,7 @@
 
 /* ---- repo link: full-bleed footer strip; ::after makes the whole card the click target ---- */
 .projects__link {
-  display: flex; align-items: stretch; align-self: end;
+  display: flex; align-items: stretch; align-self: stretch;   /* fills the shared row → strips line up across cards */
   margin: 24px calc(-1 * var(--pad)) 0;
   border-top: var(--border);
   border-radius: 0 0 calc(var(--r) - var(--bw)) calc(var(--r) - var(--bw));
@@ -101,13 +104,21 @@
   grid-column: 2; grid-row: 1 / span 2;
   display: flex; flex-direction: column; gap: 16px;
   padding: calc(var(--pad) + 30px) var(--pad) var(--pad);
-  background: var(--blue); color: var(--on-dark);
+  /* periwinkle Ben-Day dots fading in toward the bottom-right (kept as background layers so the
+     panel stays unpositioned and the repo link's ::after can still cover the whole card) */
+  background:
+    linear-gradient(to bottom right, var(--blue) 35%, rgba(20, 40, 110, 0) 95%),
+    radial-gradient(circle at center, rgba(201, 214, 255, .34) 2.4px, transparent 3px) 0 0 / 13px 13px,
+    radial-gradient(circle at center, rgba(201, 214, 255, .34) 2.4px, transparent 3px) 6.5px 6.5px / 13px 13px,
+    var(--blue);
+  color: var(--on-dark);
   border-left: var(--border);
   border-radius: 0 calc(var(--r) - var(--bw)) calc(var(--r) - var(--bw)) 0;
 }
 .projects__side-label { color: var(--on-dark-2); }
 .projects__lead-side .projects__chips { margin-top: 0; }
 .projects__link--lead {
+  align-self: stretch;
   margin: auto 0 0; padding: 0;
   border: var(--border); border-radius: var(--r-sm);
   background: var(--paper);

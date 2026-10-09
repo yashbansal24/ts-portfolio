@@ -21,13 +21,16 @@ const word = (n: number) => WORDS[n] ?? String(n);
 const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 const githubHost = profile.links.github.replace(/^https?:\/\//, '');
 
+/** Long repo names (Fuzzy_Based_Dietary_Clustering) may break after "_" / "-" instead of mid-word. */
+const breakable = (s: string) => s.split(/(?<=[_-])/).flatMap((part, i) => (i ? [<wbr key={i} />, part] : [part]));
+
 /** Repo footer link: visible label + mono repo name. Its ::after stretches over the whole card (card = click target). */
 function RepoLink({ p, variant }: { p: Project; variant?: 'lead' }) {
   return (
     <a className={`projects__link${variant ? ` projects__link--${variant}` : ''}`} href={p.url} target="_blank" rel="noopener noreferrer">
       <span className="projects__link-text">
         <span className="projects__link-k">View on GitHub<span className="sr-only">:</span></span>
-        <span className="projects__link-v">{p.urlLabel}</span>
+        <span className="projects__link-v">{breakable(p.urlLabel)}</span>
       </span>
       <span className="projects__link-go" aria-hidden="true">↗</span>
       <span className="sr-only"> (opens in a new tab)</span>
@@ -91,7 +94,7 @@ export function Projects() {
             <Halftone tone="coral" density="medium" className="projects__ht projects__ht--lead" />
             <Card as="article" tone="paper" className="projects__card projects__lead" aria-labelledby={leadId}>
               <p className="projects__cap projects__cap--coral"><span className="sr-only">Year: </span>{lead.year} · Newest</p>
-              <Burst text="NEW!" tone="periwinkle" size={124} rotate={10} className="projects__burst" />
+              <Burst text="NEW!" tone="periwinkle" size={140} rotate={10} className="projects__burst" />
               <div className="projects__lead-main">
                 <h3 id={leadId} className="projects__name projects__name--lead">{lead.name}</h3>
                 <SpeechBubble side="top-left" tone="peach" as="p" className="projects__bubble projects__bubble--lead">{lead.tagline}</SpeechBubble>
