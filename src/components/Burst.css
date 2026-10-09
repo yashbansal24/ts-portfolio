@@ -1,0 +1,27 @@
+.burst {
+  position: relative; flex: none;
+  width: var(--burst-size, 160px); aspect-ratio: 1;
+  display: grid; place-items: center;
+  transform: rotate(var(--burst-rot, -8deg));
+}
+.burst__svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.burst__shadow { fill: var(--ink); }
+.burst__shape { fill: var(--burst-fill); stroke: var(--ink); stroke-width: 4; stroke-linejoin: miter; }
+.burst--coral { --burst-fill: var(--coral); --burst-ink: var(--ink); }
+.burst--paper { --burst-fill: var(--paper); --burst-ink: var(--ink); }
+.burst--peach { --burst-fill: var(--peach); --burst-ink: var(--ink); }
+.burst--periwinkle { --burst-fill: var(--periwinkle); --burst-ink: var(--ink); }
+.burst--blue { --burst-fill: var(--blue-2); --burst-ink: var(--paper); }
+.burst__text {
+  position: relative; display: grid; justify-items: center; max-width: 72%;
+  font: 400 calc(var(--burst-size, 160px) * var(--burst-fit, .22)) / .9 var(--font-comic);
+  letter-spacing: .03em; text-align: center; color: var(--burst-ink);
+  transform: skew(-6deg) rotate(-2deg);
+  text-shadow: 2px 2px 0 var(--burst-shadow-text, transparent);
+}
+.burst--coral .burst__text { --burst-shadow-text: var(--paper); }
+.burst__sub {
+  margin-top: .3em;
+  font: 800 calc(var(--burst-size, 160px) * .065) / 1.1 var(--font-sans); letter-spacing: .04em; text-transform: uppercase;
+  text-shadow: none;
+}

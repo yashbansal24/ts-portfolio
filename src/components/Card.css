@@ -1,0 +1,16 @@
+.card {
+  position: relative;
+  border: var(--border); border-radius: var(--r);
+  padding: clamp(18px, 2.2vw, 28px);
+  box-shadow: 6px 6px 0 var(--shadow-c, var(--ink));
+}
+.card--shadow-sm { box-shadow: 4px 4px 0 var(--shadow-c, var(--ink)); }
+.card--shadow-lg { box-shadow: 10px 10px 0 var(--shadow-c, var(--ink)); }
+.card--paper { background: var(--paper); color: var(--blue); }
+.card--ivory { background: var(--ivory-2); color: var(--blue); }
+.card--peach { background: var(--peach); color: var(--ink); }
+.card--coral { background: var(--coral); color: var(--ink); }
+.card--blue { background: var(--blue); color: var(--on-dark); --focus: var(--coral); }
+.card--interactive { transition: transform var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out); }
+.card--interactive:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0 var(--shadow-c, var(--ink)); }
+.card--interactive:active { transform: translate(4px, 4px); box-shadow: var(--shadow-press); transition-duration: var(--dur-fast); }

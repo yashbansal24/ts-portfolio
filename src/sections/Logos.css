@@ -1,0 +1,78 @@
+/* ---------- LOGOS: paper block, neo-brutal tiles on a marquee ---------- */
+.logos { padding-block: clamp(48px, 6vw, 80px) clamp(56px, 7vw, 96px); overflow: hidden; }
+.logos__head { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px 24px; flex-wrap: wrap; }
+.logos__head .sh { margin-bottom: clamp(24px, 3vw, 36px); }
+.logos__head .sh__title { font-size: clamp(38px, 5vw, 72px); }
+.logos__toggle {
+  display: inline-flex; align-items: center; gap: 8px; margin-bottom: clamp(24px, 3vw, 36px);
+  min-height: 40px; padding: 0 12px;
+  background: var(--paper); color: var(--ink);
+  border: var(--border-sm); border-radius: var(--r-sm); box-shadow: var(--shadow-sm);
+  font: 500 12px/1 var(--font-mono); letter-spacing: .1em; text-transform: uppercase; cursor: pointer;
+  transition: transform var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out);
+}
+.logos__toggle:hover { transform: translate(-2px, -2px); box-shadow: var(--shadow-hover-sm); }
+.logos__toggle:active { transform: translate(4px, 4px); box-shadow: none; }
+.logos__toggle span { font-size: 10px; }
+
+.logos__marquee { position: relative; padding-block: 14px 22px; }
+.logos__track { display: flex; width: max-content; animation: logos-scroll var(--dur-marquee) linear infinite; }
+.logos__marquee:hover .logos__track,
+.logos__marquee:focus-within .logos__track,
+.logos__marquee.is-paused .logos__track { animation-play-state: paused; }
+@keyframes logos-scroll { to { transform: translateX(-50%); } }
+
+.logos__list { display: flex; gap: clamp(16px, 2vw, 26px); padding-right: clamp(16px, 2vw, 26px); flex: none; }
+.logos__tile {
+  position: relative; flex: none;
+  width: clamp(178px, 17vw, 228px); height: clamp(96px, 8.6vw, 120px);
+  display: grid; place-items: center;
+  border: var(--border); border-radius: var(--r);
+  box-shadow: var(--shadow);
+  transform: rotate(-1.5deg);
+  transition: transform var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out);
+}
+.logos__tile--tilt-b { transform: rotate(1.5deg); }
+.logos__tile:hover { transform: translate(-2px, -2px) rotate(0deg); box-shadow: var(--shadow-hover); }
+.logos__tile--paper { background: var(--paper); }
+.logos__tile--ivory { background: var(--ivory-2); }
+.logos__tile--blue { background: var(--blue); }
+.logos__tile--coral { background: var(--coral); }
+
+.logos__legend {
+  position: absolute; top: 8px; left: 10px;
+  font: 500 10px/1 var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--blue-2);
+}
+.logos__tile--blue .logos__legend { color: var(--on-dark-2); }
+.logos__tile--coral .logos__legend { color: var(--ink); }
+
+.logos__crop { position: relative; display: block; width: var(--size); aspect-ratio: var(--cw) / var(--ch); overflow: hidden; margin-top: 10px; }
+.logos__crop img {
+  position: absolute; left: 0; top: 0; max-width: none; height: auto;
+  width: calc(var(--W) / var(--cw) * 100%);
+  margin-left: calc(var(--x) / var(--cw) * -100%);
+  margin-top: calc(var(--y) / var(--cw) * -100%);
+}
+.logos__crop img[src*="trading_economics"] { filter: brightness(.62) contrast(1.15); }
+
+.logos__wordmark {
+  display: inline-flex; align-items: baseline; gap: 6px; margin-top: 10px;
+  font: 400 clamp(28px, 2.6vw, 36px)/1 var(--font-serif); letter-spacing: -.01em; color: var(--ink);
+}
+.logos__wordmark small {
+  font: 700 11px/1 var(--font-mono); letter-spacing: .08em;
+  padding: 3px 5px; border: var(--border-sm); border-radius: var(--r-sm); background: var(--paper);
+  transform: translateY(-5px);
+}
+
+/* reduced motion: static wrapped grid, no duplicate */
+@media (prefers-reduced-motion: reduce) {
+  .logos__track { display: block; animation: none; width: auto; padding-inline: var(--gutter); max-width: var(--max); margin-inline: auto; }
+  .logos__list { flex: initial; flex-wrap: wrap; justify-content: center; row-gap: 22px; padding-right: 0; }
+  .logos__list--dupe, .logos__toggle { display: none; }
+}
+@media (max-width: 720px) {
+  .logos__tile { width: 168px; height: 92px; }
+  .logos__head .sh { margin-bottom: 12px; }
+  .logos__toggle { margin-bottom: 18px; }
+}

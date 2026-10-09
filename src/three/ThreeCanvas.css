@@ -1,0 +1,10 @@
+.three-stage { position: relative; width: 100%; overflow: hidden; touch-action: pan-y; }
+.three-stage__canvas {
+  position: absolute; inset: 0;
+  width: 100% !important; height: 100% !important;
+  display: block; outline: none;
+  opacity: 0; transition: opacity var(--dur-slow) var(--ease-out);
+}
+.three-stage--ready .three-stage__canvas { opacity: 1; }
+.three-stage__fallback { position: absolute; inset: 0; display: grid; place-items: center; }
+.three-stage__fallback > svg { width: 86%; height: auto; }

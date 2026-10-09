@@ -1,0 +1,135 @@
+/* Global reset, base typography, layout primitives and utilities. Tokens live in tokens.css. */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--nav-h) + 12px);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--blue);
+  background-color: var(--ivory);
+  /* subtle graph-paper dot grid */
+  background-image: radial-gradient(var(--grid-dot) 1.1px, transparent 1.4px);
+  background-size: var(--grid-size) var(--grid-size);
+  font: 400 var(--fs-base) / var(--lh-body) var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+}
+
+img, svg, video, canvas { display: block; max-width: 100%; }
+img { height: auto; }
+a { color: inherit; }
+button { font: inherit; color: inherit; }
+h1, h2, h3, h4, p, figure, blockquote, dl, dd { margin: 0; }
+ul, ol { margin: 0; padding: 0; }
+ul[role='list'], ol[role='list'] { list-style: none; }
+h1, h2, h3 { font-weight: 400; text-wrap: balance; }
+p { text-wrap: pretty; }
+::selection { background: var(--coral); color: var(--ink); }
+
+/* ---- focus: 3px ink outline + offset (coral on dark tones) ---- */
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+.tone-blue, .tone-ink { --focus: var(--coral); }
+
+/* ---- hard-shadow colour follows the surface: ink on light, coral on deep blue ----
+   Components draw shadows with var(--shadow-c, var(--ink)). Light containers reset it for their children. */
+.tone-blue, .tone-ink { --shadow-c: var(--coral); }
+.card--paper > *, .card--ivory > *, .card--peach > *, .card--coral > *,
+.panel:not(.panel--blue) > *, .bubble:not(.bubble--blue) > * { --shadow-c: var(--ink); }
+.card--blue > *, .panel--blue > * { --shadow-c: var(--coral); }
+
+/* ---- skip link ---- */
+.skip-link {
+  position: absolute; left: 12px; top: -80px; z-index: var(--z-skip);
+  padding: 10px 16px;
+  background: var(--paper); color: var(--ink);
+  border: var(--border); box-shadow: var(--shadow-sm);
+  font: 800 14px/1 var(--font-sans); text-decoration: none;
+  opacity: 0; pointer-events: none;
+}
+.skip-link:focus { top: 12px; opacity: 1; pointer-events: auto; }
+
+/* ---- layout ---- */
+.wrap {
+  width: 100%;
+  max-width: var(--max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* Every page section: <section className="section tone-paper" id="…">. */
+.section {
+  position: relative;
+  isolation: isolate;          /* lets MeshGradient / Halftone sit at z-index -1 */
+  padding-block: var(--section-y);
+  scroll-margin-top: calc(var(--nav-h) + 8px);
+}
+section[id], footer[id] { scroll-margin-top: calc(var(--nav-h) + 8px); }
+
+/* ---- section tones ---- */
+.tone-ivory { background-color: var(--ivory); color: var(--blue); }
+.tone-ivory-2 { background-color: var(--ivory-2); color: var(--blue); }
+.tone-paper { background-color: var(--paper); color: var(--blue); }
+.tone-blue { background-color: var(--blue); color: var(--on-dark); }
+.tone-ink { background-color: var(--ink); color: var(--on-dark); }
+.tone-coral { background-color: var(--coral); color: var(--ink); }
+.tone-mesh { background-color: transparent; }   /* pair with <MeshGradient/> */
+/* hard ink rule between flat colour blocks */
+.rule-top { border-top: var(--border); }
+.rule-bottom { border-bottom: var(--border); }
+
+/* ---- type utilities ---- */
+.serif { font-family: var(--font-serif); font-weight: 400; }
+.mono { font-family: var(--font-mono); }
+.comic { font-family: var(--font-comic); letter-spacing: .03em; }
+.eyebrow {
+  font: 500 var(--fs-xs)/1.2 var(--font-mono);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+}
+.h2 {
+  font: 400 var(--fs-h2)/.95 var(--font-serif);
+  letter-spacing: -.025em;
+}
+.h2 em, .h1 em { font-style: italic; }
+.lede { font: 400 var(--fs-lg)/1.3 var(--font-serif); }
+.heavy { font-family: var(--font-sans); font-weight: 800; letter-spacing: .02em; text-transform: uppercase; }
+.muted { color: var(--blue-2); }
+.tone-blue .muted, .tone-ink .muted { color: var(--on-dark-2); }
+
+/* ---- a11y utilities ---- */
+.sr-only {
+  position: absolute !important;
+  width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%);
+  white-space: nowrap; border: 0;
+}
+
+/* ---- neo-brutal utilities ---- */
+.nb-box { border: var(--border); box-shadow: var(--shadow); }
+.nb-box-sm { border: var(--border-sm); box-shadow: var(--shadow-sm); }
+.nb-lift {
+  transition: transform var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out);
+}
+.nb-lift:hover { transform: translate(-2px, -2px); box-shadow: var(--shadow-hover); }
+.nb-lift:active { transform: translate(4px, 4px); box-shadow: var(--shadow-press); transition-duration: var(--dur-fast); }
+
+/* ---- reduced motion: kill animation globally ---- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+}

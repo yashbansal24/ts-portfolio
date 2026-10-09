@@ -1,0 +1,24 @@
+.tape { position: relative; overflow: hidden; padding-block: 22px; margin-block: -48px; z-index: 3; pointer-events: none; } /* straddles the seam between two sections */
+.tape__band {
+  width: 110%; margin-left: -5%;
+  transform: rotate(var(--tape-rot, -2deg));
+  border-block: var(--border);
+  box-shadow: 0 6px 0 var(--ink);
+  overflow: hidden;
+}
+.tape--coral .tape__band { background: var(--coral); color: var(--ink); }
+.tape--blue .tape__band { background: var(--blue); color: var(--on-dark); box-shadow: 0 6px 0 var(--coral); }
+.tape--paper .tape__band { background: var(--paper); color: var(--ink); }
+.tape__track {
+  display: flex; width: max-content;
+  animation: tape-scroll var(--tape-dur, 32s) linear infinite;
+  animation-direction: var(--tape-dir, normal);
+}
+.tape__run { display: flex; flex: none; }
+.tape__item {
+  display: inline-flex; align-items: center; gap: 22px; padding: 12px 0 12px 22px;
+  font: 800 clamp(15px, 1.4vw, 19px)/1 var(--font-sans); letter-spacing: .06em; text-transform: uppercase; white-space: nowrap;
+}
+.tape__sep { font-size: 1.1em; }
+@keyframes tape-scroll { to { transform: translateX(-25%); } }
+@media (prefers-reduced-motion: reduce) { .tape__track { animation: none; } }

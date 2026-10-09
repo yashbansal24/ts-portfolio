@@ -1,0 +1,30 @@
+.bubble {
+  position: relative;
+  padding: 14px 18px;
+  border: var(--border); border-radius: 22px;
+  background: var(--bubble-fill); color: var(--bubble-ink, var(--ink));
+  filter: drop-shadow(4px 4px 0 var(--shadow-c, var(--ink)));
+  font: 600 var(--fs-md)/1.35 var(--font-sans);
+}
+.bubble--paper { --bubble-fill: var(--paper); }
+.bubble--ivory { --bubble-fill: var(--ivory-2); }
+.bubble--peach { --bubble-fill: var(--peach); }
+.bubble--coral { --bubble-fill: var(--coral); }
+.bubble--periwinkle { --bubble-fill: var(--periwinkle); }
+.bubble--blue { --bubble-fill: var(--blue); --bubble-ink: var(--on-dark); --focus: var(--coral); }
+.bubble__tail {
+  position: absolute; width: 36px; height: 30px; overflow: visible;
+  fill: var(--bubble-fill); stroke: var(--ink); stroke-width: 3; stroke-linejoin: miter;
+}
+/* tail's open edge sits on the inner border edge so its fill hides that border segment */
+.bubble--bottom-left .bubble__tail { top: 100%; left: 24px; }
+.bubble--bottom-right .bubble__tail { top: 100%; right: 24px; transform: scaleX(-1); }
+.bubble--top-left .bubble__tail { bottom: 100%; left: 24px; transform: scaleY(-1); }
+.bubble--top-right .bubble__tail { bottom: 100%; right: 24px; transform: scale(-1, -1); }
+.bubble--left .bubble__tail { left: 0; top: 14px; transform-origin: 0 0; transform: rotate(90deg); }
+.bubble--right .bubble__tail { left: 100%; top: 50px; transform-origin: 0 0; transform: rotate(-90deg); }
+.bubble--bottom-left { margin-bottom: 28px; }
+.bubble--bottom-right { margin-bottom: 28px; }
+.bubble--top-left, .bubble--top-right { margin-top: 28px; }
+.bubble--left { margin-left: 28px; }
+.bubble--right { margin-right: 28px; }

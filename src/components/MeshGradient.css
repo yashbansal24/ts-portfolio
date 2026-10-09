@@ -1,0 +1,21 @@
+.mesh { position: absolute; inset: 0; z-index: var(--z-bg); overflow: hidden; pointer-events: none; }
+.mesh__field {
+  position: absolute; inset: -18%;
+  background: var(--mesh-bg);
+  will-change: transform;
+}
+.mesh__field--drift { animation: mesh-drift var(--dur-mesh, 28s) var(--ease-inout) infinite alternate; }
+@keyframes mesh-drift {
+  0%   { transform: translate3d(-3%, -2%, 0) rotate(0deg) scale(1); }
+  50%  { transform: translate3d(2%, 3%, 0) rotate(4deg) scale(1.06); }
+  100% { transform: translate3d(4%, -2%, 0) rotate(-3deg) scale(1.03); }
+}
+.mesh__grain {
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.055 0 0 0 0 0.106 0 0 0 0 0.302 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  opacity: .16;
+  mix-blend-mode: multiply;
+}
+.mesh--contact .mesh__grain { opacity: .22; mix-blend-mode: overlay; }
+@media (prefers-reduced-motion: reduce) { .mesh__field--drift { animation: none; } }

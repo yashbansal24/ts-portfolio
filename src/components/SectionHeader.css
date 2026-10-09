@@ -1,0 +1,15 @@
+.sh { position: relative; display: grid; gap: 12px; max-width: 980px; margin-bottom: clamp(36px, 5vw, 64px); }
+.sh--center { margin-inline: auto; text-align: center; justify-items: center; }
+.sh__num { font: italic 400 clamp(52px, 6.5vw, 92px)/.8 var(--font-serif); color: var(--coral); -webkit-text-stroke: 1px var(--ink); }
+.sh__eyebrow {
+  display: inline-block; justify-self: start; width: max-content; max-width: 100%;
+  padding: 5px 9px; background: var(--paper); color: var(--ink);
+  border: var(--border-sm); box-shadow: 3px 3px 0 var(--shadow-c, var(--ink));
+}
+.sh--center .sh__eyebrow { justify-self: center; }
+.sh__title { font: 400 var(--fs-h2)/.95 var(--font-serif); letter-spacing: -.025em; }
+.sh__title em { font-style: italic; color: var(--blue-2); }
+.sh--xl .sh__title { font-size: var(--fs-h2-xl); line-height: .85; }
+.sh__dek { max-width: 60ch; font: 400 var(--fs-md)/1.5 var(--font-sans); color: var(--blue-2); }
+.tone-blue .sh__title em, .tone-ink .sh__title em { color: var(--coral); }
+.tone-blue .sh__dek, .tone-ink .sh__dek { color: var(--on-dark-2); }

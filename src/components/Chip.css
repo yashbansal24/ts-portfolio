@@ -1,0 +1,16 @@
+.chips { display: flex; flex-wrap: wrap; gap: 10px 8px; list-style: none; margin: 0; padding: 0; }
+.chip {
+  display: inline-flex; align-items: center;
+  padding: 6px 10px;
+  border: var(--border-sm); border-radius: var(--r-sm);
+  box-shadow: 3px 3px 0 var(--shadow-c, var(--ink));
+  font: 500 12.5px/1.2 var(--font-mono); letter-spacing: .01em;
+  color: var(--ink);
+}
+.chip--sm { padding: 5px 8px; font-size: 11.5px; box-shadow: 2px 2px 0 var(--shadow-c, var(--ink)); }
+.chip--ivory { background: var(--ivory-2); }
+.chip--paper { background: var(--paper); }
+.chip--coral { background: var(--coral); }
+.chip--peach { background: var(--peach); }
+.chip--periwinkle { background: var(--periwinkle); }
+.chip--blue { background: var(--blue); color: var(--on-dark); }

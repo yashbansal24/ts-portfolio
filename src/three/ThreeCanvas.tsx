@@ -1,0 +1,149 @@
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react';
+import type { SceneFactory, SceneInstance, SceneModule } from './types';
+import './ThreeCanvas.css';
+
+export type ThreeCanvasProps<P = unknown> = {
+  /** Eager factory (bundled with the caller). Provide `factory` OR `loader`. */
+  factory?: SceneFactory<P>;
+  /** Lazy factory: `() => import('./scenes/x')`. Loaded when the stage is within `lazyMargin` of the viewport. */
+  loader?: () => Promise<SceneModule<P>>;
+  /** IntersectionObserver rootMargin for lazy loading (default '600px 0px'). */
+  lazyMargin?: string;
+  /** Passed to the factory as opts.props. Read once at mount. */
+  options?: P;
+  /** Rendered when WebGL is unavailable, the factory throws, or the context is lost. */
+  fallback?: ReactNode;
+  /** Overlays rendered above the canvas (captions etc.). */
+  children?: ReactNode;
+  className?: string;
+  style?: CSSProperties;
+  /** Decorative by default. Pass a label to expose the stage as role="img". */
+  label?: string;
+};
+
+const DPR_CAP = 1.5;
+
+function webglAvailable(): boolean {
+  try {
+    const c = document.createElement('canvas');
+    const gl = (c.getContext('webgl2') || c.getContext('webgl')) as WebGLRenderingContext | null;
+    if (!gl) return false;
+    gl.getExtension('WEBGL_lose_context')?.loseContext();
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Hosts a three.js scene: creates its own <canvas>, caps DPR at 1.5, resizes via ResizeObserver,
+ * pauses off-screen (IntersectionObserver) and in hidden tabs, renders one static frame under
+ * prefers-reduced-motion, shows `fallback` without WebGL, and disposes everything on unmount.
+ * Size the stage with CSS (fixed height / aspect-ratio) so there is no layout shift.
+ */
+export function ThreeCanvas<P = unknown>({ factory, loader, lazyMargin = '600px 0px', options, fallback, children, className, style, label }: ThreeCanvasProps<P>) {
+  const hostRef = useRef<HTMLDivElement>(null);
+  const [failed, setFailed] = useState(false);
+  const [ready, setReady] = useState(false);
+  const optsRef = useRef(options);
+  const factoryRef = useRef(factory);
+  const loaderRef = useRef(loader);
+
+  useEffect(() => {
+    const host = hostRef.current;
+    if (!host) return;
+    if (!webglAvailable()) { setFailed(true); return; }
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let disposed = false;
+    let inst: SceneInstance | null = null;
+    let canvas: HTMLCanvasElement | null = null;
+    let raf = 0, running = false, inView = false, last = 0, t = 0;
+    const cleanups: Array<() => void> = [];
+
+    const draw = (dt: number) => { if (inst) inst.render(reduced ? (inst.staticTime ?? inst.startTime ?? 0) : t, dt); };
+    const frame = (now: number) => {
+      raf = requestAnimationFrame(frame);
+      const dt = Math.min(0.05, (now - last) / 1000 || 0); last = now; t += dt;
+      draw(dt);
+    };
+    const start = () => { if (running || reduced || !inst) return; running = true; last = performance.now(); raf = requestAnimationFrame(frame); };
+    const stop = () => { running = false; cancelAnimationFrame(raf); };
+    const sync = () => (inView && !document.hidden ? start() : stop());
+    const requestRender = () => { if (!running && inst) draw(0); };
+
+    const fail = () => { stop(); setFailed(true); if (canvas) canvas.style.display = 'none'; };
+
+    const mount = (create: SceneFactory<P>) => {
+      if (disposed) return;
+      canvas = document.createElement('canvas');
+      canvas.className = 'three-stage__canvas';
+      canvas.setAttribute('aria-hidden', 'true');
+      host.prepend(canvas);
+      try {
+        inst = create(canvas, {
+          container: host,
+          dpr: Math.min(window.devicePixelRatio || 1, DPR_CAP),
+          reducedMotion: reduced,
+          requestRender,
+          props: optsRef.current as P,
+        });
+      } catch (err) {
+        console.warn('[ThreeCanvas] scene failed, showing fallback', err);
+        canvas.remove(); canvas = null; setFailed(true); return;
+      }
+      t = inst.startTime ?? 0;
+      const onLost = (e: Event) => { e.preventDefault(); fail(); };
+      canvas.addEventListener('webglcontextlost', onLost);
+      cleanups.push(() => canvas?.removeEventListener('webglcontextlost', onLost));
+
+      const resize = () => {
+        const r = host.getBoundingClientRect();
+        inst?.resize(Math.max(1, Math.round(r.width)), Math.max(1, Math.round(r.height)));
+        if (!running) draw(0);
+      };
+      resize();
+      const ro = new ResizeObserver(resize); ro.observe(host);
+      const io = new IntersectionObserver(([e]) => { inView = e.isIntersecting; sync(); }, { rootMargin: '80px 0px' });
+      io.observe(host);
+      document.addEventListener('visibilitychange', sync);
+      cleanups.push(() => { ro.disconnect(); io.disconnect(); document.removeEventListener('visibilitychange', sync); });
+      setReady(true);
+    };
+
+    const eager = factoryRef.current, lazy = loaderRef.current;
+    if (eager) mount(eager);
+    else if (lazy) {
+      const io = new IntersectionObserver(([e]) => {
+        if (!e.isIntersecting) return;
+        io.disconnect();
+        lazy().then((m) => mount(m.default), (err) => { console.warn('[ThreeCanvas] scene load failed', err); if (!disposed) setFailed(true); });
+      }, { rootMargin: lazyMargin });
+      io.observe(host);
+      cleanups.push(() => io.disconnect());
+    }
+
+    return () => {
+      disposed = true;
+      stop();
+      cleanups.forEach((c) => c());
+      try { inst?.dispose(); } catch { /* already gone */ }
+      inst = null;
+      canvas?.remove();
+      canvas = null;
+    };
+  }, [lazyMargin]);
+
+  const a11y = label ? { role: 'img', 'aria-label': label } : { 'aria-hidden': true as const };
+  return (
+    <div
+      ref={hostRef}
+      className={['three-stage', failed && 'three-stage--fallback', ready && 'three-stage--ready', className].filter(Boolean).join(' ')}
+      style={style}
+      {...a11y}
+    >
+      {failed && <div className="three-stage__fallback">{fallback}</div>}
+      {children}
+    </div>
+  );
+}

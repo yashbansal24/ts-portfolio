@@ -1,0 +1,102 @@
+/* Design tokens — "The Impossible Desk", neo-brutalist edition.
+   Every colour, border, shadow, size and timing the site uses lives here. */
+:root {
+  /* ---- palette ---- */
+  --ivory: #F7F1E5;        /* page background */
+  --ivory-2: #EFE6D3;      /* alt panels, chips */
+  --line: #E4D8C0;         /* hairlines on ivory (decorative only) */
+  --paper: #FFFDF8;        /* cards, tiles */
+  --blue: #14286E;         /* primary text, deep-blue blocks */
+  --blue-2: #2A44A0;       /* secondary text on light, accents */
+  --coral: #FF6B4A;        /* accent fills — text on coral must be --ink */
+  --coral-soft: #FFD9CC;   /* peach: caption boxes, mesh points */
+  --peach: #FFD9CC;        /* alias of --coral-soft (mesh vocabulary) */
+  --periwinkle: #C9D6FF;   /* mesh points, soft blue fills */
+  --ink: #0E1B4D;          /* neo-brutal outlines + hard shadows (darkest blue, never black) */
+  --on-dark: #F7F1E5;      /* text on --blue / --ink */
+  --on-dark-2: #C9D2F0;    /* muted text on --blue (9.0:1) */
+
+  /* ---- type ---- */
+  --font-serif: 'Instrument Serif', 'Times New Roman', Georgia, serif;
+  --font-sans: 'Inter Tight', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  --font-comic: 'Bangers', 'Impact', 'Arial Black', sans-serif; /* bursts / onomatopoeia ONLY */
+
+  --fs-xs: 12px;                                   /* mono eyebrows, captions */
+  --fs-sm: 14px;                                   /* chips, meta */
+  --fs-base: clamp(16px, 0.25vw + 15px, 17px);     /* body */
+  --fs-md: clamp(18px, 0.6vw + 15px, 21px);        /* lead body */
+  --fs-lg: clamp(22px, 1.2vw + 16px, 30px);        /* serif lede */
+  --fs-xl: clamp(30px, 2.4vw + 18px, 44px);        /* h3 serif */
+  --fs-h2: clamp(42px, 6vw, 88px);                 /* section h2 */
+  --fs-h2-xl: clamp(64px, 11vw, 160px);            /* oversized h2 (Slayb, Contact) */
+  --fs-display: clamp(64px, 10.4vw, 158px);        /* hero h1 */
+
+  --lh-tight: 0.9;
+  --lh-snug: 1.25;
+  --lh-body: 1.6;
+  --tracking-mono: 0.14em;
+
+  /* ---- neo-brutal borders + shadows ---- */
+  --bw: 3px;                          /* cards, buttons, tiles, nav */
+  --bw-sm: 2px;                       /* small chips */
+  --border: var(--bw) solid var(--ink);
+  --border-sm: var(--bw-sm) solid var(--ink);
+  --shadow-sm: 4px 4px 0 var(--ink);  /* buttons, chips, stickers */
+  --shadow: 6px 6px 0 var(--ink);     /* cards, panels */
+  --shadow-lg: 10px 10px 0 var(--ink);
+  --shadow-hover-sm: 6px 6px 0 var(--ink);
+  --shadow-hover: 8px 8px 0 var(--ink);
+  --shadow-press: 0 0 0 var(--ink);
+  /* context-aware variants: write `box-shadow: 4px 4px 0 var(--shadow-c, var(--ink))` in components */
+
+  /* ---- radii (0–10px, mix square + slightly rounded) ---- */
+  --r-0: 0;
+  --r-sm: 4px;
+  --r: 8px;
+  --r-lg: 10px;
+  --r-pill: 999px; /* speech bubbles / pulse dots only */
+
+  /* ---- spacing (4px base) ---- */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 24px;
+  --s-6: 32px;
+  --s-7: 48px;
+  --s-8: 64px;
+  --s-9: 96px;
+  --s-10: 128px;
+  --gutter: clamp(16px, 4vw, 56px);
+  --section-y: clamp(64px, 9vw, 120px);
+  --max: 1320px;
+  --max-text: 68ch;
+  --nav-h: 68px;
+
+  /* ---- layers ---- */
+  --z-bg: -1;        /* MeshGradient / Halftone inside an isolated section */
+  --z-base: 0;
+  --z-raised: 2;     /* stickers, bursts over cards */
+  --z-overlay: 10;   /* fig captions over canvases */
+  --z-nav: 50;
+  --z-menu: 60;
+  --z-skip: 100;
+
+  /* ---- motion ---- */
+  --ease-out: cubic-bezier(.2, .8, .2, 1);
+  --ease-snap: cubic-bezier(.3, 1.4, .5, 1);
+  --ease-inout: cubic-bezier(.65, 0, .35, 1);
+  --dur-fast: 120ms;   /* press */
+  --dur: 160ms;        /* hover lift */
+  --dur-slow: 400ms;
+  --dur-marquee: 38s;
+  --dur-mesh: 28s;
+
+  /* ---- background grid ---- */
+  --grid-dot: rgba(20, 40, 110, .10);
+  --grid-size: 24px;
+
+  /* ---- focus ---- */
+  --focus: var(--ink);
+}

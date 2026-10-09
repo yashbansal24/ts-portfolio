@@ -1,0 +1,26 @@
+.sticker {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 7px 12px;
+  border: var(--border); border-radius: var(--r-sm);
+  box-shadow: 4px 4px 0 var(--shadow-c, var(--ink));
+  font: 800 13px/1.15 var(--font-sans); letter-spacing: .05em; text-transform: uppercase;
+  transform: rotate(var(--rot, -3deg));
+  width: max-content; max-width: 100%;
+}
+.sticker--coral { background: var(--coral); color: var(--ink); }
+.sticker--paper { background: var(--paper); color: var(--ink); }
+.sticker--ivory { background: var(--ivory-2); color: var(--ink); }
+.sticker--peach { background: var(--peach); color: var(--ink); }
+.sticker--periwinkle { background: var(--periwinkle); color: var(--ink); }
+.sticker--blue { background: var(--blue); color: var(--on-dark); }
+.sticker__dot {
+  flex: none; width: 10px; height: 10px; border-radius: var(--r-pill);
+  background: var(--coral); border: var(--border-sm);
+  animation: sticker-pulse 2.4s var(--ease-out) infinite;
+}
+.sticker--coral .sticker__dot { background: var(--paper); }
+@keyframes sticker-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(255, 107, 74, .55); }
+  80%, 100% { box-shadow: 0 0 0 9px rgba(255, 107, 74, 0); }
+}
+@media (prefers-reduced-motion: reduce) { .sticker__dot { animation: none; } }

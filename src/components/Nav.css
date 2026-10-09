@@ -1,0 +1,65 @@
+.nav {
+  position: sticky; top: 0; z-index: var(--z-nav);
+  height: var(--nav-h);
+  background: var(--paper);
+  border-bottom: var(--border);
+}
+.nav__in { height: 100%; display: flex; align-items: center; gap: 16px; }
+.nav__brand { display: inline-flex; align-items: center; gap: 10px; margin-right: auto; text-decoration: none; color: var(--ink); }
+.nav__mark {
+  display: grid; place-items: center; width: 38px; height: 38px;
+  background: var(--coral); color: var(--ink);
+  border: var(--border); border-radius: var(--r-sm); box-shadow: 3px 3px 0 var(--ink);
+  font: 800 14px/1 var(--font-sans); letter-spacing: -.02em;
+  transition: transform var(--dur) var(--ease-out);
+}
+.nav__brand:hover .nav__mark { transform: rotate(-6deg); }
+.nav__name { font: 400 25px/1 var(--font-serif); letter-spacing: .005em; }
+
+.nav__links { display: flex; gap: 2px; list-style: none; }
+.nav__links a, .nav__menu-links a {
+  display: inline-flex; align-items: center; min-height: 40px; padding: 0 10px;
+  border: var(--bw-sm) solid transparent; border-radius: var(--r-sm);
+  font: 600 14px/1 var(--font-sans); text-decoration: none; color: var(--ink);
+  transition: background-color var(--dur) ease, border-color var(--dur) ease, box-shadow var(--dur) ease, transform var(--dur) var(--ease-out);
+}
+.nav__links a:hover { background: var(--ivory-2); border-color: var(--ink); }
+.nav__links a[aria-current] { background: var(--peach); border-color: var(--ink); box-shadow: 3px 3px 0 var(--ink); transform: translate(-1px, -1px); }
+
+.nav__toggle {
+  display: none; align-items: center; gap: 10px;
+  min-height: 42px; padding: 0 12px;
+  background: var(--paper); color: var(--ink);
+  border: var(--border); border-radius: var(--r-sm); box-shadow: var(--shadow-sm);
+  font: 800 13px/1 var(--font-sans); letter-spacing: .05em; text-transform: uppercase; cursor: pointer;
+}
+.nav__toggle:active { transform: translate(4px, 4px); box-shadow: none; }
+.nav__burger { display: grid; gap: 4px; width: 18px; }
+.nav__burger i { display: block; height: 2.5px; background: currentColor; transition: transform var(--dur) var(--ease-out), opacity var(--dur); }
+.nav--open .nav__burger i:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav--open .nav__burger i:nth-child(2) { opacity: 0; }
+.nav--open .nav__burger i:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+.nav__menu {
+  position: absolute; left: 0; right: 0; top: 100%; z-index: var(--z-menu);
+  background: var(--paper); border-bottom: var(--border); box-shadow: 0 8px 0 var(--ink);
+  padding: 16px var(--gutter) 22px;
+}
+.nav__menu[hidden] { display: none; }
+.nav__menu-links { list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.nav__menu-links a {
+  width: 100%; min-height: 48px; padding: 0 14px;
+  background: var(--ivory); border-color: var(--ink); box-shadow: 3px 3px 0 var(--ink);
+  font-size: 16px;
+}
+.nav__menu-links a[aria-current] { background: var(--peach); }
+.nav__menu-links li:last-child a { background: var(--coral); }
+
+@media (max-width: 1079.98px) {
+  .nav__primary { display: none; }
+  .nav__toggle { display: inline-flex; }
+}
+@media (max-width: 520px) {
+  .nav__cta { display: none; }
+  .nav__name { font-size: 22px; }
+}

@@ -1,0 +1,23 @@
+.halftone {
+  position: absolute; inset: 0; z-index: var(--z-bg); pointer-events: none;
+  --ht-cell: 14px; --ht-dot: 2.6px;
+  background-image:
+    radial-gradient(circle at center, var(--ht-color) var(--ht-dot), transparent calc(var(--ht-dot) + .6px)),
+    radial-gradient(circle at center, var(--ht-color) var(--ht-dot), transparent calc(var(--ht-dot) + .6px));
+  background-size: var(--ht-cell) var(--ht-cell);
+  background-position: 0 0, calc(var(--ht-cell) / 2) calc(var(--ht-cell) / 2);
+}
+.halftone--fine { --ht-cell: 9px; --ht-dot: 1.6px; }
+.halftone--coarse { --ht-cell: 22px; --ht-dot: 4.4px; }
+.halftone--coral { --ht-color: var(--coral); }
+.halftone--blue { --ht-color: var(--blue-2); }
+.halftone--ink { --ht-color: var(--ink); }
+.halftone--periwinkle { --ht-color: var(--periwinkle); }
+.halftone--paper { --ht-color: var(--paper); }
+.halftone--peach { --ht-color: var(--peach); }
+.halftone--fade-up { -webkit-mask-image: linear-gradient(to top, #000 10%, transparent 90%); mask-image: linear-gradient(to top, #000 10%, transparent 90%); }
+.halftone--fade-down { -webkit-mask-image: linear-gradient(to bottom, #000 10%, transparent 90%); mask-image: linear-gradient(to bottom, #000 10%, transparent 90%); }
+.halftone--fade-left { -webkit-mask-image: linear-gradient(to left, #000 10%, transparent 90%); mask-image: linear-gradient(to left, #000 10%, transparent 90%); }
+.halftone--fade-right { -webkit-mask-image: linear-gradient(to right, #000 10%, transparent 90%); mask-image: linear-gradient(to right, #000 10%, transparent 90%); }
+.halftone--fade-radial { -webkit-mask-image: radial-gradient(closest-side, #000 20%, transparent 100%); mask-image: radial-gradient(closest-side, #000 20%, transparent 100%); }
+.halftone--fade-corner { -webkit-mask-image: radial-gradient(120% 120% at 100% 100%, #000 0%, transparent 70%); mask-image: radial-gradient(120% 120% at 100% 100%, #000 0%, transparent 70%); }
