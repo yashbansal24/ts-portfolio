@@ -23,7 +23,6 @@ function monthIndex(s: string, now: number): number {
   return Number(y) * 12 + Math.max(0, MONTHS.indexOf(m.slice(0, 3)));
 }
 const yearOf = (s: string, now: number) => (isPresent(s) ? Math.floor(now / 12) : Number(s.split(' ')[1]));
-const pad = (n: number) => String(n).padStart(2, '0');
 /** Instrument Serif's "1" reads as "l" ("H1" → "Hl"), so digit runs in names are set in the sans. */
 const nameNodes = (name: string) =>
   name.split(/(\d+)/).map((part, i) => (i % 2 ? <span key={i} className="experience__digits">{part}</span> : part));
@@ -31,11 +30,11 @@ const nameNodes = (name: string) =>
 /** Keep "sub-200 ms" on one line (non-breaking hyphen + space) — display only, the fact is unchanged. */
 const keep = (s: string) => s.replace(/\bsub-(\d+) ms/g, 'sub\u2011$1\u00a0ms');
 
-const WORDS = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve'];
-const word = (n: number) => WORDS[n] ?? String(n);
-
-const latest = experience[0];
-const origin = experience[experience.length - 1];
+/** Career path oldest → newest, from the data: "PayPal → H1 → … → Presight (G42)". */
+const path = [...experience]
+  .reverse()
+  .map((r) => (r.companyNote && r === experience[0] ? `${r.company} (${r.companyNote})` : r.company))
+  .join(' → ');
 
 /* ---------- look per panel (position in the strip, not tied to a company) ---------- */
 type Look = { tone: ComicPanelTone; cap: 'paper' | 'peach' | 'coral'; bubble: BubbleTone; chip: ChipTone; tilt: number };
@@ -46,13 +45,6 @@ const LOOKS: Look[] = [
   { tone: 'periwinkle', cap: 'paper', bubble: 'paper', chip: 'paper', tilt: -0.8 },
   { tone: 'peach', cap: 'paper', bubble: 'paper', chip: 'paper', tilt: 1.1 },
 ];
-/** Comic narration boxes: the strip is a flashback, newest panel first. */
-function beatOf(i: number, n: number) {
-  if (i === 0) return 'Now…';
-  if (i === n - 1) return 'Where it began…';
-  return ['Previously…', 'Before that…', 'Earlier…'][i - 1] ?? 'Earlier…';
-}
-
 /** Proportional tenure rail (newest on the left, like the strip). Decorative: every date is also in the panels. */
 function Rail({ now }: { now: number }) {
   return (
@@ -63,7 +55,6 @@ function Rail({ now }: { now: number }) {
           const tone = i === 0 && isPresent(r.end) ? 'coral' : LOOKS[i % LOOKS.length].tone;
           return (
             <span key={r.company} className={`experience__seg experience__seg--${tone}`} style={{ flexGrow: months } as CSSProperties}>
-              <b className="experience__seg-no">{pad(i + 1)}</b>
               <span className="experience__seg-name">{r.company}</span>
               <span className="experience__tick">{yearOf(r.start, now)}</span>
               {i === 0 && <span className="experience__tick experience__tick--now">Now</span>}
@@ -75,7 +66,7 @@ function Rail({ now }: { now: number }) {
   );
 }
 
-function RolePanel({ role, index, total }: { role: Role; index: number; total: number }) {
+function RolePanel({ role, index }: { role: Role; index: number }) {
   const [open, setOpen] = useState(false);
   const listId = useId();
   const look = LOOKS[index % LOOKS.length];
@@ -91,17 +82,10 @@ function RolePanel({ role, index, total }: { role: Role; index: number; total: n
         tone={look.tone}
         tilt={look.tilt}
         captionTone={look.cap}
-        caption={
-          <span className="experience__cap" aria-hidden="true">
-            <b className="experience__no">{pad(index + 1)}</b>
-            <span>{when} · {role.location}</span>
-          </span>
-        }
-        footer={current ? <span aria-hidden="true">To be continued…</span> : undefined}
+        caption={<span aria-hidden="true">{when} · {role.location}</span>}
       >
         {current && <Halftone tone="coral" density="medium" fade="radial" opacity={0.6} className="experience__splash-dots" />}
         <div className="experience__lead">
-          <p className="experience__beat" aria-hidden="true">{beatOf(index, total)}</p>
           <h3 className="experience__company">
             {nameNodes(role.company)}
             {role.companyNote && (
@@ -150,10 +134,9 @@ function RolePanel({ role, index, total }: { role: Role; index: number; total: n
   );
 }
 
-/** Experience — deep-blue comic zone: one ComicPanel per role in a flashback strip (newest first), numbered and railed. */
+/** Experience — deep-blue comic zone: one ComicPanel per role (newest first) above a proportional tenure rail. */
 export function Experience() {
   const now = useMonthIndex();
-  const years = Math.floor((now - monthIndex(origin.start, now)) / 12);
   return (
     <section className="experience section tone-blue" id="experience" aria-labelledby="experience-title">
       <Halftone tone="periwinkle" density="coarse" fade="up" opacity={0.2} />
@@ -161,16 +144,15 @@ export function Experience() {
       <div className="wrap">
         <SectionHeader
           id="experience-title"
-          num="03"
-          eyebrow={`Experience · since ${origin.start.split(' ')[1]}`}
-          title={<>{word(experience.length)} desks, <em>{word(years).toLowerCase()} years.</em></>}
-          dek={<>From {origin.company} in {yearOf(origin.start, now)} to {latest.company}{latest.companyNote ? ` (${latest.companyNote})` : ''} today. Read the strip newest panel first.</>}
+          eyebrow="Experience"
+          title={<>From payments <em>to agents.</em></>}
+          dek={`${path}.`}
           className="experience__sh"
         />
         <Rail now={now} />
         <ol className="experience__strip" role="list">
           {experience.map((r, i) => (
-            <RolePanel key={r.company} role={r} index={i} total={experience.length} />
+            <RolePanel key={r.company} role={r} index={i} />
           ))}
         </ol>
       </div>

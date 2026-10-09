@@ -9,7 +9,7 @@ import type { HalftoneTone } from '../components/Halftone';
 import { prefersReducedMotion } from '../hooks/useReducedMotion';
 import './About.css';
 
-/* ---------- manifesto: profile.summary minus its first sentence (the hero already shows that pitch) ---------- */
+/* ---------- summary bubble: profile.summary minus its first sentence (the hero already shows that pitch) ---------- */
 const cut = profile.summary.indexOf('. ') + 1;
 const record = profile.summary.slice(cut).trim();
 /** The record is set in Instrument Serif, whose "1" reads as "l" ("H1" → "Hl"), so digit runs are set in the sans. */
@@ -19,7 +19,7 @@ const initials = `${profile.firstName[0]}${profile.lastName[0]}`;
 /* ---------- stats → comic panels ----------
    Every fact comes from `stats`; the look (tone, tilt, comic device) is keyed by the stat label so a
    re-ordered or edited stats list still renders (unknown labels fall back to a plain paper panel). */
-type Device = 'impact' | 'speed' | 'plain' | 'bubble' | 'thought' | 'kaching';
+type Device = 'impact' | 'speed' | 'plain' | 'bubble' | 'thought' | 'saved';
 type Look = {
   device: Device; tone: ComicPanelTone; caption: 'paper' | 'peach' | 'coral';
   tilt: number; halftone?: HalftoneTone; wide?: boolean;
@@ -31,7 +31,7 @@ const LOOKS: Record<string, Look> = {
   'daily active users': { device: 'plain', tone: 'blue', caption: 'coral', tilt: 1.2, halftone: 'periwinkle' },
   'notification events': { device: 'bubble', tone: 'peach', caption: 'paper', tilt: 0.8 },
   'US patents': { device: 'thought', tone: 'paper', caption: 'peach', tilt: 0, halftone: 'blue' },
-  'saved per year': { device: 'kaching', tone: 'periwinkle', caption: 'paper', tilt: -0.8, wide: true },
+  'saved per year': { device: 'saved', tone: 'periwinkle', caption: 'paper', tilt: -0.8, wide: true },
 };
 const FALLBACK: Look = { device: 'plain', tone: 'paper', caption: 'peach', tilt: 0 };
 
@@ -57,8 +57,8 @@ function ActionLines() {
   );
 }
 
-/** Decorative speed lines trailing a "WHOOSH!" (the "less SDLC time" panel). */
-function Whoosh() {
+/** Decorative speed lines trailing a "FASTER!" (the "less SDLC time" panel). */
+function Faster() {
   const lines = [[6, 70, 2], [14, 10, 3], [22, 92, 2], [30, 34, 4], [38, 118, 2], [44, 60, 2]];
   return (
     <span className="about__sfx about__zoom" aria-hidden="true">
@@ -67,12 +67,12 @@ function Whoosh() {
           <line key={y} x1={x1} x2={196} y1={y} y2={y} strokeWidth={w} />
         ))}
       </svg>
-      <span className="about__sfx-word">WHOOSH!</span>
+      <span className="about__sfx-word">FASTER!</span>
     </span>
   );
 }
 
-function StatPanel({ s, i }: { s: Stat; i: number }) {
+function StatPanel({ s }: { s: Stat }) {
   const look = LOOKS[s.label] ?? FALLBACK;
   const where = whereOf(s);
   const fact = (
@@ -93,7 +93,7 @@ function StatPanel({ s, i }: { s: Stat; i: number }) {
           <div className="about__impact-art">
             <ActionLines />
             <span className="about__pop">
-              <Burst text="SHIPPED!" tone="paper" size={210} rotate={-10} spikes={14} />
+              <Burst text="RELIABLE!" tone="paper" size={210} rotate={-10} spikes={14} />
             </span>
           </div>
           <div className="about__impact-copy">{fact}{context}</div>
@@ -120,21 +120,21 @@ function StatPanel({ s, i }: { s: Stat; i: number }) {
         </div>
       );
       break;
-    case 'kaching':
+    case 'saved':
       body = (
         <div className="about__impact about__impact--flip">
           <div className="about__impact-copy">{fact}{context}</div>
           <div className="about__impact-art about__impact-art--sm">
             <ActionLines />
             <span className="about__pop">
-              <Burst text="KA-CHING!" tone="coral" size={170} rotate={9} spikes={11} />
+              <Burst text="SAVED!" tone="coral" size={170} rotate={9} spikes={11} />
             </span>
           </div>
         </div>
       );
       break;
     case 'speed':
-      body = <>{fact}<Whoosh />{context}</>;
+      body = <>{fact}<Faster />{context}</>;
       break;
     default:
       body = <>{fact}{context}</>;
@@ -146,7 +146,7 @@ function StatPanel({ s, i }: { s: Stat; i: number }) {
       tone={look.tone}
       tilt={look.tilt}
       halftone={look.halftone ?? false}
-      caption={<><span aria-hidden="true">No. {String(i + 1).padStart(2, '0')}{where ? ' — ' : ''}</span>{where && <span className="sr-only">At </span>}{where}</>}
+      caption={where && <><span className="sr-only">At </span>{where}</>}
       captionTone={look.caption}
       className={`about__panel about__panel--${look.device}${look.wide ? ' about__panel--wide' : ''}`}
     >
@@ -158,7 +158,7 @@ function StatPanel({ s, i }: { s: Stat; i: number }) {
 export function About() {
   const ref = useRef<HTMLElement>(null);
 
-  // Bursts "pop" (and the WHOOSH! zooms) in once when they scroll into view (skipped entirely under reduced motion / no IO).
+  // Bursts "pop" (and the FASTER! zooms) in once when they scroll into view (skipped entirely under reduced motion / no IO).
   useEffect(() => {
     const el = ref.current;
     if (!el || prefersReducedMotion() || typeof IntersectionObserver === 'undefined') return;
@@ -188,8 +188,7 @@ export function About() {
           <div className="about__intro">
             <SectionHeader
               id="about-title"
-              num="02"
-              eyebrow="About · Manifesto"
+              eyebrow="About"
               title={<>Long-running agents. <em>Platforms that hold them up.</em></>}
             />
             <div className="about__focus">
@@ -201,7 +200,6 @@ export function About() {
           </div>
 
           <figure className="about__manifesto">
-            <p className="about__narration">Meanwhile, in the {profile.location}…</p>
             <SpeechBubble as="blockquote" side="bottom-left" tone="paper" className="about__bubble">
               <p className="about__record">{recordNodes}</p>
             </SpeechBubble>
@@ -216,12 +214,11 @@ export function About() {
         </div>
 
         <div className="about__bar">
-          <h3 className="about__bar-title">By the numbers</h3>
+          <h3 className="about__bar-title">Impact created</h3>
           <span className="about__bar-rule" aria-hidden="true" />
-          <span className="about__bar-meta eyebrow" aria-hidden="true">{stats.length} panels</span>
         </div>
         <ul className="about__grid" role="list">
-          {stats.map((s, i) => <StatPanel key={s.label} s={s} i={i} />)}
+          {stats.map((s) => <StatPanel key={s.label} s={s} />)}
         </ul>
       </div>
     </section>

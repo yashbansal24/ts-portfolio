@@ -1,7 +1,6 @@
-import { experience, profile, stats } from '../data/profile';
+import { experience, profile } from '../data/profile';
 import { Button } from '../components/Button';
 import { Sticker } from '../components/Sticker';
-import { FigureCaption } from '../components/FigureCaption';
 import { MeshGradient } from '../components/MeshGradient';
 import { Tape } from '../components/Tape';
 import { ThreeCanvas } from '../three/ThreeCanvas';
@@ -17,15 +16,20 @@ const loadDesk = () => deskModule ?? import('../three/scenes/deskScene');
 const now = experience[0];
 const nowLabel = `Now @ ${now.company}${now.companyNote ? ` (${now.companyNote})` : ''}, ${now.location}`;
 const pitch = profile.summary.slice(0, profile.summary.indexOf('. ') + 1);
-const patents = stats.find((s) => s.label === 'US patents');
-const dau = stats.find((s) => s.label === 'daily active users');
 
+// Expertise keywords for the tape, taken from the résumé focus areas and skills (src/data/profile.ts):
+// what the work is about, not counts, places or the job title (already in the hero).
 const TAPE_ITEMS = [
-  profile.title,
-  ...profile.focus,
-  ...(patents ? [`${patents.value} ${patents.label}`] : []),
-  ...(dau ? [`${dau.value} ${dau.label}`] : []),
-  profile.location,
+  'Agentic systems',
+  'Multi-agent orchestration',
+  'LLM evals & guardrails',
+  'Context engineering',
+  'RAG',
+  'MCP & tool calling',
+  'Open-weight model serving',
+  'Distributed systems',
+  'AI platform engineering',
+  'Fintech & payments',
 ];
 
 /** Static SVG desk shown when WebGL is unavailable. */
@@ -52,11 +56,6 @@ export function Hero() {
         <MeshGradient preset="hero" />
         <div className="wrap hero__grid">
           <div className="hero__head">
-            <p className="hero__issue eyebrow">
-              <span>Portfolio</span>
-              <span className="hero__issue-opt">Edition 2026</span>
-              <span>{profile.location}</span>
-            </p>
             <h1 id="hero-name" className="hero__name">
               {profile.firstName} <em>{profile.lastName}</em>
             </h1>
@@ -68,17 +67,9 @@ export function Hero() {
             </p>
           </div>
 
-          <figure className="hero__stage" aria-hidden="true">
+          <div className="hero__stage">
             <ThreeCanvas loader={loadDesk} lazyMargin="0px" className="hero__canvas" fallback={<DeskFallback />} />
-            <FigureCaption n={1} title="The impossible desk" as="div" className="hero__fig hero__fig--tag" />
-            <FigureCaption n={2} title="Screen" as="div" tone="paper" className="hero__fig hero__fig--a">
-              <b>A screen deeper than its monitor.</b> Keycap stairs lead down to a coral sun.
-            </FigureCaption>
-            <FigureCaption n={3} title="Keyboard" as="div" tone="paper" className="hero__fig hero__fig--b">
-              <b>Keys take flight</b> and rebuild themselves as a server rack.
-            </FigureCaption>
-            <span className="hero__hint eyebrow">Drag to turn ⟲</span>
-          </figure>
+          </div>
 
           <div className="hero__body">
             <Sticker tone="coral" rotate={-3} dot className="hero__now" as="p">{nowLabel}</Sticker>

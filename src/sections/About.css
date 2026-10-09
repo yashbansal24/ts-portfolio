@@ -1,7 +1,7 @@
-/* ---------- ABOUT + STATS: ivory comic zone (caption box + speech bubble manifesto, stats as comic panels) ---------- */
+/* ---------- ABOUT + STATS: ivory comic zone (summary speech bubble, stats as comic panels) ---------- */
 .about { overflow: hidden; }
 
-/* ---- top: header + focus (left) / manifesto (right) ---- */
+/* ---- top: header + focus (left) / summary bubble (right) ---- */
 .about__top {
   display: grid;
   grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
@@ -25,18 +25,8 @@
 .about__focus-list li:nth-child(3n + 1) { background: var(--periwinkle); }
 .about__focus-list li:nth-child(3n + 2) { background: var(--peach); }
 
-/* manifesto: narration caption box → speech bubble → speaker tag */
+/* summary: speech bubble → speaker tag */
 .about__manifesto { position: relative; margin: 0; padding-top: clamp(4px, 2vw, 28px); }
-.about__narration {
-  position: relative; z-index: var(--z-raised);
-  display: inline-block; max-width: calc(100% - 12px);
-  margin: 0 0 -14px -6px; padding: 8px 12px;
-  background: var(--peach); color: var(--ink);
-  border: var(--border); border-radius: var(--r-0);
-  box-shadow: 4px 4px 0 var(--ink);
-  font: 500 12px/1.35 var(--font-mono); letter-spacing: .12em; text-transform: uppercase;
-  transform: rotate(-2deg);
-}
 .about__bubble {
   margin: 0 0 30px;
   padding: clamp(28px, 3vw, 36px) clamp(20px, 2.4vw, 32px) clamp(20px, 2.4vw, 28px);
@@ -60,7 +50,7 @@
 .about__speaker b { display: block; font: 800 16px/1.2 var(--font-sans); }
 .about__role { display: block; margin-top: 3px; font: 500 12px/1.3 var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--blue-2); }
 
-/* ---- "By the numbers" bar ---- */
+/* ---- "Impact created" bar ---- */
 .about__bar { display: flex; align-items: center; gap: 16px; margin: clamp(56px, 7vw, 96px) 0 clamp(26px, 3vw, 40px); }
 .about__bar-title {
   flex: none; padding: 9px 16px;
@@ -70,7 +60,6 @@
   transform: rotate(-1.5deg);
 }
 .about__bar-rule { flex: 1; height: 3px; background: var(--ink); }
-.about__bar-meta { flex: none; color: var(--ink); }
 
 /* ---- the comic grid ---- */
 .about__grid {
@@ -128,7 +117,7 @@
   pointer-events: none;
 }
 
-/* "WHOOSH!" + speed lines in the "less time" panel (decorative) */
+/* "FASTER!" + speed lines in the "less time" panel (decorative) */
 .about__sfx { display: flex; align-items: center; gap: 4px; margin-block: auto; padding-block: 14px; }
 .about__panel--speed .about__context { margin-top: 0; }
 .about__speed { flex: 1; min-width: 0; height: 40px; stroke: var(--ink); stroke-linecap: round; opacity: .8; }
@@ -199,7 +188,6 @@
   .about__impact .burst, .about__impact-art--sm .burst { --burst-size: 124px; }
   .about__think .about__fact { margin-bottom: 50px; }
   .about__context { max-width: none; }
-  .about__bar-meta { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .about__pop, .about__zoom { animation: none !important; opacity: 1 !important; transform: none !important; }

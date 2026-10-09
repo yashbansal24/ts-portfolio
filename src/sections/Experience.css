@@ -30,7 +30,6 @@
 .experience__seg--periwinkle { background: var(--periwinkle); }
 .experience__seg--coral { background: var(--coral); }
 .experience__seg--ivory { background: var(--ivory-2); }
-.experience__seg-no { font-weight: 700; }
 .experience__seg-name { overflow: hidden; text-overflow: ellipsis; }
 .experience__tick {
   position: absolute; top: calc(100% + 9px); right: 0; transform: translateX(50%);
@@ -57,22 +56,7 @@
 .experience .experience__panel { flex: 1; min-width: 0; --focus: var(--ink); }
 .experience .experience__panel .panel__body { display: flex; flex-direction: column; padding: clamp(18px, 2.4vw, 32px); padding-top: clamp(16px, 1.8vw, 22px); }
 
-/* caption box: ink panel number + dates · place */
-.experience__cap { display: inline-flex; align-items: stretch; }
-.experience__no {
-  display: inline-flex; align-items: center;
-  margin: -7px 10px -7px -12px; padding: 0 9px;
-  background: var(--ink); color: var(--paper);
-  font-weight: 700; letter-spacing: .06em;
-}
-.experience .panel__caption--foot { font-style: italic; }
-
-/* lead: narration, company, title, headline bubble */
-.experience__beat {
-  font: italic 400 clamp(19px, 1.5vw, 22px)/1 var(--font-serif);
-  color: var(--blue-2);
-  margin-bottom: 8px;
-}
+/* lead: company, title, headline bubble (the caption box above carries dates · place) */
 .experience__company {
   font: 400 var(--fs-xl)/.95 var(--font-serif); letter-spacing: -.02em;
   color: var(--blue);
