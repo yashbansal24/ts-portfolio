@@ -26,6 +26,25 @@ const PEERS: Array<[number, number, number]> = [        // [from, to, start] han
   [0, 1, BEATS[2] + 0.45], [2, 3, BEATS[2] + 1.25], [4, 0, BEATS[2] + 2.0], [1, 2, BEATS[2] + 2.65],
 ];
 
+/* ---------------- camera frame: the layout is authored in screen space (sx right, sy up, dz toward camera) ---------------- */
+const CAM_DIR = new THREE.Vector3(0.2, 0.45, 1).normalize();
+const AX_R = new THREE.Vector3(CAM_DIR.z, 0, -CAM_DIR.x).normalize();
+const AX_U = new THREE.Vector3().crossVectors(CAM_DIR, AX_R).normalize();
+const YAW = Math.atan2(CAM_DIR.x, CAM_DIR.z);           // rotation.y that faces the camera
+const AIM = new THREE.Vector3(0, 0.9, 0);
+const place = (out: THREE.Vector3, [sx, sy, dz]: readonly number[]) => out.copy(AIM).addScaledVector(AX_R, sx).addScaledVector(AX_U, sy).addScaledVector(CAM_DIR, dz);
+type XYZ = readonly [number, number, number];
+type Layout = { agents: XYZ[]; hub: XYZ; page: XYZ; extras: XYZ[] };
+// agents in dispatch order: laptop, tablet, chip, phone, watch (clockwise around the cloud)
+const WIDE: Layout = {
+  agents: [[-2.4, -0.75, 0.6], [-2.2, 1.35, -1.0], [2.2, 1.4, -1.0], [2.45, -0.2, 0.6], [0.05, -1.05, 1.3]],
+  hub: [0, 2.45, -0.5], page: [0, 0.6, 0.35], extras: [[-3.15, 2.85, -1.8], [3.2, 2.75, -1.9]],
+};
+const NARROW: Layout = {
+  agents: [[-1.5, -1.25, 0.6], [-1.5, 1.2, -1.0], [1.5, 1.25, -1.0], [1.6, -0.55, 0.6], [0.15, -1.6, 1.3]],
+  hub: [0, 2.5, -0.5], page: [0, 0.35, 0.35], extras: [[-2.0, 2.95, -1.8], [2.05, 2.8, -1.9]],
+};
+
 const backOut = (x: number) => { const c = 1.70158; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
 const bump = (t: number, at: number, len: number) => (t < at || t > at + len ? 0 : Math.sin(((t - at) / len) * Math.PI));
 
@@ -36,6 +55,8 @@ type Agent = {
   work(k: number, wake: number, t: number): void;
   pos: THREE.Vector3; rot: THREE.Euler; scale: number;
 };
+/** Tilt about x first, then turn to face the camera (+ a yaw offset toward the cloud). */
+const facing = (x: number, yawOff: number, z = 0) => new THREE.Euler(x, YAW + yawOff, z, 'YXZ');
 
 const create: SceneFactory<AgentsProps> = (canvas, { container: el, dpr, reducedMotion: REDUCED, requestRender, props }) => {
   const renderer = createRenderer(canvas, dpr);
@@ -55,7 +76,6 @@ const create: SceneFactory<AgentsProps> = (canvas, { container: el, dpr, reduced
   const softM = clay(0x9fb2f2, { roughness: 0.62 });
   const periM = clay(C.periwinkle, { roughness: 0.66 });
   const coralM = clay(C.coral, { roughness: 0.5 });
-  const peachM = clay(C.peach, { roughness: 0.7 });
   const inkM = clay(C.ink, { roughness: 0.6 });
   const cloudM = clay(C.white, { roughness: 0.92, emissive: C.white, emissiveIntensity: 0.1 });
   const packetM = clay(C.coral, { roughness: 0.42, emissive: C.coral, emissiveIntensity: 0.3 });
@@ -85,7 +105,7 @@ const create: SceneFactory<AgentsProps> = (canvas, { container: el, dpr, reduced
     });
     const port = new THREE.Object3D(); port.position.set(0, 0.66, 0.14); hinge.add(port);
     return {
-      g, port, screen, pos: new THREE.Vector3(), rot: new THREE.Euler(0, 0.55, 0), scale: 1,
+      g, port, screen, pos: new THREE.Vector3(), rot: facing(0, 0.5), scale: 1,
       work(k, wake) {
         lines.forEach(({ b, indent, w }, j) => {
           const len = w * clamp01(k * lines.length * 1.15 - j) * wake;
@@ -111,7 +131,7 @@ const create: SceneFactory<AgentsProps> = (canvas, { container: el, dpr, reduced
     });
     const port = new THREE.Object3D(); port.position.set(0, 0, 0.16); g.add(port);
     return {
-      g, port, screen, pos: new THREE.Vector3(), rot: new THREE.Euler(-0.12, 0.34, 0), scale: 1,
+      g, port, screen, pos: new THREE.Vector3(), rot: facing(-0.1, 0.42), scale: 1,
       work(k, wake) {
         const tw = 0.42 * wake; sized(title, tw, 0.055, 0.014); title.position.x = -0.5 + tw / 2;
         bars.forEach(({ b, h, j }) => {
@@ -142,7 +162,7 @@ const create: SceneFactory<AgentsProps> = (canvas, { container: el, dpr, reduced
     const core = mesh(rbox(0.3, 0.02, 0.3, 0.008, 1), coralM, flat); core.position.y = 0.152; g.add(core);
     const port = new THREE.Object3D(); port.position.set(0, 0.36, 0); g.add(port);
     return {
-      g, port, pos: new THREE.Vector3(), rot: new THREE.Euler(0.62, -0.32, 0), scale: 1,
+      g, port, pos: new THREE.Vector3(), rot: facing(0.78, -0.42), scale: 1.12,
       work(k, wake, t) {
         const busy = k > 0 && k < 1 ? 0.5 + 0.5 * Math.sin(t * 7) : 0;
         dieM.emissiveIntensity = wake * (0.1 + 0.32 * busy);
@@ -164,7 +184,7 @@ const create: SceneFactory<AgentsProps> = (canvas, { container: el, dpr, reduced
     const input = mesh(unit, ivory2M, flat); input.position.set(0, -0.34, 0.057); g.add(input);
     const port = new THREE.Object3D(); port.position.set(0, 0.05, 0.16); g.add(port);
     return {
-      g, port, screen, pos: new THREE.Vector3(), rot: new THREE.Euler(0, -0.55, 0.06), scale: 1,
+      g, port, screen, pos: new THREE.Vector3(), rot: facing(0, -0.42, 0.07), scale: 1.08,
       work(k, wake) {
         bubbles.forEach(({ b, w, at }) => { const s = backOut(clamp01((k - at) / 0.14)) * wake * (k > at ? 1 : 0); sized(b, w * s, 0.12 * s, 0.014); });
         sized(input, 0.36 * wake, 0.07, 0.014);
@@ -175,22 +195,24 @@ const create: SceneFactory<AgentsProps> = (canvas, { container: el, dpr, reduced
   /* ---------------- ONE smartwatch: a progress ring fills ---------------- */
   function watch(): Agent {
     const g = new THREE.Group();
-    const face = mesh(track(new THREE.CylinderGeometry(0.4, 0.4, 0.14, 40)), blue2M); g.add(face);
+    const w = new THREE.Group(); w.rotation.x = Math.PI / 2; g.add(w);   // built face-up, stood upright (face → +z)
+    const strapM = clay(0xffb8a2, { roughness: 0.68 });
+    const face = mesh(track(new THREE.CylinderGeometry(0.4, 0.4, 0.14, 40)), blue2M); w.add(face);
     const screen = screenMat();
-    const scr = mesh(track(new THREE.CylinderGeometry(0.32, 0.32, 0.02, 40)), screen, { cast: false }); scr.position.y = 0.075; g.add(scr);
-    const strapG = rbox(0.44, 0.07, 0.6, 0.03);
-    for (const s of [-1, 1]) { const st = mesh(strapG, peachM); st.position.set(0, -0.025, s * 0.62); g.add(st); }
-    const crown = mesh(track(new THREE.CylinderGeometry(0.06, 0.06, 0.09, 16)), coralM); crown.rotation.z = Math.PI / 2; crown.position.x = 0.44; g.add(crown);
+    const scr = mesh(track(new THREE.CylinderGeometry(0.32, 0.32, 0.02, 40)), screen, { cast: false }); scr.position.y = 0.075; w.add(scr);
+    const strapG = rbox(0.42, 0.07, 0.46, 0.03);
+    for (const s of [-1, 1]) { const st = mesh(strapG, strapM); st.position.set(0, -0.02, s * 0.56); w.add(st); }
+    const crown = mesh(track(new THREE.CylinderGeometry(0.06, 0.06, 0.09, 16)), coralM); crown.rotation.z = Math.PI / 2; crown.position.x = 0.44; w.add(crown);
     const dotG = track(new THREE.SphereGeometry(0.034, 12, 8));
     const dots = Array.from({ length: 12 }, (_, j) => {
       const a = (j / 12) * Math.PI * 2;
-      const d = mesh(dotG, periM, flat); d.position.set(Math.sin(a) * 0.22, 0.09, -Math.cos(a) * 0.22); g.add(d);
+      const d = mesh(dotG, periM, flat); d.position.set(Math.sin(a) * 0.22, 0.09, -Math.cos(a) * 0.22); w.add(d);
       return d;
     });
-    const hub = mesh(track(new THREE.CylinderGeometry(0.07, 0.07, 0.02, 24)), coralM, flat); hub.position.y = 0.09; g.add(hub);
-    const port = new THREE.Object3D(); port.position.set(0, 0.32, 0); g.add(port);
+    const hub = mesh(track(new THREE.CylinderGeometry(0.07, 0.07, 0.02, 24)), coralM, flat); hub.position.y = 0.09; w.add(hub);
+    const port = new THREE.Object3D(); port.position.set(0, 0, 0.26); g.add(port);
     return {
-      g, port, screen, pos: new THREE.Vector3(), rot: new THREE.Euler(0.78, 0, 0), scale: 1.15,
+      g, port, screen, pos: new THREE.Vector3(), rot: new THREE.Euler(), scale: 1,
       work(k, wake) {
         dots.forEach((d, j) => { d.material = k * 12 > j + 0.3 ? coralM : periM; d.visible = wake > 0.05; d.scale.setScalar(Math.max(1e-4, wake)); });
         hub.visible = wake > 0.05; hub.scale.setScalar(Math.max(1e-4, wake * (0.9 + 0.2 * Math.sin(k * Math.PI * 6))));
@@ -200,15 +222,14 @@ const create: SceneFactory<AgentsProps> = (canvas, { container: el, dpr, reduced
 
   // Dispatch order = clockwise around the cloud as seen by the camera.
   const agents: Agent[] = [laptop(), tablet(), chip(), phone(), watch()];
-  const LAYOUT: Array<[number, number, number]> = [[-2.35, -0.1, 0.75], [-2.05, 0.45, -1.45], [1.85, 0.35, -1.5], [2.4, 0.3, 0.6], [0.15, -0.2, 1.85]];
   agents.forEach((a) => world.add(a.g));
 
   /* ---------------- the cloud (orchestrator) + two drifting extras (clouds may repeat) ---------------- */
-  const HUB = new THREE.Vector3(0, 2.3, -0.25);
-  const hub = cloudGroup(cloudM, 2.15); hub.position.copy(HUB); world.add(hub);
-  const extras = ([[-2.9, 2.75, -2.1, 0.75], [3.0, 2.15, -1.9, 0.6]] as const).map(([x, y, z, s], i) => {
-    const c = cloudGroup(cloudM, s, false); c.position.set(x, y, z); world.add(c);
-    return { c, x: x as number, i };
+  const HUB = new THREE.Vector3();
+  const hub = cloudGroup(cloudM, 2.15); world.add(hub);
+  const extras = [0.72, 0.58].map((s, i) => {
+    const c = cloudGroup(cloudM, s, false); world.add(c);
+    return { c, base: new THREE.Vector3(), i };
   });
 
   /* ---------------- the shipped result: one finished page ---------------- */
@@ -219,10 +240,10 @@ const create: SceneFactory<AgentsProps> = (canvas, { container: el, dpr, reduced
   ([[0.27, 0.1, 0.4, softM], [0.22, 0.0, 0.3, softM], [0, -0.22, 0.92, periM]] as Array<[number, number, number, THREE.Material]>).forEach(([x, y, w, m]) => {
     const l = mesh(unit, m, flat); l.scale.set(w, 0.055, 0.02); l.position.set(x, y, 0.042); page.add(l);
   });
-  const PAGE_Y0 = HUB.y - 0.5, PAGE_Y1 = 0.95;
+  const PAGE0 = new THREE.Vector3(), PAGE1 = new THREE.Vector3();
 
   /* ---------------- packets, trails, guide dots, the goal ---------------- */
-  const packetG = track(new THREE.SphereGeometry(0.11, 22, 14));
+  const packetG = track(new THREE.SphereGeometry(0.125, 22, 14));
   const POOL = 10;
   const packets = Array.from({ length: POOL }, () => {
     const m = mesh(packetG, packetM, { cast: true, receive: false });
@@ -242,11 +263,10 @@ const create: SceneFactory<AgentsProps> = (canvas, { container: el, dpr, reduced
   scene.add(goal);
 
   /* ---------------- floor: shadow catcher + soft blob (no visible ground) ---------------- */
-  const FLOOR_Y = -0.95;
-  const catcher = new THREE.Mesh(track(new THREE.PlaneGeometry(14, 10)), track(new THREE.ShadowMaterial({ color: C.ink, opacity: 0.16 })));
-  catcher.rotation.x = -Math.PI / 2; catcher.position.y = FLOOR_Y; catcher.receiveShadow = true; world.add(catcher);
+  const catcher = new THREE.Mesh(track(new THREE.PlaneGeometry(14, 10)), track(new THREE.ShadowMaterial({ color: C.ink, opacity: 0.11 })));
+  catcher.rotation.x = -Math.PI / 2; catcher.receiveShadow = true; world.add(catcher);
   const blob = new THREE.Mesh(track(new THREE.PlaneGeometry(9, 6.4)), track(new THREE.MeshBasicMaterial({ map: radialTex('rgba(14,27,77,0.22)', 'rgba(14,27,77,0)'), transparent: true, depthWrite: false })));
-  blob.rotation.x = -Math.PI / 2; blob.position.y = FLOOR_Y - 0.01; world.add(blob);
+  blob.rotation.x = -Math.PI / 2; world.add(blob);
 
   /* ---------------- interaction: hover tilt ---------------- */
   let hoverX = 0, rotY = 0;
@@ -293,7 +313,7 @@ const create: SceneFactory<AgentsProps> = (canvas, { container: el, dpr, reduced
       if (ph !== lastPhase) { lastPhase = ph; props.onPhase(ph, durOf(ph)); }
     }
 
-    const target = (composed ? 0 : Math.sin(t * 0.13) * 0.07) + hoverX * 0.3;
+    const target = (composed ? 0 : Math.sin(t * 0.13) * 0.06) + hoverX * 0.22;
     rotY += (target - rotY) * (composed ? 1 : 0.06);
     world.rotation.y = rotY;
 
@@ -324,14 +344,15 @@ const create: SceneFactory<AgentsProps> = (canvas, { container: el, dpr, reduced
       agents.reduce((s, _, i) => s + bump(ct, departOf(i) - 0.05, 0.25) * 0.35, 0);
     hub.scale.setScalar(1 + swell * 0.07 + (composed ? 0 : Math.sin(t * 1.1) * 0.012));
     hub.position.y = HUB.y + (composed ? 0 : Math.sin(t * 0.7) * 0.05);
-    extras.forEach(({ c, x, i }) => { c.position.x = x + (composed ? 0 : Math.sin(t * 0.2 + i * 2) * 0.25); });
+    extras.forEach(({ c, base, i }) => { c.position.copy(base); c.position.x += composed ? 0 : Math.sin(t * 0.2 + i * 2) * 0.25; });
 
     // the page ships: drops from the cloud into the middle of the ring
     const ps = composed ? 1 : backOut(clamp01((ct - SHIP_AT) / 0.55)) * (1 - smooth(CYCLE - 0.8, CYCLE - 0.2, ct)) * (ct >= SHIP_AT ? 1 : 0);
     page.visible = ps > 0.01;
     page.scale.setScalar(Math.max(1e-4, ps));
-    page.position.set(0, lerp(PAGE_Y0, PAGE_Y1, composed ? 1 : ease(clamp01((ct - SHIP_AT) / 1.1))) + (composed ? 0 : Math.sin(t * 1.2) * 0.04), 0.25);
-    page.rotation.set(-0.08, composed ? 0.18 : Math.sin(t * 0.8) * 0.22, 0);
+    page.position.lerpVectors(PAGE0, PAGE1, composed ? 1 : ease(clamp01((ct - SHIP_AT) / 1.1)));
+    page.position.y += composed ? 0 : Math.sin(t * 1.2) * 0.04;
+    page.rotation.set(-0.1, YAW + (composed ? 0.16 : Math.sin(t * 0.8) * 0.22), 0, 'YXZ');
 
     world.updateMatrixWorld(true);
     agents.forEach((a, i) => a.port.getWorldPosition(ports[i]));
@@ -388,37 +409,41 @@ const create: SceneFactory<AgentsProps> = (canvas, { container: el, dpr, reduced
     goal.visible = gp > 0 && gp < 1;
     if (goal.visible) {
       const e = ease(gp);
-      goal.position.set(lerp(0.5, center.x, e), lerp(hubTop.y + 1.25, hubTop.y - 0.15, e), lerp(0.7, center.z + 0.2, e));
+      goal.position.set(lerp(center.x + 0.45, center.x, e), lerp(hubTop.y + 0.95, hubTop.y - 0.15, e), lerp(center.z + 0.5, center.z + 0.2, e));
       goal.scale.setScalar(Math.max(1e-4, smooth(0, 0.18, gp) * (1 - smooth(0.82, 1, gp) * 0.85)));
       goal.rotation.set(t * 1.6, t * 2.1, 0);
     }
   };
 
   /* ---------------- layout + camera ---------------- */
-  const CAM_DIR = new THREE.Vector3(0.42, 0.6, 1).normalize();
   const fit = () => {
-    const narrow = camera.aspect < 0.95;
-    const kx = narrow ? 0.74 : 1, kz = narrow ? 1.08 : 1;
-    agents.forEach((a, i) => { const [x, y, z] = LAYOUT[i]; a.pos.set(x * kx, y, z * kz); });
-    extras.forEach((e, i) => { e.x = (i ? 3.0 : -2.9) * kx; });
+    const L = camera.aspect < 1.0 ? NARROW : WIDE;
+    agents.forEach((a, i) => place(a.pos, L.agents[i]));
+    place(HUB, L.hub);
+    place(PAGE1, L.page); PAGE0.copy(HUB).add(tmp.set(0, -0.5, 0));
+    extras.forEach((e, i) => place(e.base, L.extras[i]));
     const saved = world.rotation.y;
     world.rotation.y = 0;
     agents.forEach((a) => { a.g.position.copy(a.pos); a.g.rotation.copy(a.rot); a.g.scale.setScalar(a.scale); });
-    page.position.set(0, PAGE_Y1, 0.25); page.scale.setScalar(1); page.visible = true;
-    extras.forEach(({ c, x }) => { c.position.x = x; });
+    hub.position.copy(HUB); hub.scale.setScalar(1);
+    page.position.copy(PAGE1); page.rotation.set(-0.1, YAW, 0, 'YXZ'); page.scale.setScalar(1); page.visible = true;
+    extras.forEach(({ c, base }) => c.position.copy(base));
     world.updateMatrixWorld(true);
     const box = new THREE.Box3(), pts: THREE.Vector3[] = [];
+    let low = Infinity;
     const add = (o: THREE.Object3D, grow = 0) => {
       box.setFromObject(o).expandByScalar(grow);
+      low = Math.min(low, box.min.y);
       for (const x of [box.min.x, box.max.x]) for (const y of [box.min.y, box.max.y]) for (const z of [box.min.z, box.max.z]) pts.push(new THREE.Vector3(x, y, z));
     };
-    agents.forEach((a) => add(a.g, 0.12));
-    add(hub, 0.1); add(page); extras.forEach(({ c }) => add(c, 0.15));
-    pts.push(new THREE.Vector3(0.5, HUB.y + 0.62 + 1.25 + 0.3, 0.7));   // where the goal enters
+    agents.forEach((a) => add(a.g, 0.1));
+    add(hub, 0.08); add(page); extras.forEach(({ c }) => add(c, 0.1));
+    catcher.position.y = blob.position.y = low - 0.3;   // the goal star pops in above the frame's top and fades through the edge mask
+    blob.position.y -= 0.01;
     const all: THREE.Vector3[] = [];
     const up = new THREE.Vector3(0, 1, 0);
-    for (const ang of [-0.18, 0, 0.18]) for (const p of pts) all.push(p.clone().applyAxisAngle(up, ang));
-    fitCamera(camera, all, CAM_DIR, new THREE.Vector3(0, 0.9, 0), narrow ? 1.0 : 0.96);
+    for (const ang of [-0.1, 0, 0.1]) for (const p of pts) all.push(p.clone().applyAxisAngle(up, ang));
+    fitCamera(camera, all, CAM_DIR, AIM, 0.97);
     world.rotation.y = saved;
     world.updateMatrixWorld(true);
   };

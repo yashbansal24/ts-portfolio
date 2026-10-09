@@ -1,1 +1,134 @@
-/* Patents section styles — BEM-ish: .patents__x */
+/* ---------- PATENTS: comic "origin story" page — coral splash panel + two certificate panels ---------- */
+.patents { overflow: hidden; }
+.patents .patents__dots { inset: 0 0 0 30%; }
+
+.patents__grid {
+  --gap: clamp(22px, 2.6vw, 36px);
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: var(--gap);
+  list-style: none; margin: 0; padding: 0;
+}
+
+/* ---- splash panel: lightbulb, speed lines, PATENTED! burst, narration ---- */
+.patents__panel--splash { grid-row: span 2; }
+.patents__panel--splash .panel__caption { z-index: 1; font-size: 13px; }
+.patents__panel--splash .panel__body { display: flex; flex-direction: column; gap: 18px; }
+
+.patents__art {
+  position: relative; flex: 1;
+  display: grid; place-items: center;
+  min-height: 340px;
+}
+/* comic action lines radiating from the bulb (clear in the middle) */
+.patents__speed {
+  position: absolute; inset: -70%; z-index: -1; pointer-events: none;
+  background: repeating-conic-gradient(from 2deg at 50% 50%, var(--ink) 0deg 1.4deg, transparent 1.4deg 7.5deg);
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, transparent 0 15%, #000 38%);
+  mask-image: radial-gradient(circle at 50% 50%, transparent 0 15%, #000 38%);
+  opacity: .32;
+}
+.patents__bulb { position: relative; width: min(66%, 270px); height: auto; overflow: visible; transform: rotate(-6deg); }
+.patents__bulb-rays { fill: none; stroke: var(--ink); stroke-width: 8; stroke-linecap: round; }
+.patents__bulb-shadow { fill: var(--ink); }
+.patents__bulb-glass { fill: var(--paper); stroke: var(--ink); stroke-width: 6; stroke-linejoin: round; }
+.patents__bulb-shine { fill: none; stroke: var(--periwinkle); stroke-width: 8; stroke-linecap: round; }
+.patents__bulb-wire { fill: none; stroke: var(--ink); stroke-width: 4; stroke-linecap: round; }
+.patents__bulb-filament { fill: none; stroke: var(--coral); stroke-width: 6; stroke-linejoin: round; stroke-linecap: round; }
+.patents__bulb-base { fill: var(--blue-2); stroke: var(--ink); stroke-width: 4; }
+.patents__bulb-base--b { fill: var(--periwinkle); }
+.patents__bulb-tip { fill: var(--ink); }
+
+.patents .patents__burst {
+  --burst-size: clamp(150px, 13vw, 190px) !important;
+  position: absolute; right: -4%; bottom: -2%; z-index: var(--z-raised);
+}
+
+/* narration caption box (comic "meanwhile…" box, real text) */
+.patents__narration {
+  position: relative; align-self: flex-start; max-width: 30ch;
+  padding: 10px 14px;
+  background: var(--paper); color: var(--ink);
+  border: var(--border); box-shadow: 4px 4px 0 var(--ink);
+  font: 700 var(--fs-md)/1.3 var(--font-sans);
+}
+
+/* ---- certificate panels ---- */
+/* faint guilloche rings ("security paper") radiating from the seal */
+.patents__panel--cert::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: repeating-radial-gradient(circle at 90% 26%, transparent 0 11px, rgba(42, 68, 160, .14) 11px 12.5px);
+  -webkit-mask-image: radial-gradient(circle at 90% 26%, #000 0 18%, transparent 62%);
+  mask-image: radial-gradient(circle at 90% 26%, #000 0 18%, transparent 62%);
+}
+.patents__cert { display: grid; gap: 20px; }
+.patents__head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: clamp(14px, 2vw, 28px);
+  align-items: start;
+}
+.patents__kicker { display: flex; align-items: center; gap: 12px; color: var(--ink); }
+.patents__kicker::after { content: ""; flex: 1; height: 7px; border-block: 2px solid var(--ink); }
+.patents__title {
+  grid-column: 1; margin-top: 12px;
+  font: 400 clamp(27px, 2.3vw, 34px)/1.05 var(--font-serif); letter-spacing: -.012em;
+  color: var(--blue);
+}
+.patents__seal {
+  grid-column: 2; grid-row: 1 / span 2;
+  width: clamp(92px, 8.4vw, 116px); height: auto; overflow: visible;
+  margin-top: -14px; transform: rotate(9deg);
+}
+.patents__panel--2 .patents__seal { transform: rotate(-7deg); }
+.patents__seal-ribbon { fill: var(--coral); stroke: var(--ink); stroke-width: 3; stroke-linejoin: round; }
+.patents__seal-ribbon--b { fill: var(--blue-2); }
+.patents__seal-shadow { fill: var(--ink); }
+.patents__seal-rosette { fill: var(--coral); stroke: var(--ink); stroke-width: 3; stroke-linejoin: round; }
+.patents__seal-face { fill: var(--paper); stroke: var(--ink); stroke-width: 3; }
+.patents__seal-ring { font: 500 9px var(--font-mono); fill: var(--ink); }
+.patents__seal-no { font: italic 400 31px var(--font-serif); fill: var(--blue); }
+.patents__panel--2 .patents__seal-rosette { fill: var(--periwinkle); }
+.patents__panel--2 .patents__seal-ribbon { fill: var(--blue-2); }
+.patents__panel--2 .patents__seal-ribbon--b { fill: var(--coral); }
+
+/* form-style field row: ink gap = 2px rules in any layout */
+.patents__fields {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr);
+  gap: 2px; margin: 0;
+  background: var(--ink); border: var(--border-sm);
+}
+.patents__field { padding: 9px 12px 10px; background: var(--paper); min-width: 0; }
+.patents__field dt { font: 500 11px/1.2 var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--blue-2); }
+.patents__field dd { margin: 4px 0 0; font: 700 17px/1.25 var(--font-sans); color: var(--ink); }
+.patents__field--no dd { font: 500 17px/1.25 var(--font-mono); letter-spacing: -.01em; }
+
+.patents__note {
+  justify-self: start;
+  padding: 10px 14px;
+  background: var(--peach); color: var(--ink);
+  border: var(--border-sm); box-shadow: 3px 3px 0 var(--ink);
+  font: 500 16px/1.45 var(--font-sans);
+}
+.patents__panel--2 .patents__note { background: var(--periwinkle); }
+.patents__note-k { font-weight: 800; }
+
+/* ---- responsive ---- */
+@media (max-width: 960px) {
+  .patents__grid { grid-template-columns: minmax(0, 1fr); }
+  .patents__panel--splash { grid-row: auto; }
+  .patents__art { min-height: 300px; }
+  .patents__bulb { width: min(52%, 220px); }
+}
+@media (max-width: 560px) {
+  .patents__art { min-height: 250px; }
+  .patents__bulb { width: min(58%, 190px); }
+  .patents .patents__burst { --burst-size: 124px !important; right: -6%; bottom: -4%; }
+  .patents__head { display: block; position: relative; }
+  .patents__kicker { padding-right: 70px; }
+  .patents__seal { position: absolute; top: -14px; right: -6px; width: 68px; margin: 0; }
+  .patents__fields { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .patents__field--no { grid-column: 1 / -1; }
+  .patents__narration { font-size: 17px; }
+}
